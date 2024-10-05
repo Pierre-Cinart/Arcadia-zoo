@@ -1,4 +1,5 @@
 <nav class="menu">
+    <a href="./accueil.php"><img src="../img/logo.png" alt="logo"></a>
     <ul>
         <li><a href="./accueil.php">Accueil</a></li>
         <li><a href="./services.php">Services</a></li>
