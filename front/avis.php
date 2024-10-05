@@ -7,13 +7,13 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services</title>
+    <title>Avis</title>
     <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
 </head>
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Services</h1>
+        <h1>Avis</h1>
     </header>
     <main>
         <h2>Contenu Principal</h2>
