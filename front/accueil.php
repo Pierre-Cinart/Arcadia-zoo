@@ -13,7 +13,7 @@ session_start();
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Accueil</h1>
+    <h1>Accueil</h1>
     </header>
     <main>
         <h2>Aracadia-zoo</h2>
@@ -25,11 +25,10 @@ session_start();
             Le parc propose également plusieurs services pour enrichir l'expérience de nos visiteurs. Vous pouvez profiter de nos 
             points de restauration pour vous détendre, participer à une visite guidée gratuite des habitats pour en apprendre
             davantage sur les espèces, ou encore découvrir le zoo à bord d'un petit train qui fait le tour du parc.
-</p>
+        </p>
+        <?php include_once "../php/avis.php"; ?>
     </main>
-    <?php include_once "../php/avis.php"; ?>
-    <footer>
-        <p>&copy; 2024 Arcadia Zoo</p>
-    </footer>
+    
+    <?php include_once "../php/footer.php"; ?>
 </body>
 </html>

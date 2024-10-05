@@ -19,8 +19,6 @@ session_start();
         <h2>Contenu Principal</h2>
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
-    <footer>
-        <p>&copy; 2024 Arcadia Zoo</p>
-    </footer>
+    <?php include_once "../php/footer.php"; ?>
 </body>
 </html>
