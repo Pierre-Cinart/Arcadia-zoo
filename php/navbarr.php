@@ -1,5 +1,6 @@
 <nav class="menu">
     <a href="./accueil.php"><img src="../img/logo.png" alt="logo"></a>
+    <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
     <ul>
         <li><a href="./accueil.php">Accueil</a></li>
         <li><a href="./services.php">Services</a></li>

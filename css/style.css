@@ -1,7 +1,8 @@
 /* colors : 
 vert logo : #acf64e 
 navbarr  : bck : #333  , txt : white , hover : #575757
-body  : bck : #d3f1c7;*/
+body  : bck : #d3f1c7;
+btn :  bck : #acf64e , hover : #9dcf2d , txt : #FFF */
 
 /* importation polices : */
 @font-face {
@@ -22,17 +23,17 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-width: 100%; 
+    min-width: 375px; 
     align-items: center;
     overflow-x: hidden;
     background-color: #d3f1c7;
     color: #111;
     font-size: 16px;
     font-weight: 600;
-    background-image: url('../img/bg.webp'); /* Remplacez par le chemin de votre image */
-    background-size: cover; /* L'image couvre toute la page */
-    background-position: center; /* L'image est centrée */
-    background-repeat: no-repeat; /* Empêche la répétition de l'image */
+    background-image: url('../img/bg.webp'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
     position: relative;
 }
 
@@ -43,19 +44,19 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(211, 241, 199, 0.5); /* Couleur #d3f1c7 avec opacité de 50% */
+    background-color: rgba(211, 241, 199, 0.5); 
     z-index: -1;
 }
 
 main {
     flex: 1; 
-    width: 90%;
-    
+    width: 90%;   
 }
 
 header {
     width: 100%;
 }
+
 p{
     
 }
@@ -74,19 +75,22 @@ p{
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.menu-toggle {
+    display: none;
+}
+
 .menu ul {
     width: 80%;
     list-style: none; 
     margin: 0;
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     height: 100%;
 }
 
-.menu ul li {
-    display: inline;
-}
+
 
 .menu ul li a {
     color: white;
@@ -125,7 +129,6 @@ h2 {
 /* footer */
 footer {
     margin :auto;
-    
     background-color: #333;
     padding: 1rem;
     width: 100% !important;
@@ -141,25 +144,25 @@ footer {
 
 form {
     margin: auto;
-    background-color: rgba(255, 255, 255, 0.8); /* Fond blanc avec transparence */
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 90%; /* Largeur responsive */
-    max-width: 600px; /* Limite la largeur sur les écrans larges */
+    width: 90%; 
+    max-width: 600px; 
 }
 
 
 label {
     font-weight: bold;
-    display: block; /* Pour que chaque label prenne une ligne entière */
+    display: block; 
     margin-bottom: 0.5rem;
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
-    width: 100%; /* Prend toute la largeur du conteneur */
+    width: 100%; 
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
@@ -168,21 +171,62 @@ textarea {
 }
 
 textarea {
-    resize: vertical; /* Permet de redimensionner verticalement seulement */
+    resize: vertical; 
 }
 
 button {
-    background-color: #acf64e; /* Couleur verte */
+    background-color: #acf64e; 
     color: white;
     padding: 0.5rem 1.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s; /* Pour l'effet de transition */
+    transition: background-color 0.3s; 
 }
 
 button:hover {
-    background-color: #9dcf2d; /* Couleur hover plus foncée */
+    background-color: #9dcf2d; 
 }
 
+/* TELEPHONE */
+
+@media (max-width: 600px) {
+    .menu ul {
+        display: none; 
+    }
+
+    .menu ul.active {
+        width: 70%; 
+        background-color: #333;
+        display: flex; 
+        justify-content: flex-start;
+        flex-direction: column; 
+        height: auto;
+        position: absolute;
+        top: 100px;
+        left: 5px;
+        
+        border-radius: 5%;
+    }
+
+    .menu-toggle {
+        display: block; 
+    }
+
+    .menu ul li {
+        margin: 0;
+        padding: 0.2rem 0; 
+        height: auto; 
+        width: 100%;
+        border-bottom: 2px solid white;
+    }
+
+    .menu ul li a {
+        margin: 0; 
+        padding: 0.5rem 1rem; 
+        line-height: 1.2; 
+        height: auto; 
+        display: block;
+    }
+}

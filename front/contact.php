@@ -37,5 +37,6 @@ session_start();
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/contact.js"></script>
+    <script src="../js/toggleMenu.js"></script>
 </body>
 </html>
