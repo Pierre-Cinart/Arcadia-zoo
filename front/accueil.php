@@ -30,5 +30,6 @@ session_start();
     </main>
     
     <?php include_once "../php/footer.php"; ?>
+    <script src="../js/toggleMenu.js"></script>
 </body>
 </html>

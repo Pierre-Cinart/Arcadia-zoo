@@ -20,5 +20,6 @@ session_start();
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
     <?php include_once "../../php/footer.php"; ?>
+    <script src="../../js/toggleMenu.js"></script>
 </body>
 </html>
