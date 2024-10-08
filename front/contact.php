@@ -15,10 +15,27 @@ session_start();
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
         <h1>Contact</h1>
     </header>
+    <body>
+    <header>
+        <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
+    </header>
     <main>
-        <h2>Contenu Principal</h2>
-        <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
+        <h2>Si vous avez des questions ou souhaitez obtenir plus d'informations, veuillez remplir le formulaire ci-dessous</h2>
+        <form id="contact-form">
+            <label for="objet">Objet :</label>
+            <input type="text" id="objet" required>
+
+            <label for="message">Message :</label>
+            <textarea id="message" required></textarea>
+
+            <label for="email">Votre Email :</label>
+            <input type="email" id="email" required>
+
+            <button type="submit">Envoyer</button>
+        </form>
+        <br>
     </main>
     <?php include_once "../php/footer.php"; ?>
+    <script src="../js/contact.js"></script>
 </body>
 </html>

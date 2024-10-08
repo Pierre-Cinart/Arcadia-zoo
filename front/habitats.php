@@ -38,7 +38,6 @@ session_start();
                             <li> <strong>Lions</strong> : Rois incontestés de la savane, ces grands félins règnent en maîtres.</li>
                             <li> <strong>Girafes</strong> : Les plus grands mammifères terrestres, avec leurs longs cous et leurs taches uniques.</li>
                             <li><strong>Éléphants d’Afrique</strong> : Ces géants doux impressionnent par leur taille et leur sagesse.</li>
-                            <li><strong>Zèbres</strong> : Leurs rayures distinctes ajoutent un charme unique au paysage.</li>
                         </ul>
                         <button>Voir les animaux</button>
                     </div>

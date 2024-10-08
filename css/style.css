@@ -28,6 +28,23 @@ body {
     background-color: #d3f1c7;
     color: #111;
     font-size: 16px;
+    font-weight: 600;
+    background-image: url('../img/bg.webp'); /* Remplacez par le chemin de votre image */
+    background-size: cover; /* L'image couvre toute la page */
+    background-position: center; /* L'image est centrée */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 241, 199, 0.5); /* Couleur #d3f1c7 avec opacité de 50% */
+    z-index: -1;
 }
 
 main {
@@ -42,6 +59,7 @@ header {
 p{
     
 }
+
 /* nav barr */
 .menu {
     margin :auto;
@@ -103,6 +121,7 @@ h2 {
     text-align : center;
      margin : 15px;
 }
+
 /* footer */
 footer {
     margin :auto;
@@ -117,3 +136,53 @@ footer {
     color: white; 
     box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* formulaire de contact */
+
+form {
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.8); /* Fond blanc avec transparence */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%; /* Largeur responsive */
+    max-width: 600px; /* Limite la largeur sur les écrans larges */
+}
+
+
+label {
+    font-weight: bold;
+    display: block; /* Pour que chaque label prenne une ligne entière */
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%; /* Prend toute la largeur du conteneur */
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical; /* Permet de redimensionner verticalement seulement */
+}
+
+button {
+    background-color: #acf64e; /* Couleur verte */
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Pour l'effet de transition */
+}
+
+button:hover {
+    background-color: #9dcf2d; /* Couleur hover plus foncée */
+}
+
