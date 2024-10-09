@@ -13,13 +13,10 @@ session_start();
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Contact</h1>
     </header>
     <body>
-    <header>
-        <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-    </header>
     <main>
+        <h1>Contact</h1>
         <h2>Si vous avez des questions ou souhaitez obtenir plus d'informations, veuillez remplir le formulaire ci-dessous</h2>
         <form id="contact-form">
             <label for="objet">Objet :</label>

@@ -16,8 +16,20 @@ session_start();
         <h1>Espace employé</h1>
     </header>
     <main>
-        <h2>Contenu Principal</h2>
-        <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
+        <h2>Rapport nutritionnel</h2>
+        <h3>habitat :</h3>
+        <ul class = habitatsUl>
+            <li>
+                Marais 
+            </li>
+            <li>
+                Jungle 
+            </li>
+            <li>
+                Savane  
+            </li>
+            
+        </ul>
     </main>
     <?php include_once "../../php/footer.php"; ?>
     <script src="../../js/toggleMenu.js"></script>

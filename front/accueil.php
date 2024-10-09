@@ -13,9 +13,9 @@ session_start();
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-    <h1>Accueil</h1>
     </header>
     <main>
+        <h1>Accueil</h1>
         <h2>Aracadia-zoo</h2>
         <p>Arcadia est un zoo situé en France, près de la forêt de Brocéliande en Bretagne, fondé en 1960. 
             Nous possédons une grande variété d'animaux répartis par habitat (savane, jungle, marais) et accordons une attention 
