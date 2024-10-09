@@ -13,9 +13,9 @@ session_start();
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Avis</h1>
     </header>
     <main>
+    <h1>Avis</h1>
         <h2>Contenu Principal</h2>
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
