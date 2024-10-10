@@ -165,7 +165,6 @@ form {
     max-width: 600px; 
 }
 
-
 label {
     font-weight: bold;
     display: block; 
@@ -174,6 +173,7 @@ label {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 textarea {
     width: 100%; 
     padding: 0.5rem;
@@ -188,11 +188,18 @@ textarea {
 }
 
 button {
-    background-color: #acf64e; 
+    background-color: #acf64e;
+    margin-top: 5px; 
     color: white;
+    border: #bbb solid 1px;
     padding: 0.5rem 1.5rem;
-    border: none;
     border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-shadow: 
+    1px 1px 0 #868686, 
+    -1px -1px 0 #868686,
+    1px -1px 0 #868686, 
+    -1px 1px 0 #868686;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s; 
@@ -264,7 +271,29 @@ section.habitat {
     text-align: left;
     max-width: 600px;
 }
-
+/* admin */
+.admin h1 ,
+.admin h2 {
+    color : red;
+}
+.admin h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.admin h1 ,
+.admin h2 ,
+.admin h3 {
+    text-decoration: underline;
+}
+.admin .green {
+    color : green;
+}
+.admin li {
+    margin-bottom: 25px;
+}
+.admin li :hover{
+    cursor: pointer;
+}
 /* MOBILE */
 
 @media (max-width: 600px) {

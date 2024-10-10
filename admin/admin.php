@@ -7,19 +7,19 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="../../css/style.css"> <!-- Lien vers le fichier CSS  -->
+    <title>Espace administateur</title>
+    <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
 </head>
 <body>
     <header>
-    <?php include_once "../../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Connexion</h1>
+        <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
     <main>
+        <h1>Espace administateur</h1>
         <h2>Contenu Principal</h2>
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
-    <?php include_once "../../php/footer.php"; ?>
-    <script src="../../js/toggleMenu.js"></script>
+    
+    <script src="../js/toggleMenu.js"></script>
 </body>
 </html>
