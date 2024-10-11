@@ -15,9 +15,19 @@ session_start();
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
     </header>
     <main>
-    <h1>Avis</h1>
-        <h2>Contenu Principal</h2>
-        <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
+        <h1>Les avis de nos visiteurs</h1>
+        <!-- injecter ici les avis stocké en bdd -->
+        <form id="avis-form">
+        <h3>Laissez votre avis : </h3>
+        <br>
+            <label for="name">nom ou pseudo:</label>
+            <input type="text" id="name" required>
+
+            <label for="avis">Votre avis :</label>
+            <textarea id="avis" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>

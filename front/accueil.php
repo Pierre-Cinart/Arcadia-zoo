@@ -26,6 +26,7 @@ session_start();
             points de restauration pour vous détendre, participer à une visite guidée gratuite des habitats pour en apprendre
             davantage sur les espèces, ou encore découvrir le zoo à bord d'un petit train qui fait le tour du parc.
         </p>
+        <!-- injecter ici les trois derniers avis -->
         <?php include_once "../php/avis.php"; ?>
     </main>
     
