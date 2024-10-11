@@ -13,9 +13,9 @@ session_start();
 <body>
     <header>
     <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
-        <h1>Les marais</h1>
     </header>
     <main>
+        <h1>Les marais</h1>
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
     <?php include_once "../php/footer.php"; ?>
