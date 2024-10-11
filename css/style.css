@@ -187,6 +187,7 @@ textarea {
     resize: vertical; 
 }
 
+
 button {
     background-color: #acf64e;
     margin-top: 5px; 
@@ -208,7 +209,10 @@ button {
 button:hover {
     background-color: #9dcf2d; 
 }
-
+ a {
+    color: inherit; 
+    text-decoration: none; 
+}
 /* services */
 .services {
     display: flex;

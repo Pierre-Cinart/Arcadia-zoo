@@ -37,7 +37,7 @@ session_start();
                             <li><strong>Girafes</strong></li>
                             <li><strong>Éléphants d’Afrique</strong></li>
                         </ul>
-                        <button>Voir les animaux</button>
+                        <button><a href="./savane.php">Voir les animaux</a></button>
                     </div>
                 </div>
             </article>
@@ -58,7 +58,7 @@ session_start();
                             <li><strong>Singes capucins</strong></li>
                             <li><strong>Panthères</strong></li>
                         </ul>
-                        <button>Voir les animaux</button>
+                        <button><a href="./jungle.php">Voir les animaux</a></button>
                     </div>
                 </div>
             </article>
@@ -79,7 +79,7 @@ session_start();
                             <li><strong>Hippopotames</strong></li>
                             <li><strong>Flamants roses</strong></li>
                         </ul>
-                        <button>Voir les animaux</button>
+                        <button><a href="./marais.php">Voir les animaux</a></button>
                     </div>
                 </div>
             </article>
