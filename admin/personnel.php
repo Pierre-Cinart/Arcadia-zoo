@@ -21,15 +21,22 @@ session_start();
         </div>
         <div id="addPersonneForm">
             <h3>Ajouter un membre</h3>
-            <form>
-                <label for="email">Email :</label>
-                <input type="email" id="email" required>
-
+            <form id="createUser" method="POST" action="../back/createUser.php">
+               
                 <label for="name">Nom :</label>
                 <input type="text" id="name" required>
 
                 <label for="surname">Prénom :</label>
                 <input type="text" id="surname" required>
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" required autocomplete="off">
+                
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" required autocomplete="off">
+
+                <label for="confirmPassword">Confirmer le mot de passe :</label>
+                <input type="password" id="confirmPassword" required autocomplete="off">
 
                 <label for="role">Rôle :</label>
                 <select id="role" style = "margin-bottom : 15px;" required>
