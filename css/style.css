@@ -188,6 +188,7 @@ textarea {
 }
 
 
+
 button {
     background-color: #acf64e;
     margin-top: 5px; 
@@ -209,7 +210,7 @@ button {
 button:hover {
     background-color: #9dcf2d; 
 }
- a {
+button a {
     color: inherit; 
     text-decoration: none; 
 }
@@ -298,6 +299,9 @@ section.habitat {
 .admin li :hover{
     cursor: pointer;
 }
+
+
+
 /* MOBILE */
 
 @media (max-width: 600px) {
