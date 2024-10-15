@@ -19,6 +19,12 @@ session_start();
         <h1>Contact</h1>
         <h2>Si vous avez des questions ou souhaitez obtenir plus d'informations, veuillez remplir le formulaire ci-dessous</h2>
         <form id="contact-form">
+            <label for="name">Nom  :</label>
+            <input type="text" id="name" required>
+
+            <label for="surname">prénom  :</label>
+            <input type="text" id="surname" required>
+
             <label for="objet">Objet :</label>
             <input type="text" id="objet" required>
 
