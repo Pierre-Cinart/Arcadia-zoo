@@ -14,13 +14,13 @@ btn :  bck : #acf64e , hover : #9dcf2d , txt : #FFF */
 
 /*initialisation des marges padding et font size , police  et disposition principale*/
 * {
-    font-family: 'Andigiana Toybox', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
+    font-family: 'Andigiana Toybox', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -139,6 +139,9 @@ h2 {
 
 /* footer */
 footer {
+    line-height: 200%;
+    font-family: 'Arial', sans-serif;
+    font-weight: 400;
     margin :auto;
     background-color: #333;
     padding: 1rem;
@@ -148,11 +151,15 @@ footer {
     box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.2);
 }
 .footer-info {
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.footer-info a {
+    color: white;
+}
 /* formulaire de contact */
 
 form {
@@ -360,6 +367,7 @@ section.habitat {
 
     /* footer */
     footer {
+        
         font-size: 10px;   
     }
     footer p{
