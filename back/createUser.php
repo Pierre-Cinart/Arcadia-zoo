@@ -1,6 +1,6 @@
 <?php
 // connexion à la base de données
-include './bdd.php';
+include_once './bdd.php';
 
 // Vérifiez si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
