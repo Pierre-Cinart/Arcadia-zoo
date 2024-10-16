@@ -18,13 +18,13 @@ session_start();
         <h1>Connexion</h1>
         <h2>Cette page est réservée au personnel</h2>
         <h3>Entrez votre identifiant et mot de passe pour vous connecter</h3>
-        <form id="contact-form">
+        <form id="contact-form" method="POST" action="../back/connexion.php">
 
             <label for="email">Votre Email :</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" name="email" required>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" required></password>
+            <input type="password" id="password" name="password"required></password>
 
             <button type="submit">Envoyer</button>
         </form>
