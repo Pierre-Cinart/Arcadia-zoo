@@ -25,7 +25,7 @@ session_start();
                 <!-- SAVANE -->
                 <h2>La Savane : Le Royaume des Grands Espaces</h2>
                 <div class="habitat-card">
-                    <img src="../img/habitats/Savane.jpg" alt="savane">
+                    <img src="../img/habitats/Savane.webp" alt="savane">
                     <div class="habitat-card-txt">
                         <p>
                             Entrez dans la savane, un vaste paysage ouvert, baigné de soleil et parsemé d’herbes dorées. 
@@ -67,7 +67,7 @@ session_start();
                 <!-- MARAIS -->
                 <h2>Les Marais : Un Refuge Aquatique</h2>
                 <div class="habitat-card">
-                    <img src="../img/habitats/Marais.jpg" alt="marais">
+                    <img src="../img/habitats/Marais.webp" alt="marais">
                     <div class="habitat-card-txt">
                         <p>
                             Les marais sont des lieux calmes où l’eau et la terre se rejoignent, créant un refuge pour une faune surprenante. 

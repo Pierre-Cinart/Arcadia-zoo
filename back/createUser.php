@@ -1,6 +1,22 @@
 <?php
-// connexion à la base de données
+session_start();
+
+// Vérification du rôle
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+    exit();
+}
+
+// Vérification du token
+include_once './checkToken.php';
+
+// Connexion à la base de données
 include_once './bdd.php';
+
+// Initialisation des messages
+$error_message = '';
+$success_message = '';
 
 // Vérifiez si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,31 +30,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validation de mot de passe
     if ($password !== $confirmPassword) {
-        die("Les mots de passe ne correspondent pas.");
-    }
-
-    // Hachage du mot de passe
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Requête SQL pour insérer le compte
-    $sql = "INSERT INTO users (name, first_name, email, password, role) VALUES (?, ?, ?, ?, ?)";
-
-    // Préparer et exécuter la requête
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("sssss", $name, $firstName, $email, $hashedPassword, $role);
-        if ($stmt->execute()) {
-            echo "Le compte a été créé avec succès.";
-        } else {
-            echo "Erreur lors de la création du compte : " . $stmt->error;
-        }
-        $stmt->close();
+        $error_message = "Les mots de passe ne correspondent pas."; // Enregistrer l'erreur
     } else {
-        echo "Erreur de préparation de la requête : " . $conn->error;
-    }
-} else {
-    echo "Méthode de requête non valide.";
-}
+        // Vérifier si l'email existe déjà
+        $check_email_sql = "SELECT id FROM users WHERE email = ?";
+        $check_email_stmt = $conn->prepare($check_email_sql);
+        $check_email_stmt->bind_param("s", $email);
+        $check_email_stmt->execute();
+        $check_email_stmt->store_result();
 
-// Fermer la connexion
-$conn->close();
+        if ($check_email_stmt->num_rows > 0) {
+            $error_message = "L'email est déjà utilisé."; // Enregistrer l'erreur
+        }
+        $check_email_stmt->close();
+    }
+
+    // Si aucune erreur, procéder à l'insertion
+    if (empty($error_message)) {
+        // Hachage du mot de passe
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Requête SQL pour insérer le compte
+        $sql = "INSERT INTO users (name, first_name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+
+        // Préparer et exécuter la requête
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param("sssss", $name, $firstName, $email, $hashedPassword, $role);
+            if ($stmt->execute()) {
+                $success_message = "Le compte a été créé avec succès."; // Enregistrer le succès
+            } else {
+                $error_message = "Erreur lors de la création du compte : " . $stmt->error; // Enregistrer l'erreur
+            }
+            $stmt->close();
+        } else {
+            $error_message = "Erreur de préparation de la requête : " . $conn->error; // Enregistrer l'erreur
+        }
+    }
+
+    // Fermer la connexion
+    $conn->close();
+
+    // Enregistrer les messages dans la session
+    if (!empty($success_message)) {
+        $_SESSION['success'] = $success_message;
+    } else if (!empty($error_message)) {
+        $_SESSION['error'] = $error_message;
+    }
+
+    // Redirection vers la page de personnel
+    header("Location: ../admin/personnel.php");
+    exit();
+} else {
+    $_SESSION['error'] = "Méthode de requête non valide."; // Enregistrer l'erreur dans la session
+    header("Location: ../admin/personnel.php"); // Rediriger vers la page de formulaire
+    exit();
+}
 ?>

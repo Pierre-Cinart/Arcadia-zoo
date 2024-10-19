@@ -18,7 +18,7 @@ session_start();
         <section class="services">
             <div class="service">
                 <h3>Restauration</h3>
-                <img src="../img/services/resto.jpg" alt="Restauration">
+                <img src="../img/services/resto.webp" alt="Restauration">
                 <p>Des points de restauration pour vous détendre et savourer un bon repas après votre visite.</p>
             </div>
 
