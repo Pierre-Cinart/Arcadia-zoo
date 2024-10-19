@@ -16,7 +16,8 @@ session_start();
     </header>
     <main>
         <h1>Les avis de nos visiteurs</h1>
-        <!-- injecter ici les avis stocké en bdd -->
+        <!-- affichage des  avis stocké en bdd -->
+        <?php include_once '../php/showAvis.php'; ?>
         <form id="avis-form">
         <h3>Laissez votre avis : </h3>
         <br>
