@@ -1,38 +1,51 @@
 <?php
 session_start();
+include_once "../back/bdd.php"; // Fichier pour la connexion à la BDD
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
+    <link rel="stylesheet" href="../css/style.css"> 
 </head>
 <body>
     <header>
-        <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
+        <?php include_once "../php/navbarr.php"; ?> 
     </header>
     <main>
         <h1>Nos Services</h1>
         <section class="services">
-            <div class="service">
-                <h3>Restauration</h3>
-                <img src="../img/services/resto.webp" alt="Restauration">
-                <p>Des points de restauration pour vous détendre et savourer un bon repas après votre visite.</p>
-            </div>
+            <?php
+            // Préparation de la requête pour récupérer les services
+            $sql = "SELECT name, description, picture FROM services";
+            $result = $conn->query($sql);
 
-            <div class="service">
-                <h3>Visite guidée des habitats</h3>
-                <img src="../img/services/visite.webp" alt="Visite guidée">
-                <p>Participez à une visite guidée gratuite des habitats pour en apprendre plus sur nos animaux.</p>
-            </div>
+            if ($result->num_rows > 0) {
+                // Boucle pour chaque service
+                while ($row = $result->fetch_assoc()) {
+                    // Récupération des données
+                    $name = htmlspecialchars($row['name']);
+                    $description = htmlspecialchars($row['description']);
+                    $picture = htmlspecialchars($row['picture']);
+                    $imagePath = "../img/services/" . $picture . ".webp"; // Génération du chemin de l'image
 
-            <div class="service">
-                <h3>Tour en petit train</h3>
-                <img src="../img/services/train.webp" alt="Petit train">
-                <p>Découvrez le parc en vous relaxant à bord de notre petit train qui fait le tour du zoo.</p>
-            </div>
+                    // Affichage du service
+                    echo "<div class='service'>";
+                    echo "<h3>$name</h3>";
+                    echo "<img src='$imagePath' alt='$name'>";
+                    echo "<p>$description</p>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<p>Aucun service disponible pour le moment.</p>";
+            }
+
+            // Fermeture de la connexion
+            $conn->close();
+            ?>
         </section>
     </main>
     <?php include_once "../php/footer.php"; ?>
