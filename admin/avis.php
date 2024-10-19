@@ -12,15 +12,32 @@ session_start();
 </head>
 <body>
     <header>
-    <?php include_once "../php/navbarrAdmin.php"; ?>
+        <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
-    <main class="admin">
-    <h1>Gestion des commentaires</h1>
-        <h2>Avis en attente : </h2>
-        <h2 class="green">Avis validés : </h2>
-       
-    </main>
+    <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de déconnexion -->
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     
-    <script src="../js/toggleMenu.js"></script>
+    <main class="admin">
+        <h1>Gestion des commentaires</h1>
+
+        <h2>Avis en attente :</h2>
+        <div id="avis-en-attente">
+            <?php include_once '../back/showAvisEnAttente.php'; ?>
+        </div>
+
+        <h2 class="green">Avis validés :</h2>
+        <div id="avis-valides">
+            <?php include_once '../back/showAvisValides.php'; ?>
+        </div>
+    </main>
+    <?php
+        // Fermer la connexion à la base de données
+        $conn->close();
+    ?>
+
+    
+
+    <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
+    <script src="../js/popup.js"></script> <!-- popup (erreur ou succès de l'action) -->
 </body>
 </html>
