@@ -283,6 +283,7 @@ section.habitat {
     text-align: left;
     max-width: 600px;
 }
+
 /* admin */
 .admin h1 ,
 .admin h2 {
@@ -305,6 +306,41 @@ section.habitat {
 }
 .admin li :hover{
     cursor: pointer;
+}
+
+/* personnels */
+.personnel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.personnel-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.personnel-name {
+    font-weight: bold;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons img {
+    width: 20px; /* Ajuster la taille des icônes */
+    height: auto;
+    cursor: pointer;
+}
+
+.action-buttons img:hover {
+    opacity: 0.7; /* Effet au survol */
 }
 
 /* popup */
