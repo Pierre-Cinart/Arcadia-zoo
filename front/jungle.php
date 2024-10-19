@@ -16,6 +16,7 @@ session_start();
     </header>
     <main> <h1>La jungle</h1>
         <h2>Contenu Principal</h2>
+        <!-- afficher ici de facon dynamique les animaux concernés -->
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
     <?php include_once "../php/footer.php"; ?>

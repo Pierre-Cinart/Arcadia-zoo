@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+// coder le contact
 ?>
 <!DOCTYPE html>
 <html lang="fr">
