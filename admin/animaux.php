@@ -13,6 +13,8 @@ session_start();
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
+    <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de deconnexion -->
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main>
         
         <section class="habitat">
@@ -20,7 +22,7 @@ session_start();
                 <!-- SAVANE -->
                 <h2>La Savane</h2>
                 <div class="habitat-card">
-                    <img src="../img/habitats/Savane.jpg" alt="savane">
+                    <img src="../img/habitats/Savane.webp" alt="savane">
                     <div class="habitat-card-txt">
                         
                         <ul class = "admin">
@@ -52,7 +54,7 @@ session_start();
                 <!-- MARAIS -->
                 <h2>Les Marais</h2>
                 <div class="habitat-card">
-                    <img src="../img/habitats/Marais.jpg" alt="marais">
+                    <img src="../img/habitats/Marais.webp" alt="marais">
                         <ul class = "admin">
                             <li><strong>Lacoste</strong></li>
                             <li><strong>Mamapo</strong></li>
@@ -66,6 +68,7 @@ session_start();
         </section>
     </main>
     <?php include_once "../php/footer.php"; ?>
-    <script src="../js/toggleMenu.js"></script>
+    <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
+    <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->
 </body>
 </html>

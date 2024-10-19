@@ -2,11 +2,11 @@
 session_start();
 
 // Vérification du rôle
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
-    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
-    exit();
-}
+// if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+//     $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+//     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+//     exit();
+// }
 
 // Vérification du token
 include_once './checkToken.php';
@@ -31,7 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validation de mot de passe
     if ($password !== $confirmPassword) {
         $error_message = "Les mots de passe ne correspondent pas."; // Enregistrer l'erreur
+        
+    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+        // Vérifier que le mot de passe a au moins une majuscule, un chiffre, un symbole et 8 caractères minimum
+        $error_message = "Le mot de passe doit contenir au moins une majuscule, un chiffre, un symbole et être composé d'au moins 8 caractères.";
     } else {
+   
         // Vérifier si l'email existe déjà
         $check_email_sql = "SELECT id FROM users WHERE email = ?";
         $check_email_stmt = $conn->prepare($check_email_sql);
@@ -70,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Fermer la connexion
     $conn->close();
 
-    // Enregistrer les messages dans la session
+    // Enregistrer le popup dans la session
     if (!empty($success_message)) {
         $_SESSION['success'] = $success_message;
     } else if (!empty($error_message)) {

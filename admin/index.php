@@ -14,6 +14,7 @@ session_start();
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
         <h1>Connexion</h1>
         <h2>Cette page est réservée au personnel</h2>
@@ -30,6 +31,7 @@ session_start();
         </form>
         <br>
     </main>
-    <script src="../js/toggleMenu.js"></script>
+    <script src="../js/toggleMenu.js"></script><!--  navbarr mobile -->
+    <script src="../js/popup.js"></script><!--  popup messages -->
 </body>
 </html>
