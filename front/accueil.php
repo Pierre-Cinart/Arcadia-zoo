@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,6 +30,7 @@ session_start();
     </main>
     
     <?php include_once "../php/footer.php"; ?>
-    <script src="../js/toggleMenu.js"></script>
+    <script src="../js/toggleMenu.js"></script> 
+    <script src="../js/popup.js"></script>
 </body>
 </html>

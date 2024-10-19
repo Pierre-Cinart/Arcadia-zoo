@@ -41,17 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['token'] = $token;
                 $_SESSION['role'] = $user_role;
-                $_SESSION['success'] = "Vous etes connecter en tant que ." . $_['role'];
-                // Rediriger vers une page d'accueil ou tableau de bord
+                $_SESSION['success'] = "Vous êtes connecter en " . $_SESSION['role'];
+                // Rediriger vers la page animaux par défaut
                 header('Location: ../admin/animaux.php');
                 exit();
             } else {
                 // Mot de passe incorrect
                 $_SESSION['error'] = "Mot de passe incorrect.";
+                // Rediriger vers la page de connexion
+                header('Location: ../admin/index.php');
             }
         } else {
             // Email non trouvé
             $_SESSION['error'] = "Aucun utilisateur trouvé avec cet email.";
+            header('Location: ../admin/index.php');
         }
 
         // Fermer la requête

@@ -1,5 +1,11 @@
 <?php
 session_start();
+// Vérification du rôle
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,8 +18,9 @@ session_start();
 </head>
 <body>
     <header>
-        <?php include_once "../php/navbarrAdmin.php"; ?>
+        <?php include_once "../php/navbarrAdmin.php"; ?> <!-- navbarr -->
     </header>
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
             <button id="addPersonnelBtn">Ajouter Personnel</button>
@@ -53,7 +60,8 @@ session_start();
             <?php include_once "../back/showPersonnel.php"; ?>
         </div>
     </main>
-    <script src="../js/perso.js"></script>
-    <script src="../js/toggleMenu.js"></script>
+    <script src="../js/perso.js"></script> <!-- affichage au clique -->
+    <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
+    <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->
 </body>
 </html>
