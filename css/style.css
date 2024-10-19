@@ -365,7 +365,41 @@ section.habitat {
     background-color: #eb0f21; /* Couleur pour les erreurs */
 }
 
+/* avis */
+.avis-container {
+    margin: auto;
+    margin-top: 20px;
+    width: 90%;
+    border: 1px solid #ddd;
+    background-color: #77e490;
+    padding: 10px;
+    border-radius: 5px;
+}
 
+.avis {
+    margin: auto;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #27bd4a;
+}
+
+.avis h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.avis p {
+    margin: 5px 0;
+    font-weight: 300;
+}
+
+.avis small {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+}
 
 
 /* MOBILE */
