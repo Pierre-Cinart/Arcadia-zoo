@@ -1,0 +1,1 @@
+afficher l animal concerné et les options disponibles selon les droits

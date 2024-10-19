@@ -26,7 +26,8 @@ session_start();
             davantage sur les espèces, ou encore découvrir le zoo à bord d'un petit train qui fait le tour du parc.
         </p>
         <!-- injecter ici les trois derniers avis -->
-        <?php include_once "../php/showAvis.php"; ?>
+        <?php include_once "../php/showAvis.php"; // (affichage provisoire )coder l affichage des trois derniers avis  ?>
+        <a href="./avis.php"> voir tout les avis </a>
     </main>
     
     <?php include_once "../php/footer.php"; ?>

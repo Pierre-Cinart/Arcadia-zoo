@@ -16,6 +16,7 @@ session_start();
     </header>
     <main>
         <h1>Les marais</h1>
+        <!-- afficher ici de facon dynamique les animaux concernés -->
         <p>Cette page est actuellement vide. Ajouter du contenu ici.</p>
     </main>
     <?php include_once "../php/footer.php"; ?>

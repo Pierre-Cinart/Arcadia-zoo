@@ -1,5 +1,6 @@
 <?php
 session_start();
+// rendre cette page dynamique
 ?>
 <!DOCTYPE html>
 <html lang="fr">
