@@ -2,7 +2,7 @@
 session_start();
 // Vérification du rôle
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+    $_SESSION['error'] = 'La page que vous avez demandé requiert des droits administrateur.';
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 }
