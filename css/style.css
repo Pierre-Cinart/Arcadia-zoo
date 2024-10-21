@@ -401,6 +401,44 @@ section.habitat {
     font-size: 12px;
 }
 
+/* paginations */
+/* Container des boutons de pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    
+}
+
+.pagination a {
+    display: inline-block;
+    text-align: center;
+    font-family: sans-serif;
+    width: 40px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #008307;
+    color: white;
+    border: solid 1px rgb(78, 78, 78);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.pagination a.btnPage {
+    width: 75px ;
+}
+/* Bouton actif */
+.pagination a.active {
+    background-color: #03e60f;
+    font-weight: bold;
+}
+
+/* Bouton au survol */
+.pagination a:hover.inactive {
+    background-color: #38f100;
+}
+
 
 /* MOBILE */
 
