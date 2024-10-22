@@ -18,7 +18,8 @@ session_start();
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
         <h1>Consulter les messages</h1>
-        <h2>Messages en attente : </h2>
+        <h2>Messages en attente : </h2> <!-- faire une requete qui compte le nombre de messages en attente -->
+        <!-- afficher les messages non répondus en lien clickable pour répondre -->
     </main>
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
     <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->

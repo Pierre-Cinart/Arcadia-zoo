@@ -2,21 +2,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const addAnimalBtn = document.getElementById('addAnimalBtn');
     const addAnimalForm = document.getElementById('addAnimalForm');
     const showAnimalsBtn = document.getElementById('showAnimalsBtn');
+    const showHabitats = document.getElementById('showHabitats');
+    const showHabitatsBtn = document.getElementById('showHabitatsBtn');
     const showAnimals = document.getElementById('showAnimals');
     
-    // Cacher le formulaire et la section d'affichage au départ
+    // Cacher le formulaire et les sections d'affichage au départ
+    showHabitats.style.display = 'none';
     addAnimalForm.style.display = 'none';
     showAnimals.style.display = 'none';
 
-    // Afficher ou cacher le formulaire lors du clic sur le bouton "Ajouter Animals"
+    // Afficher le formulaire "Ajouter animal" lors du clic sur le bouton "Ajouter Animals" et cacher les autres sections
     addAnimalBtn.addEventListener('click', function() {
         addAnimalForm.style.display = 'block';
-        showAnimals.style.display = 'none'; // Cacher la section d'affichage si le formulaire est ouvert
+        showHabitats.style.display = 'none';
+        showAnimals.style.display = 'none'; 
     });
 
-    // Afficher ou cacher la section "Afficher le Animals"
+    // Afficher  la section "Affichage des animaux" et cacher les autres sections
     showAnimalsBtn.addEventListener('click', function() {
         showAnimals.style.display = 'block';
-        addAnimalForm.style.display = 'none'; // Cacher le formulaire si la section d'affichage est ouverte
+        showHabitats.style.display = 'none';
+        addAnimalForm.style.display = 'none'; 
+    });
+
+     // Afficher  la section "Gestion des habitats" et cacher les autres sections
+     showHabitatsBtn.addEventListener('click', function() {
+        showAnimals.style.display = 'none';
+        showHabitats.style.display = 'block';
+        addAnimalForm.style.display = 'none'; 
     });
 });
