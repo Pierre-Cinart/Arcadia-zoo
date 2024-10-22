@@ -3,6 +3,9 @@ session_start();
 
 // Inclure la connexion à la base de données
 include_once 'bdd.php';
+// pour creation de token
+include_once './Token.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer et échapper les données du formulaire
@@ -27,15 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Vérifier si le mot de passe est correct
             if (password_verify($password, $hashed_password)) {
-                // Générer un token aléatoire de 128 caractères
-                $token = bin2hex(random_bytes(64)); // 64 bytes * 2 hex chars = 128 characters
+                //creer le token
+                $token = createToken($conn , $token , $user_id );
 
                 // Mettre à jour le token et l'expiration (ajout de 2 heures avec CURRENT_TIMESTAMP)
-                $update_sql = "UPDATE users SET token = ?, token_expiration = CURRENT_TIMESTAMP + INTERVAL 2 HOUR WHERE id = ?";
-                $update_stmt = $conn->prepare($update_sql);
-                $update_stmt->bind_param("si", $token, $user_id);
-                $update_stmt->execute();
-                $update_stmt->close();
+                updateToken($conn,$token,$user_id);
 
                 // Stocker les informations dans la session
                 $_SESSION['user_id'] = $user_id;
