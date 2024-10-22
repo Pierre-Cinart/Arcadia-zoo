@@ -25,7 +25,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <main class="admin">
         
     </main>
-    
-    <script src="../js/toggleMenu.js"></script>
+    <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
+    <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->
 </body>
 </html>
