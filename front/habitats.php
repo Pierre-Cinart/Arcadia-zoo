@@ -50,8 +50,7 @@ session_start();
                     <img src="../img/habitats/Jungle.webp" alt="jungle">
                     <div class="habitat-card-txt">
                         <p>
-                            La jungle est dense et vibrante, avec des arbres imposants et une végétation luxuriante. 
-                            Ici, le chant des oiseaux exotiques et les mouvements des créatures cachées rythment la vie.
+                            La jungle un lieu dense et vibrant, avec de nombreux arbres imposants et une végétation luxuriante. 
                         </p>
                         <h3>Découvrez nos habitants :</h3>
                         <ul>
