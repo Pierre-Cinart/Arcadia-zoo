@@ -2,17 +2,17 @@
 session_start();
 
 // Vérification du rôle
-// if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-//     $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
-//     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
-//     exit();
-// }
-
-// Vérification du token
-include_once './checkToken.php';
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+    exit();
+}
 
 // Connexion à la base de données
 include_once './bdd.php';
+
+// pour creation de token
+include_once './createToken.php';
 
 // Initialisation des messages
 $error_message = '';
@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password']; // Le mot de passe n'est pas échappé
     $confirmPassword = $_POST['confirmPassword'];
     $role = htmlspecialchars(trim($_POST['role']));
-
     // Validation de mot de passe
     if ($password !== $confirmPassword) {
         $error_message = "Les mots de passe ne correspondent pas."; // Enregistrer l'erreur
