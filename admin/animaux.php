@@ -4,8 +4,8 @@ session_start();
 if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' 
 || $_SESSION['role'] !== 'agent' 
 || $_SESSION['role'] !== 'veterinaire')) {
-
-    $_SESSION['error'] = 'La page que vous avez demandé requiert des droits administrateur.';
+    session_unset();
+    $_SESSION['error'] = "Il semblerait que vous n'ayez pas les droits requis \n pour des raisons de sécurité , veuillez vous reconnecter.";
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 } else { 
@@ -18,7 +18,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion personnel</title>
+    <title>Gestion animaux</title>
     <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
 </head>
 <body>
@@ -27,10 +27,13 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     </header>
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
+        <!-- bouttons d ' action  -->
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
             <button id="addAnimalBtn">Ajouter Un Animal</button>
             <button id="showAnimalsBtn">Consulter Les Animaux</button>
+            <button id="showHabitatsBtn">Gérer Les Habitats</button>
         </div>
+        <!-- formulaire pour ajouter un animal -->
         <div id="addAnimalForm">
             <h3>Ajouter un animal</h3>
             <form action="ajouter_animal.php" method="POST">
@@ -79,6 +82,9 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         </div>
         <div id="showAnimals" style = "text-align : center;">
             <?php include_once "../back/showAnimals.php"; ?>
+        </div>
+        <div id="showHabitats" style = "text-align : center;">
+            coder l affichage ...
         </div>
     </main>
     <script src="../js/animals.js"></script> <!-- affichage au clique -->
