@@ -1,74 +1,49 @@
 <?php
 session_start();
-// rendre cette page dynamique
+// Vérification du rôle
+if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' 
+|| $_SESSION['role'] !== 'agent' 
+|| $_SESSION['role'] !== 'veterinaire')) {
+
+    $_SESSION['error'] = 'La page que vous avez demandé requiert des droits administrateur.';
+    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+    exit();
+} else { 
+    $role = $_SESSION['role']; 
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habitats</title>
+    <title>Gestion personnel</title>
     <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
 </head>
 <body>
     <header>
-        <?php include_once "../php/navbarrAdmin.php"; ?>
+        <?php include_once "../php/navbarrAdmin.php"; ?> <!-- navbarr -->
     </header>
-    <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de deconnexion -->
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
-    <main>
-        
-        <section class="habitat">
-            <article>
-                <!-- SAVANE -->
-                <h2>La Savane</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Savane.webp" alt="savane">
-                    <div class="habitat-card-txt">
-                        
-                        <ul class = "admin">
-                            <li><strong>Simba</strong></li>
-                            <li><strong>Nalah</strong></li>
-                            <li><strong>Mumu</strong></li>
-                            <li><strong>Dumbo</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
+    <main class="admin">
+        <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
+            <button id="addAnimalBtn">Ajouter Un Animal</button>
+            <button id="showAnimalsBtn">Consulter Les Animaux</button>
+        </div>
+        <div id="addAnimalForm">
+            <h3>Ajouter un animal</h3>
+            <form action="">
+                <br>
+                <button type="submit">Soumettre</button>
+            </form>
 
-            <article>
-                <!-- JUNGLE -->
-                <h2>La Jungle</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Jungle.webp" alt="jungle">
-                    <div class="habitat-card-txt">
-                        <ul class = "admin">
-                            <li><strong>Sherkan</strong></li>
-                            <li><strong>Singes capucins</strong></li>
-                            <li><strong>Baguera</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
-
-            <article>
-                <!-- MARAIS -->
-                <h2>Les Marais</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Marais.webp" alt="marais">
-                        <ul class = "admin">
-                            <li><strong>Lacoste</strong></li>
-                            <li><strong>Mamapo</strong></li>
-                            <li><strong>Popa</strong></li>
-                            <li><strong>Popi</strong></li>
-                            <li><strong>Flamants roses</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
-        </section>
+        </div>
+        <div id="showAnimals" style = "text-align : center;">
+            <?php include_once "../back/showAnimals.php"; ?>
+        </div>
     </main>
-    <?php include_once "../php/footer.php"; ?>
+    <script src="../js/animals.js"></script> <!-- affichage au clique -->
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
     <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->
 </body>
