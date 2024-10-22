@@ -33,11 +33,49 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         </div>
         <div id="addAnimalForm">
             <h3>Ajouter un animal</h3>
-            <form action="">
-                <br>
+            <form action="ajouter_animal.php" method="POST">
+                
+                <label for="name">Nom :</label>
+                <input type="text" name="name" required><br>
+
+                <label for="race">Race :</label>
+                <input type="text" name="race" required><br>
+
+                <label for="age">Âge :</label>
+                <input type="number" name="age" required><br>
+
+                <label for="poid">Poids (kg) :</label>
+                <input type="number" step="0.1" name="poid" required><br>
+
+                <label for="habitat">Habitat :</label>
+                <select name="habitat" required>
+                    <option value="M">Marais</option>
+                    <option value="F">Jungle</option>
+                    <option value="F">Savane</option>
+                    <option value="F">Autre</option>
+                </select><br>
+
+                <label for="regime">Régime :</label>
+                <select name="regime" required>
+                    <option value="carnivore">Carnivore</option>
+                    <option value="herbivore">Herbivore</option>
+                    <option value="omnivore">Omnivore</option>
+                </select><br>
+
+                <label for="description">Description :</label>
+                <textarea name="description" required></textarea><br>
+
+                <label for="sex">Sexe :</label>
+                <select name="sex" required>
+                    <option value="M">Mâle</option>
+                    <option value="F">Femelle</option>
+                </select><br>
+
+                <label for="health">Santé :</label>
+                <input type="text" name="health" required><br>
+
                 <button type="submit">Soumettre</button>
             </form>
-
         </div>
         <div id="showAnimals" style = "text-align : center;">
             <?php include_once "../back/showAnimals.php"; ?>
