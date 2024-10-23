@@ -1,24 +1,32 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const showUnvalidBtn = document.getElementById('showUnvalidBtn');
     const avisUnValid = document.getElementById('avisUnValid');
     const showValidBtn = document.getElementById('showValidBtn');
     const avisValid = document.getElementById('avisValid');
-    
-    // Cacher le formulaire et la section d'affichage au départ
+
+    // Vérifier l'état du localStorage pour déterminer quelle section afficher
+    const currentView = localStorage.getItem('currentView');
+
+    // Cacher les sections par défaut
     avisUnValid.style.display = 'none';
     avisValid.style.display = 'none';
 
-    // Afficher ou cacher le formulaire lors du clic sur le bouton "Ajouter Personnel"
-    showUnvalidBtn.addEventListener('click', function() {
+    // Afficher la section appropriée
+    if (currentView === 'unvalid') {
         avisUnValid.style.display = 'block';
-        avisValid.style.display = 'none'; // Cacher la section d'affichage si le formulaire est ouvert
-    });
-
-    // Afficher ou cacher la section "Afficher le Personnel"
-    showValidBtn.addEventListener('click', function() {
+    } else if (currentView === 'valid') {
         avisValid.style.display = 'block';
-        avisUnValid.style.display = 'none'; // Cacher le formulaire si la section d'affichage est ouverte
+    }
+
+    // Afficher les avis en attente
+    showUnvalidBtn.addEventListener('click', function() {
+        localStorage.setItem('currentView', 'unvalid'); // Sauvegarder l'état
+        window.location.href = `avis.php?page=1`; // Reset la pagination
     });
 
+    // Afficher les avis validés
+    showValidBtn.addEventListener('click', function() {
+        localStorage.setItem('currentView', 'valid'); // Sauvegarder l'état
+        window.location.href = `avis.php?page=1`; // Reset la pagination
+    });
 });
