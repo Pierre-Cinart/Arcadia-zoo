@@ -28,14 +28,16 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     
     <main class="admin">
         <h1>Gestion des commentaires</h1>
-
-        <h2>Avis en attente :</h2>
-        <div id="avis-en-attente">
+        <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
+            <button id="showUnvalidBtn">Avis en attente :</button>
+            <button id="showValidBtn">Avis validés :</button>
+        </div>
+        
+        <div id="avisUnValid">
             <?php include_once '../back/showAvisEnAttente.php'; ?>
         </div>
 
-        <h2 class="green">Avis validés :</h2>
-        <div id="avis-valides">
+        <div id="avisValid">
             <?php include_once '../back/showAvisValides.php'; ?>
         </div>
     </main>
@@ -43,9 +45,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         // Fermer la connexion à la base de données
         $conn->close();
     ?>
-
-    
-
+    <script src="../js/avis.js"></script> <!-- affichage au clique -->
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
     <script src="../js/popup.js"></script> <!-- popup (erreur ou succès de l'action) -->
 </body>
