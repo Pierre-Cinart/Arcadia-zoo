@@ -2,9 +2,26 @@
 // Inclure la connexion à la base de données
 include_once '../back/bdd.php';
 
-// Requête pour récupérer les avis en attente
-$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = FALSE";
-$result = $conn->query($sql);
+// Configuration de la pagination
+include_once '../php/pagination.php'; // Inclure la configuration de pagination si elle est dans un fichier séparé
+
+// Requête SQL pour compter le nombre total d'avis en attente pour calculer le nombre de pages
+$sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = FALSE";
+$resultCount = $conn->query($sqlCount);
+$totalAvis = $resultCount->fetch_assoc()['total'];
+
+// Calculer le nombre total de pages
+$totalPages = ceil($totalAvis / $limit);
+
+// Calculer l'offset pour savoir à partir de quel enregistrement commencer
+$offset = ($page - 1) * $limit;
+
+// Requête SQL pour récupérer les avis en attente (LIMIT et OFFSET)
+$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = FALSE LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($sql); // Préparer la requête pour éviter les injections SQL
+$stmt->bind_param('ii', $limit, $offset); // Associer les paramètres à la requête (limite et offset)
+$stmt->execute(); // Exécuter la requête
+$result = $stmt->get_result(); // Récupérer le résultat de la requête
 
 // Vérifier si des avis en attente ont été trouvés
 if ($result->num_rows > 0) {
@@ -31,6 +48,12 @@ if ($result->num_rows > 0) {
     echo '<p style="text-align:center; width:100%">Aucun avis en attente</p>'; // Message si aucun avis en attente
 }
 
-// connexion Fermée sur la page concerné car requetes séparées 
+// Fermer la requête préparée
+$stmt->close();
+
+// Lancer la fonction de pagination avec $totalPages et la page actuelle
+paginate($totalPages, $page, $limit, $limitBtn);
+
+// connexion Fermée sur la page concernée car requêtes séparées
 
 ?>

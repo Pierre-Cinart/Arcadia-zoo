@@ -2,9 +2,26 @@
 // Inclure la connexion à la base de données
 include_once '../back/bdd.php';
 
-// Requête pour récupérer les avis validés
-$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = TRUE";
-$result = $conn->query($sql);
+// configuration de la pagination
+include_once '../php/pagination.php';
+
+// Requête SQL pour compter le nombre total d'avis validés pour la pagination
+$sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = TRUE";
+$resultCount = $conn->query($sqlCount);
+$totalAvis = $resultCount->fetch_assoc()['total'];
+
+// Calculer le nombre total de pages
+$totalPages = ceil($totalAvis / $limit);
+
+// Calculer l'offset pour savoir à partir de quel enregistrement commencer
+$offset = ($page - 1) * $limit;
+
+// Requête SQL pour récupérer les avis validés avec LIMIT et OFFSET
+$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = TRUE LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($sql); // Préparer la requête pour éviter les injections SQL
+$stmt->bind_param('ii', $limit, $offset); // Associer les paramètres (limite et offset)
+$stmt->execute(); // Exécuter la requête
+$result = $stmt->get_result(); // Récupérer le résultat de la requête
 
 // Vérifier si des avis validés ont été trouvés
 if ($result->num_rows > 0) {
@@ -29,6 +46,12 @@ if ($result->num_rows > 0) {
 } else {
     echo '<p style="text-align:center; width:100%">Aucun avis validé</p>'; // Message si aucun avis validé
 }
+
+// Appeler la fonction paginate pour afficher les boutons de pagination
+paginate($totalPages, $page, $limit, $limitBtn);
+
+// Fermer la requête préparée
+$stmt->close();
 
 // connexion Fermée sur la page concerné car requetes séparées 
 
