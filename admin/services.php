@@ -24,6 +24,8 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
+    <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de déconnexion -->
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
         
     </main>
