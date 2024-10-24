@@ -1,20 +1,25 @@
 <?php
-// Limite affichage par page
-$limit = 5; // items affichés
-$limitBtn = 5; // Boutons de navigation
+// utiliser un include en début de page necessitant une pagination pour initialiser les variables
+    // Limite affichage par page
+    $limit = 5; // items affichés
+    $limitBtn = 5; // Boutons de navigation
 
-// Vérifier si le paramètre 'page' existe dans l'URL, sinon mettre sur la première page
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    // Vérifier si le paramètre 'page' existe dans l'URL est qu il est bien un nombre entier , sinon mettre sur la première page
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
 
+//verfier si le get['page'] est valid
+function verifPage ($page , $totalPage) {
+    if ($page > $totalPage) {
+        $page = $totalPage;
+    }
+}
+// fonction de pagination 
 function paginate($totalPages , $page , $limit , $limitBtn ){
 
     // Calculer l'offset pour savoir à partir de quel enregistrement commencer
-$offset = ($page - 1) * $limit;
-// Empêcher l'accès à une page supérieure à la dernière page existante
-if ($page > $totalPages) {
-    $page = $totalPages;
-}
-        // Générer les liens de pagination
+    $offset = ($page - 1) * $limit;
+   
+    // Générer les liens de pagination
     echo '<div class="pagination" style="text-align:center; margin-top: 20px;">';
 
     // Bouton page précédente - 5 si existe
@@ -67,6 +72,12 @@ if ($page > $totalPages) {
                 echo '<a class = "btnPage" href="?page=' . ($page + 5) . '#pagination" class="btn-nav"> >> + 5 </a>';
             }
         }
+    
+        //empecher l accés aux pages inexistantes 
+    if ($page > $totalPages) {
+        header("Location: ?page=$totalPages#pagination");
+        exit();
+    }
 
     echo '</div>'; // Fin du container pagination
 

@@ -5,17 +5,23 @@ include_once '../back/bdd.php';
 // configuration de la pagination
 include_once '../php/pagination.php';
 
+
 // Requête SQL pour compter le nombre total d'avis validés pour calculer le nombre de pages
 $sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = TRUE";
 $resultCount = $conn->query($sqlCount);
 $totalAvis = $resultCount->fetch_assoc()['total'];
 
+
 // Calculer le nombre total de pages
 $totalPages = ceil($totalAvis / $limit);
 
-// Calculer l'offset pour savoir à partir de quel enregistrement commencer
+// verification de $page
+verifPage($page , $totalPages);
+
 $offset = ($page - 1) * $limit;
 
+
+var_dump('total : ' . $totalPages . '  pages : ' .$page);
 // Requête SQL pour récupérer les avis validés (LIMIT et OFFSET)
 $sql = "SELECT pseudo, commentaire, created_at FROM avis WHERE isVisible = TRUE LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sql); // Préparer la requête pour éviter les injections SQL
@@ -44,8 +50,8 @@ if ($result->num_rows > 0) {
 
 // Fermer la requête préparée
 $stmt->close();
-//lancer la fonction de pagination avec $totalpages en paramètre
 
+//fonction de pagination 
 paginate($totalPages , $page , $limit , $limitBtn );
 
 // Fermeture de la connexion à la base de données
