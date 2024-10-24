@@ -9,13 +9,15 @@ include_once '../php/pagination.php';
 $sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = TRUE";
 $resultCount = $conn->query($sqlCount);
 $totalAvis = $resultCount->fetch_assoc()['total'];
-// affiche un message en cas de données vide 
-if ($totalAvis == 0){
-    echo '<p style="text-align:center; width:100%">Aucun avis en attente</p>'; // Message si aucun avis en attente
-    exit();
-} else {
-    // Calculer le nombre total de pages
-    $totalPages = ceil($totalAvis / $limit);}
+var_dump('va' . $totalAvis);
+// verifie si il y a des données vide 
+if ($totalAvis == false){
+    $totalPages = 1 ;//pour fixer l affichage de la pagination en cas de données null
+    $page = 1;
+ } else {
+     // Calculer le nombre total de pages
+     $totalPages = ceil($totalAvis / $limit);
+    }
 
 // Vérification de $page
 verifPage($page , $totalPages);
@@ -39,14 +41,14 @@ if ($result->num_rows > 0) {
         $formattedDate = $dateTime->format('d-m-Y à H:i:s');
 
         echo '<div class="avis">';
-        echo '<h4>' . htmlspecialchars($row['pseudo']) . ' : </h4>'; // Afficher le pseudo
-        echo '<p>' . htmlspecialchars($row['commentaire']) . '</p>'; // Afficher le commentaire
-        echo '<small>Publié le ' . htmlspecialchars($formattedDate) . '</small><br>'; // Date de publication
-        
-        // Ajouter l'icône de suppression avec confirmation JavaScript
-        echo '<div class="avis-actions">';
-            echo '<a href="#" onclick="confirmDelete(' . $row['id'] . ')"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
-        echo '</div>'; // Fin des actions
+            echo '<h4>' . htmlspecialchars($row['pseudo']) . ' : </h4>'; // Afficher le pseudo
+            echo '<p>' . htmlspecialchars($row['commentaire']) . '</p>'; // Afficher le commentaire
+            echo '<small>Publié le ' . htmlspecialchars($formattedDate) . '</small><br>'; // Date de publication
+            
+            // Ajouter l'icône de suppression avec confirmation JavaScript
+            echo '<div class="avis-actions">';
+                echo '<a href="#" onclick="confirmDelete(' . $row['id'] . ')"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
+            echo '</div>'; // Fin des actions
         echo '</div>'; // Fin de l'avis
     }
     echo '</div>'; // Fin du container
