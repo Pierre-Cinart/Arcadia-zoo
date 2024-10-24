@@ -13,6 +13,9 @@ $totalAvis = $resultCount->fetch_assoc()['total'];
 // Calculer le nombre total de pages
 $totalPages = ceil($totalAvis / $limit);
 
+// verification de $page
+verifPage($page , $totalPages);
+
 // Calculer l'offset pour savoir à partir de quel enregistrement commencer
 $offset = ($page - 1) * $limit;
 

@@ -1,6 +1,6 @@
 <?php
 // Inclure le fichier de configuration pour la connexion à la base de données
-include './back/bdd.php'; 
+include_once './back/bdd.php'; 
 
 // Les données de l'utilisateur à insérer
 $name = 'José';

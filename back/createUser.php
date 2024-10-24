@@ -7,13 +7,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 }
+// Vérification de l id et assignation à user_id
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
+    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
+    exit();
+}
 
 // Connexion à la base de données
 include_once './bdd.php';
 
 // pour creation de token
-include_once './createToken.php';
-
+include_once './token.php';
+checkToken($conn);
 // Initialisation des messages
 $error_message = '';
 $success_message = '';
@@ -27,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password']; // Le mot de passe n'est pas échappé
     $confirmPassword = $_POST['confirmPassword'];
     $role = htmlspecialchars(trim($_POST['role']));
+    
     // Validation de mot de passe
     if ($password !== $confirmPassword) {
         $error_message = "Les mots de passe ne correspondent pas."; // Enregistrer l'erreur
@@ -70,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error_message = "Erreur de préparation de la requête : " . $conn->error; // Enregistrer l'erreur
         }
     }
-
+    
     // Fermer la connexion
     $conn->close();
 
