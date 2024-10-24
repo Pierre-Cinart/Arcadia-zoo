@@ -26,7 +26,7 @@ verifPage($pageW , $totalPagesW);
 $offset = ($pageW - 1) * $limit;
 
 // Requête SQL pour récupérer les avis en attente (LIMIT et OFFSET)
-$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = FALSE LIMIT ? OFFSET ?";
+$sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = FALSE ORDER BY created_at ASC LIMIT ? OFFSET ?; ";
 $stmt = $conn->prepare($sql); // Préparer la requête pour éviter les injections SQL
 $stmt->bind_param('ii', $limit, $offset); // Associer les paramètres à la requête (limite et offset)
 $stmt->execute(); // Exécuter la requête
