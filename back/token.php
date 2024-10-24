@@ -44,7 +44,7 @@ function updateToken($conn, $token, $user_id) {
 // Vérifie la validité du token
 function checkToken($conn) {
     if (isset($_SESSION['user_id']) && isset($_SESSION['token'])) {
-        $user_id = $_SESSION['user_id']; 
+        $user_id = (int)$_SESSION['user_id']; 
         $token = $_SESSION['token'];
 
         // Préparer la requête pour vérifier le token et son expiration
@@ -61,6 +61,8 @@ function checkToken($conn) {
 
             // Vérifier si le token correspond et si l'expiration est valide
             if ($token === $dbToken && new DateTime() < new DateTime($dbTokenExpiration)) {
+                //mettre à jour le token
+                updateToken($conn, $token , $user_id);
                 return true; // Le token est valide
             } else {
                 // Le token a expiré ou ne correspond pas

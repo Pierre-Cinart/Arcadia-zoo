@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $hashed_password)) {
                 //creer le token
                 $token = createToken($conn , $token , $user_id );
-
+                var_dump($token);
                 // Mettre à jour le token et l'expiration (ajout de 2 heures avec CURRENT_TIMESTAMP)
                 updateToken($conn,$token,$user_id);
 
