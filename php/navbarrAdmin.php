@@ -10,6 +10,7 @@
          }
     
          if (isset($role) && ($role === 'admin' || $role === 'agent' || $role === 'veterinaire')){
+            echo '<li><a href="./services.php">Services</a></li>';
             echo '<li><a href="./animaux.php">Animaux</a></li>';  
          }
     
