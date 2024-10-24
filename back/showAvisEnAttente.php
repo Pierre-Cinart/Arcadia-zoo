@@ -10,19 +10,21 @@ $sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = FALSE";
 $resultCount = $conn->query($sqlCount);
 $totalAvis = $resultCount->fetch_assoc()['total'];
 
-// verifie si il y a des données vide 
+// definit la page à un pour la pagination en cas de données vide 
 if ($totalAvis == false){
-    $totalPages = 1 ;//pour fixer l affichage de la pagination en cas de données null
- } else {
-     // Calculer le nombre total de pages
-     $totalPages = ceil($totalAvis / $limit);
-    }
+    var_dump($resultCount);
+   $totalPagesW = 1 ;
+   $pageW = 1;
+} else {
+    // Calculer le nombre total de pages
+    $pageW = $page;
+    $totalPagesW = ceil($totalAvis / $limit);}
 
-// verification de $page
-verifPage($page , $totalPages);
+// verification de $pageW
+verifPage($pageW , $totalPagesW);
 
 // Calculer l'offset pour savoir à partir de quel enregistrement commencer
-$offset = ($page - 1) * $limit;
+$offset = ($pageW - 1) * $limit;
 
 // Requête SQL pour récupérer les avis en attente (LIMIT et OFFSET)
 $sql = "SELECT id, pseudo, commentaire, created_at FROM avis WHERE isVisible = FALSE LIMIT ? OFFSET ?";
@@ -40,15 +42,15 @@ if ($result->num_rows > 0) {
         $formattedDate = $dateTime->format('d-m-Y à H:i:s');
         
         echo '<div class="avis">';
-            echo '<h4>' . htmlspecialchars($row['pseudo']) . ' : </h4>'; // Afficher le pseudo
-            echo '<p>' . htmlspecialchars($row['commentaire']) . '</p>'; // Afficher le commentaire
-            echo '<small>Publié le ' . htmlspecialchars($formattedDate) . '</small><br>'; // Date de publication
-            
-            // Ajouter les icônes pour valider et supprimer
-            echo '<div class="avis-actions">';
-                echo '<a href="../back/validateAvis.php?id=' . $row['id'] . '"><img src="../img/icones/valid.png" alt="Valider" title="Valider"></a>';
-                echo '<a href="#" onclick="confirmDelete(' . $row['id'] . ')"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
-            echo '</div>'; // Fin des actions
+        echo '<h4>' . htmlspecialchars($row['pseudo']) . ' : </h4>'; // Afficher le pseudo
+        echo '<p>' . htmlspecialchars($row['commentaire']) . '</p>'; // Afficher le commentaire
+        echo '<small>Publié le ' . htmlspecialchars($formattedDate) . '</small><br>'; // Date de publication
+        
+        // Ajouter les icônes pour valider et supprimer
+        echo '<div class="avis-actions">';
+        echo '<a href="../back/validateAvis.php?id=' . $row['id'] . '"><img src="../img/icones/valid.png" alt="Valider" title="Valider"></a>';
+        echo '<a href="../back/deleteAvis.php?id=' . $row['id'] . '"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
+        echo '</div>'; // Fin des actions
         echo '</div>'; // Fin de l'avis
     }
     echo '</div>'; // Fin du container
@@ -59,8 +61,8 @@ if ($result->num_rows > 0) {
 // Fermer la requête préparée
 $stmt->close();
 
-// Lancer la fonction de pagination avec $totalPages et la page actuelle
-paginate($totalPages, $page, $limit, $limitBtn);
+// Lancer la fonction de pagination avec $totalPagesW et la page actuelle
+paginate($totalPagesW, $pageW, $limit, $limitBtn);
 
 // connexion Fermée sur la page concernée car requêtes séparées
 
