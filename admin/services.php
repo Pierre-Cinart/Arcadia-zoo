@@ -27,7 +27,37 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de déconnexion -->
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
-        
+    <h1>Nos Services</h1>
+        <section class="services">
+            <?php
+            // Préparation de la requête pour récupérer les services
+            $sql = "SELECT name, description, picture FROM services";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // Boucle pour chaque service
+                while ($row = $result->fetch_assoc()) {
+                    // Récupération des données
+                    $name = htmlspecialchars($row['name']);
+                    $description = htmlspecialchars($row['description']);
+                    $picture = htmlspecialchars($row['picture']);
+                    $imagePath = "../img/services/" . $picture . ".webp"; // Génération du chemin de l'image
+
+                    // Affichage du service
+                    echo "<div class='service'>";
+                    echo "<h3>$name</h3>";
+                    echo "<img src='$imagePath' alt='$name'>";
+                    echo "<p>$description</p>";
+                    echo "</div>";
+                }
+            } else {
+                echo "<p>Aucun service disponible pour le moment.</p>";
+            }
+
+            // Fermeture de la connexion
+            $conn->close();
+            ?>
+        </section>
     </main>
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
     <script src="../js/popup.js"></script> <!-- popup (erreur ou succés de l action) -->
