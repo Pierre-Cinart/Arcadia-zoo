@@ -2,18 +2,22 @@
 // Inclure la connexion à la base de données
 include_once '../back/bdd.php';
 
-// configuration de la pagination
+// Configuration de la pagination
 include_once '../php/pagination.php';
 
 // Requête SQL pour compter le nombre total d'avis validés pour la pagination
 $sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = TRUE";
 $resultCount = $conn->query($sqlCount);
 $totalAvis = $resultCount->fetch_assoc()['total'];
+// affiche un message en cas de données vide 
+if ($totalAvis == 0){
+    echo '<p style="text-align:center; width:100%">Aucun avis en attente</p>'; // Message si aucun avis en attente
+    exit();
+} else {
+    // Calculer le nombre total de pages
+    $totalPages = ceil($totalAvis / $limit);}
 
-// Calculer le nombre total de pages
-$totalPages = ceil($totalAvis / $limit);
-
-// verification de $page
+// Vérification de $page
 verifPage($page , $totalPages);
 
 // Calculer l'offset pour savoir à partir de quel enregistrement commencer
@@ -39,23 +43,23 @@ if ($result->num_rows > 0) {
         echo '<p>' . htmlspecialchars($row['commentaire']) . '</p>'; // Afficher le commentaire
         echo '<small>Publié le ' . htmlspecialchars($formattedDate) . '</small><br>'; // Date de publication
         
-        // Ajouter l'icône de suppression
+        // Ajouter l'icône de suppression avec confirmation JavaScript
         echo '<div class="avis-actions">';
-        echo '<a href="../back/deleteAvis.php?id=' . $row['id'] . '"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
+            echo '<a href="#" onclick="confirmDelete(' . $row['id'] . ')"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
         echo '</div>'; // Fin des actions
         echo '</div>'; // Fin de l'avis
     }
     echo '</div>'; // Fin du container
 } else {
-    echo '<p style="text-align:center; width:100%">Aucun avis validé</p>'; // Message si aucun avis validé
+    // Afficher un message s'il n'y a aucun avis validé
+    echo '<p style="text-align:center; width:100%">Aucun avis validé</p>';
 }
 
-// Appeler la fonction paginate pour afficher les boutons de pagination
+// Appeler la fonction paginate pour afficher les boutons de pagination même s'il n'y a aucun résultat
 paginate($totalPages, $page, $limit, $limitBtn);
 
 // Fermer la requête préparée
 $stmt->close();
 
-// connexion Fermée sur la page concerné car requetes séparées 
-
+// connexion Fermée sur la page concernée car requêtes séparées
 ?>

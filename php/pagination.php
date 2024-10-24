@@ -5,10 +5,12 @@
     $limitBtn = 5; // Boutons de navigation
 
     // Vérifier si le paramètre 'page' existe dans l'URL est qu il est bien un nombre entier , sinon mettre sur la première page
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] >= 0 ? (int)$_GET['page'] : 1;
 
 //verfier si le get['page'] est valid
 function verifPage ($page , $totalPage) {
+    $page = (int)$page;
+    // empecher de dépasser la dernière page
     if ($page > $totalPage) {
         $page = $totalPage;
     }

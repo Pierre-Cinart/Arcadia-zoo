@@ -30,3 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = `avis.php?page=1`; // Reset la pagination
     });
 });
+
+// fonction de confirmation de suppression du commentaire
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer ce commentaire ?")) {
+        window.location.href = "../back/deleteAvis.php?id=" + id;
+    }
+}
