@@ -12,7 +12,6 @@ $totalAvis = $resultCount->fetch_assoc()['total'];
 
 // definit la page à un pour la pagination en cas de données vide 
 if ($totalAvis == false){
-    var_dump($resultCount);
    $totalPagesW = 1 ;
    $pageW = 1;
 } else {
@@ -35,6 +34,7 @@ $result = $stmt->get_result(); // Récupérer le résultat de la requête
 
 // Vérifier si des avis en attente ont été trouvés
 if ($result->num_rows > 0) {
+    echo '<<h2>Commentaires en attente</h2>'; 
     echo '<div class="avis-container">'; // Container pour les avis
     while ($row = $result->fetch_assoc()) {
         // Formater la date au format désiré

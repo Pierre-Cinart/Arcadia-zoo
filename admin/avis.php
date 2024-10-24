@@ -27,7 +27,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     
     <main class="admin">
-        <h1>Gestion des commentaires</h1>
+        <h1 id = "titleAvis">Gestion des commentaires</h1>
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
             <button id="showUnvalidBtn">Avis en attente :</button>
             <button id="showValidBtn">Avis validés :</button>

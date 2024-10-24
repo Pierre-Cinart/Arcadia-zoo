@@ -2,11 +2,11 @@
 // Configuration de la pagination
 $limit = 5; // Nombre d'éléments affichés par page
 $limitBtn = 5; // Nombre de boutons de navigation à afficher
-$page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] >= 0 ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+
 // Fonction pour vérifier la validité de la page
 function verifPage($page, $totalPages) {
     $page = (int)$page;
-    
     // Empêcher de dépasser la dernière page
     if ($page < 1) {
         return 1; // Retourner la première page si page est inférieure à 1

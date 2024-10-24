@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Inclure la connexion à la base de données
 include_once 'bdd.php';
 

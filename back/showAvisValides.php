@@ -9,7 +9,6 @@ include_once '../php/pagination.php';
 $sqlCount = "SELECT COUNT(*) AS total FROM avis WHERE isVisible = TRUE";
 $resultCount = $conn->query($sqlCount);
 $totalAvis = $resultCount->fetch_assoc()['total'];
-var_dump('va' . $totalAvis);
 // verifie si il y a des données vide 
 if ($totalAvis == false){
     $totalPages = 1 ;//pour fixer l affichage de la pagination en cas de données null
@@ -34,6 +33,7 @@ $result = $stmt->get_result(); // Récupérer le résultat de la requête
 
 // Vérifier si des avis validés ont été trouvés
 if ($result->num_rows > 0) {
+    echo '<<h2>Commentaires validés</h2>';
     echo '<div class="avis-container">'; // Container pour les avis
     while ($row = $result->fetch_assoc()) {
         // Formater la date au format désiré

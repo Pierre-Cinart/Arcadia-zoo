@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const titleAvis = document.getElementById('titleAvis');
     const showUnvalidBtn = document.getElementById('showUnvalidBtn');
     const avisUnValid = document.getElementById('avisUnValid');
     const showValidBtn = document.getElementById('showValidBtn');
@@ -14,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Afficher la section appropriée
     if (currentView === 'unvalid') {
         avisUnValid.style.display = 'block';
+        avisValid.style.display = 'none';
     } else if (currentView === 'valid') {
         avisValid.style.display = 'block';
+        avisUnValid.style.display = 'none';
     }
 
     // Afficher les avis en attente
