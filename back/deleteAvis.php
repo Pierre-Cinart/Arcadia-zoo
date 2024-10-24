@@ -1,4 +1,8 @@
 <?php
+
+session_start();
+
+
 // Inclure la connexion à la base de données
 include_once 'bdd.php';
 
@@ -30,6 +34,5 @@ if (isset($_GET['id'])) {
 $conn->close();
 // Rediriger vers la page de gestion des avis
 header("Location: ../admin/avis.php");
-
 exit();
 ?>
