@@ -37,7 +37,10 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
         <div style="display: flex; justify-content: center; gap: 10px; margin: 20px;">
             <button id="createServiceBtn">Ajouter un service</button> <!-- Bouton pour ajouter un service -->
         </div>
+        <!-- formulaire ajout de service -->
+
         <form id="createService" method="POST" action="../back/createService.php" enctype="multipart/form-data">
+            <h3>Ajouter un service</h3>
             <label for="name">Nom du service :</label>
             <input type="text" id="name" name="name" required>
             
@@ -49,6 +52,25 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
             
             <button type="submit">Soumettre</button>
         </form>
+        <!-- formulaire de modification de service en sticky  -->
+        <div id="modifService" style = " position: sticky;top: 25%; left: 50%;">
+            <!-- bouton de fermeture -->
+            <button onclick="closeModifService()" style="float: right;background-color:red;">&times;</button>
+            <!-- formulaire préremplit -->
+            <form  method="POST" action="../back/modifService.php" enctype="multipart/form-data">
+                <h3>modifier le service</h3>
+                <label for="modifName">Nom du service :</label>
+                <input type="text" id="modifName" name="name" required>
+                
+                <label for="modifDescription">Description :</label>
+                <textarea id="description" name="modifDescription" rows="4" required></textarea>
+                
+                <label for="modifPicture">Image du service : ( format autorisé : webp ) </label>
+                <input type="file" id="modifPicture" name="picture" accept=".webp" required>
+                
+                <button type="submit">Soumettre</button>
+            </form>
+            </div>
         <section class="services">
             <?php
             // Préparation de la requête pour récupérer les services
@@ -67,12 +89,19 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
 
                     // Affichage du service
                     echo "<div class='service'>";
-                    echo "<h3>$name</h3>";
-                    echo "<img src='$imagePath' alt='$name'>";
-                    echo "<p>$description</p>";
-                    echo '<p style="font-weight:small"> - - - - - - - - - - </p>';
-                    echo '<a href="../back/ModifService.php?id=' . $id . '" id=""><img src="../img/icones/modif.png" style="width:32px;height:32px;margin-right:25px;" alt="Modifier" title="Modifier"></a>';
-                    echo '<a href="#" onclick="confirmDelete(event, ' . $id . ', \'' . addslashes($name) . '\')" id=""><img src="../img/icones/supp.png" style="width:32px;height:32px;" alt="Supprimer" title="Supprimer"></a>';
+                        echo "<h3>$name</h3>";
+                        echo "<img src='$imagePath' alt='$name'>";
+                        echo "<p>$description</p>";
+                        echo '<p style="font-weight:small"> - - - - - - - - - - </p>';
+                        echo '<a href="#" onclick="modif(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\')">
+                                <img src="../img/icones/modif.png" style="width:32px;height:32px;margin-right:25px;" 
+                                alt="Supprimer" title="Supprimer">
+                            </a>';
+                        echo '<a href="#" onclick="confirmDelete(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\')" 
+                                class="modifService">
+                                <img src="../img/icones/supp.png" style="width:32px;height:32px;" 
+                                alt="Modifier" title="Modifier">
+                            </a>';
                     echo "</div>";
                 }
             } else {
