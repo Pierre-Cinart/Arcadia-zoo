@@ -1,1 +1,1 @@
-coder l affichage des animaux
+coder l affichage des animaux et la possibilité de modifier les informations ainsi que le rapport nutritionnel pour agent et le rapport santé pour vétérinaire
