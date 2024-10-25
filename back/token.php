@@ -27,6 +27,7 @@ function checkToken($conn) {
             // Vérifier si le token correspond et si l'expiration est valide
             if ($token === $dbToken && new DateTime() < new DateTime($dbTokenExpiration)) {
                 //mettre à jour le token
+                $token = createToken();
                 updateToken($conn, $token , $user_id);
                 return true; // Le token est valide
             } else {
