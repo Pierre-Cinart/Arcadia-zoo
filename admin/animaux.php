@@ -10,6 +10,9 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     exit();
 } else { 
     $role = $_SESSION['role']; 
+    // pour utilisation de token
+    include_once './token.php';
+    checkToken($conn);// verifie si le token de session est correct et le met à jour
 }
 ?>
 

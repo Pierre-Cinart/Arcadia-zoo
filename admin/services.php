@@ -1,6 +1,5 @@
 <?php
 session_start();
-include_once ('../back/bdd.php');
 
 // Vérification du rôle (admin ou agent)
 if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'agent')) {
@@ -10,6 +9,11 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
     exit();
 } else {
     $role = $_SESSION['role'];
+     // Connexion à la base de données
+     include_once './bdd.php';
+     // pour utilisation de token
+     include_once './token.php';
+     checkToken($conn);// verifie si le token de session est correct et le met à jour
 }
 ?>
 
