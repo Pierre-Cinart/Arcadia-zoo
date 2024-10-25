@@ -17,9 +17,11 @@ if (!isset($_SESSION['user_id'])) {
 // Connexion à la base de données
 include_once './bdd.php';
 
-// pour creation de token
+// pour utilisation de token
 include_once './token.php';
-checkToken($conn);
+
+checkToken($conn);// verifie si le token de session est correct et le met à jour
+
 // Initialisation des messages
 $error_message = '';
 $success_message = '';
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error_message = "Erreur de préparation de la requête : " . $conn->error; // Enregistrer l'erreur
         }
     }
-    
+   
     // Fermer la connexion
     $conn->close();
 

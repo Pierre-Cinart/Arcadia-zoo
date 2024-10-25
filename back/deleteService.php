@@ -1,7 +1,5 @@
 <?php
 session_start();
-// connexion à la base de données
-include_once ('../back/bdd.php');
 
 // Vérification du rôle
 if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' 
@@ -11,6 +9,14 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 } 
+
+// connexion à la base de données
+include_once ('../back/bdd.php');
+
+// pour utilisation de token
+include_once '../back/token.php';
+
+checkToken($conn);// verifie si le token de session est  et le met à jour
 
 // Vérifier si l'ID est bien passé en paramètre
 if (isset($_GET['id'])) {
