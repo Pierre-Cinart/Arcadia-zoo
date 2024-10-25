@@ -28,8 +28,8 @@ function checkToken($conn) {
             if ($token === $dbToken && new DateTime() < new DateTime($dbTokenExpiration)) {
                 //mettre à jour le token
                 $token = createToken();
+                $_SESSION['token'] = $token;
                 updateToken($conn, $token , $user_id);
-                return true; // Le token est valide
             } else {
                 // Le token a expiré ou ne correspond pas
                 session_unset();

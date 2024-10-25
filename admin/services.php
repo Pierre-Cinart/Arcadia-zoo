@@ -37,6 +37,12 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
         <div style="display: flex; justify-content: center; gap: 10px; margin: 20px;">
             <button id="createService">Ajouter un service</button> <!-- Bouton pour ajouter un service -->
         </div>
+        <form id="createService" method="POST" action="../back/createService.php">
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" required>
+            <br>
+            <button type="submit">Soumettre</button>
+        </form>
         <section class="services">
             <?php
             // Préparation de la requête pour récupérer les services

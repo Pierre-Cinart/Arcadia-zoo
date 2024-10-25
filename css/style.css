@@ -441,11 +441,6 @@ section.habitat {
     background-color: #38f100;
 }
 
-/* icones de gestion */
-.ico img {
-    width: 32px!important;
-    height: 32px!important;
-}
 /* MOBILE */
 
 @media (max-width: 600px) {
