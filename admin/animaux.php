@@ -33,16 +33,22 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de déconnexion -->
     <?php include_once "../php/popup.php"; ?> <!-- message popup -->
     <main class="admin">
-        <!-- bouttons d ' action  -->
+        <!-- bouttons d ' action selon les droits  -->
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
-            <button id="addAnimalBtn">Ajouter Un Animal</button>
-            <button id="showAnimalsBtn">Consulter Les Animaux</button>
-            <button id="showHabitatsBtn">Gérer Les Habitats</button>
+            <?php 
+                if ( $role === 'admin' || $role === 'agent') {
+                    echo '<button id="addAnimalBtn">Ajouter Un Animal</button>';// bouton ajout animal
+                }
+              ?>
         </div>
-        <!-- formulaire pour ajouter un animal -->
+         <!-- affichage des habitats option de gestion pour admin et agent -->
+         <div id="showHabitats" style = "text-align : center;">
+            <!-- coder l affichage et la gestion si admin ou agent -->
+        </div>
+        <!-- formulaire pour ajouter un animal visible pour agent ou admin -->
         <div id="addAnimalForm">
             <h3>Ajouter un animal</h3>
-            <form action="ajouter_animal.php" method="POST">
+            <form action="addAnimal.php" method="POST">
                 
                 <label for="name">Nom :</label>
                 <input type="text" name="name" required><br>
@@ -86,11 +92,9 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
                 <button type="submit">Soumettre</button>
             </form>
         </div>
+        <!-- affichage des animaux option différentes pour agent/admin( modifier / rapport nouriture )  veterinaire -->
         <div id="showAnimals" style = "text-align : center;">
             <?php include_once "../back/showAnimals.php"; ?>
-        </div>
-        <div id="showHabitats" style = "text-align : center;">
-            coder l affichage ...
         </div>
     </main>
     <script src="../js/animals.js"></script> <!-- affichage au clique -->

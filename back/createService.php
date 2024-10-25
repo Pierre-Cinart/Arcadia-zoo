@@ -2,17 +2,15 @@
 session_start();
 
 // Vérification du rôle
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
+} else {
+    //assignation de $user_id
+    $user_id=$_SESSION['user_id'];
 }
-// Vérification de l id et assignation à user_id
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
-    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
-    exit();
-}
+
 
 // Connexion à la base de données
 include_once './bdd.php';
@@ -63,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Insertion dans la base de données
-        $sql = "INSERT INTO services (name, description, picture) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO services (name, description, picture , maj_by ) VALUES (?, ?, ? , ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $name, $description, $pictureName);
+        $stmt->bind_param("sssi", $name, $description, $pictureName, $user_id);
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Service ajouté avec succès !";
