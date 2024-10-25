@@ -35,12 +35,18 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
     <main class="admin">
         <h1>Gestion des services</h1>
         <div style="display: flex; justify-content: center; gap: 10px; margin: 20px;">
-            <button id="createService">Ajouter un service</button> <!-- Bouton pour ajouter un service -->
+            <button id="createServiceBtn">Ajouter un service</button> <!-- Bouton pour ajouter un service -->
         </div>
-        <form id="createService" method="POST" action="../back/createService.php">
-                <label for="name">Nom :</label>
-                <input type="text" id="name" name="name" required>
-            <br>
+        <form id="createService" method="POST" action="../back/createService.php" enctype="multipart/form-data">
+            <label for="name">Nom du service :</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+            
+            <label for="picture">Image du service : ( format autorisé : webp ) </label>
+            <input type="file" id="picture" name="picture" accept=".webp" required>
+            
             <button type="submit">Soumettre</button>
         </form>
         <section class="services">
