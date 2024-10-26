@@ -4,16 +4,16 @@ session_start();
 // Vérification du rôle (admin ou agent)
 if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'agent')) {
     session_unset();
-    $_SESSION['error'] = "Il semblerait que vous n'ayez pas les droits requis \n pour des raisons de sécurité, veuillez vous reconnecter.";
+    $_SESSION['error'] = "Il semblerait que vous n'ayez pas les droits requis pour des raisons de sécurité, veuillez vous reconnecter.";
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 } else {
     $role = $_SESSION['role'];
-     // Connexion à la base de données
-    include_once '../back/bdd.php';
+    // Connexion à la base de données
+    include_once '../back/bdd.php'; // Inclusion de la connexion
     // pour utilisation de token
     include_once '../back/token.php';
-     checkToken($conn);// verifie si le token de session est correct et le met à jour
+    checkToken($conn); // Vérifie si le token de session est correct et le met à jour
 }
 ?>
 
@@ -37,8 +37,8 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
         <div style="display: flex; justify-content: center; gap: 10px; margin: 20px;">
             <button id="createServiceBtn">Ajouter un service</button> <!-- Bouton pour ajouter un service -->
         </div>
+        
         <!-- formulaire ajout de service -->
-
         <form id="createService" method="POST" action="../back/createService.php" enctype="multipart/form-data">
             <h3>Ajouter un service</h3>
             <label for="name">Nom du service :</label>
@@ -47,30 +47,32 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
             <label for="description">Description :</label>
             <textarea id="description" name="description" rows="4" required></textarea>
             
-            <label for="picture">Image du service : ( format autorisé : webp ) </label>
+            <label for="picture">Image du service : (format autorisé : webp)</label>
             <input type="file" id="picture" name="picture" accept=".webp" required>
             
             <button type="submit">Soumettre</button>
         </form>
-        <!-- formulaire de modification de service en sticky  -->
-        <div id="modifService" style = " position: sticky;top: 25%; left: 50%;">
-            <!-- bouton de fermeture -->
-            <button onclick="closeModifService()" style="float: right;background-color:red;">&times;</button>
-            <!-- formulaire préremplit -->
-            <form  method="POST" action="../back/modifService.php" enctype="multipart/form-data">
-                <h3>modifier le service</h3>
+
+        <!-- formulaire de modification de service en sticky -->
+        <div id="modifService" style= "position: sticky; top: 25%; , left:50%">
+            <form method="POST" action="../back/modifService.php" enctype="multipart/form-data" style ="position :relative;">
+                <!-- bouton de fermeture -->
+                <button type="button" onclick="closeModifService()" style="position:absolute; top:0; right: 2px; background-color:red;">&times;</button>
+                <h3>Modifier le service</h3>
                 <label for="modifName">Nom du service :</label>
                 <input type="text" id="modifName" name="name" required>
                 
                 <label for="modifDescription">Description :</label>
-                <textarea id="description" name="modifDescription" rows="4" required></textarea>
+                <textarea id="modifDescription" name="modifDescription" rows="4" required></textarea>
                 
-                <label for="modifPicture">Image du service : ( format autorisé : webp ) </label>
+                <label for="modifPicture">Image du service : (format autorisé : webp)</label>
                 <input type="file" id="modifPicture" name="picture" accept=".webp" required>
                 
                 <button type="submit">Soumettre</button>
             </form>
-            </div>
+        </div>
+
+        <!-- Affichage des services  -->
         <section class="services">
             <?php
             // Préparation de la requête pour récupérer les services
@@ -93,14 +95,17 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
                         echo "<img src='$imagePath' alt='$name'>";
                         echo "<p>$description</p>";
                         echo '<p style="font-weight:small"> - - - - - - - - - - </p>';
-                        echo '<a href="#" onclick="modif(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\')">
+                        // bouton de modification 
+                        echo '<a href="#" onclick="modif(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\', 
+                        \'' . addslashes(htmlspecialchars($description)) . '\', \'' . addslashes(htmlspecialchars($picture)) . '\')">
                                 <img src="../img/icones/modif.png" style="width:32px;height:32px;margin-right:25px;" 
-                                alt="Supprimer" title="Supprimer">
-                            </a>';
-                        echo '<a href="#" onclick="confirmDelete(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\')" 
-                                class="modifService">
-                                <img src="../img/icones/supp.png" style="width:32px;height:32px;" 
                                 alt="Modifier" title="Modifier">
+                            </a>';
+                        // bouton de suppression 
+                        echo '<a href="#" onclick="confirmDelete(event, ' . $id . ', \'' . addslashes(htmlspecialchars($name)) . '\')" 
+                                class="deleteService">
+                                <img src="../img/icones/supp.png" style="width:32px;height:32px;" 
+                                alt="Supprimer" title="Supprimer">
                             </a>';
                     echo "</div>";
                 }
