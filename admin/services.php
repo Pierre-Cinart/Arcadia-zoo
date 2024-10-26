@@ -59,6 +59,8 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
                 <!-- bouton de fermeture -->
                 <button type="button" onclick="closeModifService()" style="position:absolute; top:0; right: 2px; background-color:red;">&times;</button>
                 <h3>Modifier le service</h3>
+                <!-- Champ caché pour l'ID du service -->
+                <input type="hidden" id="modifId" name="id" required>
                 <label for="modifName">Nom du service :</label>
                 <input type="text" id="modifName" name="name" required>
                 
@@ -66,7 +68,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
                 <textarea id="modifDescription" name="modifDescription" rows="4" required></textarea>
                 
                 <label for="modifPicture">Image du service : (format autorisé : webp)</label>
-                <input type="file" id="modifPicture" name="picture" accept=".webp" required>
+                <input type="file" id="modifPicture" name="picture" accept=".webp"> <!-- non obligatoire si vide garde l image enregistrée en bdd -->
                 
                 <button type="submit">Soumettre</button>
             </form>

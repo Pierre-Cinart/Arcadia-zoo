@@ -34,28 +34,24 @@ function confirmDelete(event, id, name) {
 }
    
 // afficher le formulaire pré-rempli
-function modif(event, id, name , description , picture) {
+function modif(event, id, name , description ) {
     event.preventDefault(); // Empêcher le comportement par défaut du lien
+    //recupération des données
+    let modifId = document.getElementById('modifId');
     let modifName = document.getElementById('modifName');
     let modifDescription = document.getElementById('modifDescription');
-    let modifPicture = document.getElementById('modifPicture');
-
+    
+    //injection des données dans le formulaire
+    modifId.value = id;
     modifName.value = name;
     modifDescription.value = description;
     // modifPicture.value = picture;
-   
-    
-  
     // cacher le formulaire d ajout si il est visible
+
     if (createService.style.display === 'block'){
         createService.style.display = 'none';
        }   
     modifService.style.display = 'block';  
-
- 
 }
-// valider les modifications
-function confirmModif(id , name , description , picture){
 
-}
 
