@@ -1,7 +1,6 @@
 <?php
 session_start();
-//rendre cette page dynamique !
-include_once "../back/bdd.php"; //connexion à la base de données
+include_once "../back/bdd.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,81 +8,69 @@ include_once "../back/bdd.php"; //connexion à la base de données
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habitats</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers le fichier CSS  -->
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header>
-        <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
+        <?php include_once "../php/navbarr.php"; ?>
     </header>
     <main>
         <h1>Explorez Nos Habitats et Découvrez Nos Animaux !</h1>
-        <p> 
-            Bienvenue à Arcadia Zoo, où la nature vous invite à découvrir des animaux fascinants dans leurs habitats recréés avec soin. 
-            En explorant chaque environnement, vous pourrez en apprendre davantage sur ces créatures étonnantes. 
-            Cliquez sur les images pour en savoir plus sur les animaux de chaque habitat !
-        </p>
+        <p style = "text-align:center;">Bienvenue à Arcadia Zoo, où la nature vous invite à découvrir des animaux fascinants dans leurs habitats recréés avec soin. Cliquez sur les images pour en savoir plus sur les animaux de chaque habitat !</p>
+        <br>
         <section class="habitat">
-            <article>
-                <!-- SAVANE -->
-                <h2>La Savane : Le Royaume des Grands Espaces</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Savane.webp" alt="savane">
-                    <div class="habitat-card-txt">
-                        <p>
-                            Entrez dans la savane, un vaste paysage ouvert, baigné de soleil et parsemé d’herbes dorées. 
-                            Cet habitat vous plonge au cœur des plaines africaines, où des animaux majestueux cohabitent.
-                        </p>
-                        <h3>Rencontrez nos résidents :</h3>
-                        <ul>
-                            <li><strong>Lions</strong></li>
-                            <li><strong>Girafes</strong></li>
-                            <li><strong>Éléphants d’Afrique</strong></li>
-                        </ul>
-                        <button><a href="./savane.php">Voir les animaux</a></button>
-                    </div>
-                </div>
-            </article>
+            <?php
+                // Préparation de la requête pour récupérer les habitats et leurs races
+                $sql = "SELECT h.id AS habitat_id, h.name AS habitat_name, h.title_txt, h.description, h.picture, r.name AS race_name
+                        FROM habitats h
+                        LEFT JOIN races r ON h.id = r.habitat
+                        ORDER BY h.id";
+                
+                $result = $conn->query($sql);
+                
+                // Tableau pour organiser les données
+                $habitats = [];
+                
+                while ($row = $result->fetch_assoc()) {
+                    $habitatId = $row['habitat_id'];
+                    
+                    // Vérifie si l'habitat existe déjà dans le tableau
+                    if (!isset($habitats[$habitatId])) {
+                        $habitats[$habitatId] = [
+                            'name' => $row['habitat_name'],
+                            'title_txt' => $row['title_txt'],
+                            'description' => $row['description'],
+                            'picture' => $row['picture'],
+                            'races' => []
+                        ];
+                    }
+                    
+                    // Ajoute la race si elle existe
+                    if ($row['race_name']) {
+                        $habitats[$habitatId]['races'][] = $row['race_name'];
+                    }
+                }
 
-            <article>
-                <!-- JUNGLE -->
-                <h2>La Jungle : Un Monde de Mystère et de Couleurs</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Jungle.webp" alt="jungle">
-                    <div class="habitat-card-txt">
-                        <p>
-                            La jungle un lieu dense et vibrant, avec de nombreux arbres imposants et une végétation luxuriante. 
-                        </p>
-                        <h3>Découvrez nos habitants :</h3>
-                        <ul>
-                            <li><strong>Tigres</strong></li>
-                            <li><strong>Singes capucins</strong></li>
-                            <li><strong>Panthères</strong></li>
-                        </ul>
-                        <button><a href="./jungle.php">Voir les animaux</a></button>
-                    </div>
-                </div>
-            </article>
-
-            <article>
-                <!-- MARAIS -->
-                <h2>Les Marais : Un Refuge Aquatique</h2>
-                <div class="habitat-card">
-                    <img src="../img/habitats/Marais.webp" alt="marais">
-                    <div class="habitat-card-txt">
-                        <p>
-                            Les marais sont des lieux calmes où l’eau et la terre se rejoignent, créant un refuge pour une faune surprenante. 
-                            C’est un habitat où chaque espèce a su s’adapter à la vie dans l’eau et sur terre.
-                        </p>
-                        <h3>Découvrez nos résidents aquatiques :</h3>
-                        <ul>
-                            <li><strong>Crocodiles du Nil</strong></li>
-                            <li><strong>Hippopotames</strong></li>
-                            <li><strong>Flamants roses</strong></li>
-                        </ul>
-                        <button><a href="./marais.php">Voir les animaux</a></button>
-                    </div>
-                </div>
-            </article>
+                // Affiche les habitats et leurs races
+                foreach ($habitats as $habitat) {
+                    $imagePath = "../img/habitats/" . htmlspecialchars($habitat['picture']) . ".webp";
+                    echo "<article>";
+                        echo '<div class="habitat-card">';
+                            echo "<h2>" . htmlspecialchars($habitat['title_txt']) . "</h2>";
+                            echo "<img src='$imagePath' alt='" . htmlspecialchars($habitat['name']) . "'>";
+                            echo '<div class="habitat-card-txt">';
+                                echo "<p>" . nl2br(htmlspecialchars_decode($habitat['description'])) . "</p>";
+                                echo "<h3>Rencontrez nos résidents :</h3>";
+                                echo "<ul>";
+                                foreach ($habitat['races'] as $race) {
+                                    echo "<li><strong>" . htmlspecialchars($race) . "</strong></li>";
+                                }
+                                echo "</ul>";
+                            echo "</div>";
+                        echo "</div>";
+                    echo "</article>";
+                }
+            ?>
         </section>
     </main>
     <?php include_once "../php/footer.php"; ?>
