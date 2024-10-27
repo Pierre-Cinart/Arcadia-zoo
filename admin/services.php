@@ -87,7 +87,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
                     // Récupération des données du service
                     $id = intval($row['id']);
                     $name = htmlspecialchars($row['name']);
-                    $description = htmlspecialchars($row['description']);
+                    $description = nl2br(htmlspecialchars_decode($row['description']));
                     $picture = htmlspecialchars($row['picture']);
                     $imagePath = "../img/services/" . $picture . ".webp"; // Chemin de l'image
 

@@ -22,6 +22,8 @@ if (isset($_POST['id'])) {
     $id = intval($_POST['id']); 
     $name = nl2br($_POST['name']);
     $description = nl2br($_POST['modifDescription']);
+    $description = preg_replace("/\r|\n/", ' ', $description);
+    $description = trim($description);
     
     // Préparer la requête pour mettre à jour le service
     $sql = "UPDATE services SET name = ?, description = ? WHERE id = ?";

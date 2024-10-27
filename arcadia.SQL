@@ -14,10 +14,10 @@ CREATE TABLE `animals` (
   `age` int NOT NULL,
   `poid` decimal(10,2) NOT NULL,
   `sex` varchar(1) NOT NULL,
-  `regime` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `regime` int DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `health` varchar(255) NOT NULL,
-  `maj` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `maj` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `maj_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -90,7 +90,8 @@ CREATE TABLE `messages` (
 CREATE TABLE `races` (
   `id` int NOT NULL  AUTO_INCREMENT  PRIMARY KEY ,
   `name` varchar(255) NOT NULL,
-  `habitat` int DEFAULT NULL
+  `habitat` int DEFAULT NULL ,
+  `regime` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 -- --------------------------------------------------------
 --

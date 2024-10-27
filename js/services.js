@@ -40,11 +40,10 @@ function modif(event, id, name , description ) {
     let modifId = document.getElementById('modifId');
     let modifName = document.getElementById('modifName');
     let modifDescription = document.getElementById('modifDescription');
-    
-    //injection des données dans le formulaire
+    console.log(description);
     modifId.value = id;
     modifName.value = name;
-    modifDescription.value = description;
+    modifDescription.value = description.replace(/<br\s*\/?>/mg, "\n");
     // modifPicture.value = picture;
     // cacher le formulaire d ajout si il est visible
 

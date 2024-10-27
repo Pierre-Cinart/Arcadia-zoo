@@ -1,6 +1,7 @@
 <?php
 session_start();
 //rendre cette page dynamique !
+include_once "../back/bdd.php"; //connexion à la base de données
 ?>
 <!DOCTYPE html>
 <html lang="fr">
