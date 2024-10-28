@@ -11,7 +11,9 @@ session_start();
 </head>
 <body>
     <header>
-    <?php include_once "../php/navbarr.php"; ?> <!-- navbarr -->
+    <?php include_once "../php/navbarr.php"; 
+    if (isset($_SESSION['postMsg'])){
+        var_dump($_SESSION['postMsg']);}?> <!-- navbarr -->
     </header>
     <?php include_once "../php/popup.php"; ?> <!-- popup messages -->
     <main>

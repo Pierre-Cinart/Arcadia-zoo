@@ -1,9 +1,11 @@
 <?php
 session_start();
-include_once '../back/bdd.php'; // Connexion à la base de données
-
 // Vérifier si la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    include_once '../back/bdd.php'; // Connexion à la base de données
+    include_once "../php/antispam.php"; // antispam 
+    postMsg('../front/avis.php'); // Antispam
     // Récupérer les données du formulaire
     $name = htmlspecialchars($_POST['name']);
     $commentaire = htmlspecialchars(trim($_POST['avis']));
