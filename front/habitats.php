@@ -16,12 +16,12 @@ include_once "../back/bdd.php";
     </header>
     <main>
         <h1>Explorez Nos Habitats et Découvrez Nos Animaux !</h1>
-        <p style = "text-align:center;">Bienvenue à Arcadia Zoo, où la nature vous invite à découvrir des animaux fascinants dans leurs habitats recréés avec soin. Cliquez sur les images pour en savoir plus sur les animaux de chaque habitat !</p>
+        <p style="text-align:center;">Bienvenue à Arcadia Zoo, où la nature vous invite à découvrir des animaux fascinants dans leurs habitats recréés avec soin.</p>
         <br>
         <section class="habitat">
             <?php
                 // Préparation de la requête pour récupérer les habitats et leurs races
-                $sql = "SELECT h.id AS habitat_id, h.name AS habitat_name, h.title_txt, h.description, h.picture, r.name AS race_name
+                $sql = "SELECT h.id AS habitat_id, h.name AS habitat_name, h.title_txt, h.description, h.picture, r.id AS race_id, r.name AS race_name
                         FROM habitats h
                         LEFT JOIN races r ON h.id = r.habitat
                         ORDER BY h.id";
@@ -37,6 +37,7 @@ include_once "../back/bdd.php";
                     // Vérifie si l'habitat existe déjà dans le tableau
                     if (!isset($habitats[$habitatId])) {
                         $habitats[$habitatId] = [
+                            'id' => $row['habitat_id'],
                             'name' => $row['habitat_name'],
                             'title_txt' => $row['title_txt'],
                             'description' => $row['description'],
@@ -45,9 +46,12 @@ include_once "../back/bdd.php";
                         ];
                     }
                     
-                    // Ajoute la race si elle existe
+                    // Ajoute la race avec son ID si elle existe
                     if ($row['race_name']) {
-                        $habitats[$habitatId]['races'][] = $row['race_name'];
+                        $habitats[$habitatId]['races'][] = [
+                            'id' => $row['race_id'],
+                            'name' => $row['race_name']
+                        ];
                     }
                 }
 
@@ -63,9 +67,15 @@ include_once "../back/bdd.php";
                                 echo "<h3>Rencontrez nos résidents :</h3>";
                                 echo "<ul>";
                                 foreach ($habitat['races'] as $race) {
-                                    echo "<li><strong>" . htmlspecialchars($race) . "</strong></li>";
+                                    $raceId = htmlspecialchars($race['id']);
+                                    $raceName = htmlspecialchars($race['name']);
+                                    echo "<li><a href='./animaux.php?id=$raceId'>$raceName</a></li>";
                                 }
                                 echo "</ul>";
+                                
+                                // Bouton "Voir les animaux" avec l'ID de l'habitat
+                                echo "<button><a href='./habitat.php?habitat_id=" . htmlspecialchars($habitat['id']) . "' class='btn'>Voir les animaux</a></button>";
+                                
                             echo "</div>";
                         echo "</div>";
                     echo "</article>";
