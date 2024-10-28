@@ -49,9 +49,13 @@ if ($result->num_rows > 0) {
         // Ajouter les icônes pour valider et supprimer
         echo '<div class="avis-actions">';
         echo '<a href="../back/validateAvis.php?id=' . $row['id'] . '"><img src="../img/icones/valid.png" alt="Valider" title="Valider"></a>';
-        echo '<a href="../back/deleteAvis.php?id=' . $row['id'] . '"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
+        // Ajouter l'icône de suppression avec confirmation JavaScript
+        echo '<a href="#" onclick="confirmDelete(' . $row['id'] . ')"><img src="../img/icones/supp.png" alt="Supprimer" title="Supprimer"></a>';
         echo '</div>'; // Fin des actions
         echo '</div>'; // Fin de l'avis
+         
+         
+    
     }
     echo '</div>'; // Fin du container
 } else {

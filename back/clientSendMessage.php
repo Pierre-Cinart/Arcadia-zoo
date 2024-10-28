@@ -1,8 +1,11 @@
 <?php
 session_start();
-include_once './bdd.php'; // Connexion à la base de données
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    include_once '../php/antispam.php'; // Inclusion du fichier antispam 
+    // Vérification du spam
+    postMsg('../front/contact.php');
+    include_once './bdd.php'; // Connexion à la base de données
     // Nettoyage des inputs pour éviter les injections de scripts
     $name = htmlspecialchars(trim($_POST['name']));
     $surname = htmlspecialchars(trim($_POST['surname']));
@@ -39,11 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    if (strlen(str_replace(' ', '', $objet)) < 3 || !preg_match('/^[a-zA-Z\s-]+$/', $objet)) {
-        $_SESSION['error'] = "L'objet doit contenir au moins 3 lettres et peut inclure seulement des lettres, des espaces, et le tiret (-).";
-        header('Location: ../front/contact.php');
-        exit();
-    }
 
     // Vérification de la longueur minimale du message (par exemple 20 caractères)
     if (strlen($message) < 20) {

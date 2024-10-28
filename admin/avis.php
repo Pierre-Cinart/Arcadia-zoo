@@ -34,8 +34,8 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <main class="admin">
         <h1 id = "titleAvis">Gestion des commentaires</h1>
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
-            <button id="showUnvalidBtn">Avis en attente :</button>
-            <button id="showValidBtn">Avis validés :</button>
+        <button id="showUnvalidBtn" onclick="toggleView('unvalid')">Avis en attente :</button>
+        <button id="showValidBtn" onclick="toggleView('valid')">Avis validés :</button>
         </div>
         
         <div id="avisUnValid">
