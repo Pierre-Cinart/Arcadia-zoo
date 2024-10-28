@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "../back/bdd.php";
-
+//connexion à la base de données 
+include_once ( '../back/bdd.php' );
 // Récupère l'ID de l'habitat depuis le paramètre GET et vérifie s'il est valide
 if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     $habitatId = intval($_GET['habitat_id']);
@@ -59,6 +59,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
         }
         /* Style container du titre  */
         .container {
+            position: relative;
             padding: 20px;
             background: rgba(0, 0, 0, 0.7); /* Fond transparent pour le texte */
             max-width: 800px;
@@ -90,6 +91,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
         <div class="container">
             <h1><?php echo htmlspecialchars($habitat['title_txt']); ?></h1>
             <p><?php echo nl2br(htmlspecialchars_decode($habitat['description'])); ?></p>
+            <?php echo  back("habitats","r"); ?>
         </div>
         <br>
         <div class="container" style = "text-align:center;">
@@ -99,16 +101,14 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
             if (count($races) > 0) {
                 echo '<ul class = "animals_list">';
                 foreach ($races as $race) {
-                    echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . '">' . htmlspecialchars($race['name']) . ' : </a></li>';
+                    echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . 
+                    '">' . htmlspecialchars($race['name']) . ' : </a></li>';
                 }
                 echo '</ul>';
+        echo  '</div>' . back("habitats","r"); 
             } else {
                 echo '<p>Aucune race disponible dans cet habitat.</p>';
-            }
-            ?>
-
-        </div>
-
+            }?>
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>

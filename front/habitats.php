@@ -78,10 +78,14 @@ include_once "../back/bdd.php";
                                 
                             echo "</div>";
                         echo "</div>";
+                        echo back("./habitat","r");
                     echo "</article>";
+                    
+
                 }
             ?>
-        </section>
+           </section>
+        
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>

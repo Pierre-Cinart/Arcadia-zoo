@@ -256,6 +256,7 @@ button a {
 }
 /* habitats */
 section.habitat {
+    position: relative; /* pour permetre de configurer l emplacement de btn  */
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -439,7 +440,11 @@ section.habitat {
 /* Bouton au survol */
 .pagination a:hover.inactive {
     background-color: #38f100;
+    
 }
+
+
+
 
 /* MOBILE */
 
