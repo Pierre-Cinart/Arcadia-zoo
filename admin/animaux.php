@@ -37,6 +37,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
             <?php 
                 if ( $role === 'admin' || $role === 'agent') {
+                    echo '<button id="habitats">Gérer les habitats</button>';
                     echo '<button id="addAnimalBtn">Ajouter Un Animal</button>';// bouton ajout animal
                     // boutton pour changer des informations sur l animal // supprimer unanimal / ajouter ou supprimer des images
                     echo '<button id="mofifAnimalBtn">Modifier des informations</button>'; 
@@ -101,7 +102,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         <!-- formulaire pour ajouter un animal visible pour agent ou admin -->
          <!-- pre remplir comme pour les services  -->
         <div id="modifAnimalForm">
-            <h3>Ajouter un animal</h3>
+            <h3>Modifier les informations d'un animal</h3>
             <form action="addAnimal.php" method="POST">
                 
                 <label for="name">Nom :</label>
@@ -150,7 +151,9 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         </div>
         <!-- formulaire pour faire un rapport sur l  animal visible pour tous  -->
          <!-- rendre dynamique et différent selon le role (à gérer sur les boutons et js ) -->
-        <div id="reportAnimal"></div>
+        <div id="reportAnimal">
+
+        </div>
         </main>
     <script src="../js/animals.js"></script> <!-- affichage au clique -->
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->
