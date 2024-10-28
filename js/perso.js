@@ -19,5 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
         showPersonne.style.display = 'block';
         addPersonneForm.style.display = 'none'; // Cacher le formulaire si la section d'affichage est ouverte
     });
-
 });
+
+// fonction de confirmation de suppression du commentaire
+function confirmDelete(event, id) {
+    event.preventDefault(); 
+    if (confirm("Voulez-vous vraiment supprimer cet employé ?")) {
+        window.location.href = "../back/deleteUser.php?id=" + id;
+    }
+}

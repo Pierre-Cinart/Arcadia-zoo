@@ -66,7 +66,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin')) {
 
         </div>
         <div id="showPersonne" style = "text-align : center;">
-            <?php include_once "../back/showPersonnel.php"; ?>
+            <?php include_once "../back/showUsers.php"; ?>
         </div>
     </main>
     <script src="../js/perso.js"></script> <!-- affichage au clique -->

@@ -152,8 +152,10 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
         <!-- formulaire pour faire un rapport sur l  animal visible pour tous  -->
          <!-- rendre dynamique et différent selon le role (à gérer sur les boutons et js ) -->
         <div id="reportAnimal">
-
+         
         </div>
+           <!-- div pour afficher les animaux action différentes selon clic modifier ou faire une rapport  -->
+        <div id="showAnimals"></div>
         </main>
     <script src="../js/animals.js"></script> <!-- affichage au clique -->
     <script src="../js/toggleMenu.js"></script> <!-- navbarr mobile -->

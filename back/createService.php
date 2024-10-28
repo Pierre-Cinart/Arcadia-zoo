@@ -11,7 +11,6 @@ if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || $_SESSION['role
     $user_id=$_SESSION['user_id'];
 }
 
-
 // Connexion à la base de données
 include_once './bdd.php';
 
