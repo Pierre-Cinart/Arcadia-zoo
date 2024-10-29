@@ -35,7 +35,7 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'agent',
         <div style="display: flex; justify-content: center; gap: 10px; margin: 20px;">
             <?php 
                 if ($role === 'admin' || $role === 'agent') {
-                    echo '<a href="./habitats.php"><button id="habitats">Gérer les habitats</button></a>';
+                    echo '<a href="./habitats.php"><button id="modifHabitats">Gérer les habitats</button></a>';
                     echo '<button id="addAnimalBtn">Ajouter Un Animal</button>'; // Bouton ajout animal
                     echo '<button id="modifAnimalBtn">Modifier des informations</button>'; // Bouton modification d'informations
                 }
@@ -45,7 +45,7 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'agent',
         <!-- Affichage des habitats et formulaire d'ajout d'animal -->
         <div id="addAnimalForm">
             <h3>Ajouter un animal</h3>
-            <form action="addAnimal.php" method="POST">
+            <form action="../back/addAnimal.php" method="POST">
                 
                 <!-- Nom de l'animal -->
                 <label for="name">Nom :</label>
@@ -53,7 +53,7 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'agent',
 
                 <!-- Race de l'animal -->
                 <label for="race">Race :</label>
-                <select name="race" id="raceSelect" required>
+                <select name="race" id="ModifRaceSelect" required>
                     <option value="">Sélectionnez une race</option>
                     <option value="Lion" data-regime="carnivore">Lion</option>
                     <option value="Tigre" data-regime="carnivore">Tigre</option>
@@ -81,9 +81,9 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'agent',
                 <input type="number" step="0.1" name="poid" required><br>
 
                 <!-- Habitat de l'animal -->
-                <div id="habitatContainer" style="display: none;">
+                <div id="modifHabitatContainer" style="display: none;">
                     <label for="habitat">Habitat :</label>
-                    <select name="habitat" id="habitatSelect" required>
+                    <select name="habitat" id="modifHabitatSelect" required>
                         <option value="">Sélectionnez un habitat</option>
                         <option value="Marais">Marais</option>
                         <option value="Jungle">Jungle</option>
@@ -112,7 +112,44 @@ if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'agent',
                 <button type="submit">Soumettre</button>
             </form>
         </div>
-        <div id="modifAnimalForm"><p>en testen testen testen test</p></div>
+         <!-- modification d information  -->
+         <div id="modifAnimalForm">
+            <h3>Modifier les informations d'un animal</h3>
+            <form action="../back/modifAnimal.php" method="POST">
+                   <!-- Habitat de l'animal -->
+                   <div id="modifHabitatContainer" style="display: none;">
+                    <label for="habitat">Habitat :</label>
+                    <select name="habitat" id="modifHabitatSelect" required>
+                        <option value="">Sélectionnez un habitat</option>
+                        <option value="Marais">Marais</option>
+                        <option value="Jungle">Jungle</option>
+                        <option value="Savane">Savane</option>
+                    </select>
+                </div>
+                <!-- QUAND HABITAT SELECTIONNé AFFICHER LE SELECT RACE EN FONCTION DE L HABITAT CHOISI-->
+                <!-- Race de l'animal -->
+                <label for="race">Race :</label>
+                <select name="race" id="ModifRaceSelect" required>
+                    <option value="">Sélectionnez une race</option>
+                    <option value="Lion" data-regime="carnivore">Lion</option>
+                    <option value="Tigre" data-regime="carnivore">Tigre</option>
+                    <option value="Éléphant" data-regime="herbivore">Éléphant</option>
+                </select>
+                <!-- QUAND HABITAT SELECTIONNé AFFICHER LE SELECT NAME EN FONCTION DE LA RACE CHOISIE -->
+                 <!-- select animal where race id = id ????? -->
+                  <!-- Nom de l'animal -->
+                <label for="modifName"> Modifier le nom ? : </label>
+                <input type="text" name="modifName"><br>
+                <!-- QUAND modifNAME SELECTIONNé PROPOSER DE CHANGER LE NOM  -->
+                <!-- ET AFFICHER CES 2 RUBRIQUES  -->
+                <!-- Date de naissance -->
+                <label for="birthday">Date de naissance :</label>
+                <input type="date" name="birthday"><br>
+
+                <!-- Poids de l'animal -->
+                <label for="poid">Poids (kg) :</label>
+                <input type="number" step="0.1" name="poid"><br>
+             
     </main>
     <script src="../js/animals.js"></script> <!-- Affichage au clic -->
     <script src="../js/toggleMenu.js"></script> <!-- Navbar mobile -->
