@@ -442,7 +442,24 @@ section.habitat {
     background-color: #38f100;
     
 }
+/* Bouton retour */
+.btn-back {
+    transform : translateY(-50%);
+    position: absolute;
+    width: 80px;
+    font-size: 12px; 
+    padding: 8px 8px; 
+    background-color: #275e6e;
+    color: white; 
+    text-decoration: none;
+    border : solid 1px #275e6e;  
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
+}
 
+.btn-back:hover {
+    background-color: #4c79ad; 
+}
 
 
 

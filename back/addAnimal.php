@@ -7,11 +7,9 @@ if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || $_SESSION['role
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
     exit();
 }
-// Vérification de l id et assignation à user_id
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
-    header('Location: ../admin/index.php'); // Redirection vers la page de connexion
-    exit();
+else {
+    
+    $user_id = $_SESSION['user_id'];
 }
 ?>
 coder l a jout d animal

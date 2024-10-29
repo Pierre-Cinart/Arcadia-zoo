@@ -3,7 +3,7 @@ function back($url, $align = null) {
     $style = "";
     switch ($align) {
         case "r":
-            $style = "position: absolute; right: 10px;";
+            $style = "position: absolute; right: 100px;";
             break;
         case "l":
             $style = "position: absolute; top: 10px; left: 10px;";
@@ -21,6 +21,6 @@ function back($url, $align = null) {
             $style = "display: inline-block;";
             break;
     }
-    echo '<a href="' . htmlspecialchars($url) . '.php" class="btn-back" style="' . $style . '"><<< Retour</a>';
+    echo '<a href="' . htmlspecialchars($url) . '.php" style="' . $style . '"><div class="btn-back" ><<< Retour</div class="btn-back" ></a>';
 }
 ?>

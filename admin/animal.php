@@ -17,4 +17,5 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     checkToken($conn);// verifie si le token de session est correct et le met à jour
 }
 ?>
-afficher l animal concerné et les options disponibles selon les droits
+afficher la race  concernée , les animaux qu elles contient et les options disponibles selon les droits
++ un select qui permet de choisir un autre habitat // par défaut celui de cette page  et un autre select qui permet de voir une race 
