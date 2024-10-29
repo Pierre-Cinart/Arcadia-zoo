@@ -1,27 +1,21 @@
 <?php
-// Démarre une session PHP pour pouvoir stocker et récupérer des données globales pour cette session utilisateur
 session_start();
 
-// Inclusion du fichier de configuration pour obtenir les clés de reCAPTCHA
+// fichier de configuration de reCAPTCHA
 include_once('../configCaptcha.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"> <!-- Définit l'encodage des caractères -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Pour un affichage responsive sur mobile -->
-    <title>Contact</title>
-    <link rel="stylesheet" href="../css/style.css"> <!-- Lien vers la feuille de style CSS -->
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="../css/style.css"> 
 </head>
 <body>
-    <!-- En-tête de la page, avec inclusion de la barre de navigation -->
     <header>
-        <?php include_once "../php/navbarr.php"; ?> <!-- Inclusion du fichier de navigation -->
+        <?php include_once "../php/navbarr.php"; ?> <!-- navbarr-->
     </header>
-    
-    <!-- Inclusion d'un système de pop-up pour les messages de succès ou d'erreur -->
-    <?php include_once "../php/popup.php"; ?>
-
+    <?php include_once "../php/popup.php"; ?>  <!-- pop-up pour les messages de succès ou d'erreur -->
     <main>
         <h1>Contact</h1>
         <h2>Si vous avez des questions ou souhaitez obtenir plus d'informations, veuillez remplir le formulaire ci-dessous</h2>
@@ -63,10 +57,10 @@ include_once('../configCaptcha.php');
         <br>
     </main>
 
-    <!-- Inclusion du pied de page -->
+    <!-- footer -->
     <?php include_once "../php/footer.php"; ?>
     
-    <!-- Script pour charger l'API reCAPTCHA de Google -->
+    <!--API reCAPTCHA de Google -->
     <script src="https://www.google.com/recaptcha/api.js"></script>
     
     <!-- Fonction JavaScript appelée par reCAPTCHA lorsque le formulaire est validé -->
@@ -76,11 +70,8 @@ include_once('../configCaptcha.php');
            document.getElementById("contact-form").submit();
        }
     </script>
-
-    <!-- Script pour activer le menu mobile -->
-    <script src="../js/toggleMenu.js"></script>
-
-    <!-- Script pour gérer les pop-ups de succès ou d'erreur -->
-    <script src="../js/popup.js"></script>
+    <script src="../js/toggleMenu.js"></script><!-- menu mobile -->
+    <script src="../js/popup.js"></script> <!-- pop-ups de succès ou d'erreur -->
+    
 </body>
 </html>
