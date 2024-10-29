@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Affiche le régime si "Autre" est sélectionné ou si la race n’a pas de régime prédéfini
         regimeContainer.style.display = (raceSelect.value === "Autre" || !regime) ? "block" : "none";
 
-        // Affiche le conteneur d'habitat si la race est "Autre"
+        // Affiche .le conteneur d'habitat si la race est "Autre"
         habitatContainer.style.display = raceSelect.value === "Autre" ? "block" : "none";
     });
 
