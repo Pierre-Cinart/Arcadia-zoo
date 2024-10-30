@@ -28,28 +28,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $surname = $_POST['surname'];
     $email = $_POST['email'];
     $role = $_POST['role'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
 
-    // Requête SQL pour mettre à jour les informations de l'utilisateur
-    $updateSql = "UPDATE users SET name = ?, first_name = ?, email = ?, role = ? WHERE id = ?";
-    
-    if ($stmt = $conn->prepare($updateSql)) {
-        $stmt->bind_param("ssssi", $name, $surname, $email, $role, $id);
+    // Vérification de la correspondance des mots de passe
+    if (!empty($password)) {
         
-        if ($stmt->execute()) {
-            $_SESSION['success'] = 'Les informations ont été mises à jour avec succès.';
-            header('Location: ../admin/personnel.php');
-            exit();
-        } else {
-            $_SESSION['error'] = "Erreur lors de la mise à jour : " . $stmt->error;
-            header("Location: ../admin/personnel.php");
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+            $_SESSION['error'] = "Le mot de passe doit contenir au moins une majuscule, un chiffre, un symbole et être composé d'au moins 8 caractères.";
+            header("Location: ../admin/modifUser.php?id=".$id);
             exit();
         }
-        $stmt->close();
+        if ($password !== $confirmPassword) {
+            $_SESSION['error'] = "Les mots de passe ne correspondent pas.";
+            header("Location: ../admin/modifUser.php?id=".$id);
+            exit();
+        }
+        
+        // Hachage du mot de passe
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Requête SQL pour mettre à jour les informations de l'utilisateur, y compris le mot de passe
+        $updateSql = "UPDATE users SET name = ?, first_name = ?, email = ?, role = ?, password = ? WHERE id = ?";
+        if ($stmt = $conn->prepare($updateSql)) {
+            $stmt->bind_param("sssssi", $name, $surname, $email, $role, $hashedPassword, $id);
+        }
     } else {
-        $_SESSION['error'] = "Erreur de préparation de la requête : " . $conn->error;
+        // Requête SQL sans mise à jour du mot de passe
+        $updateSql = "UPDATE users SET name = ?, first_name = ?, email = ?, role = ? WHERE id = ?";
+        if ($stmt = $conn->prepare($updateSql)) {
+            $stmt->bind_param("ssssi", $name, $surname, $email, $role, $id);
+        }
+    }
+
+    // Exécution de la requête
+    if ($stmt->execute()) {
+        $_SESSION['success'] = 'Les informations ont été mises à jour avec succès.';
+        header('Location: ../admin/personnel.php');
+        exit();
+    } else {
+        $_SESSION['error'] = "Erreur lors de la mise à jour : " . $stmt->error;
         header("Location: ../admin/personnel.php");
         exit();
     }
+    $stmt->close();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $id = intval($_GET['id']);
     
@@ -87,9 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     header('Location: ../admin/personnel.php');
     exit();
 }
-
-$conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -131,6 +150,12 @@ $conn->close();
                     <option value="agent" <?= $role === 'agent' ? 'selected' : ''; ?>>Agent</option>
                     <option value="veterinaire" <?= $role === 'veterinaire' ? 'selected' : ''; ?>>Vétérinaire</option>
                 </select>
+                <label for="password">Nouveau mot de passe :</label>
+                <input type="password" id="password" name="password" autocomplete="off">
+
+                <label for="confirm_password">Confirmer le mot de passe :</label>
+                <input type="password" id="confirm_password" name="confirm_password" autocomplete="off">
+
                 <br>
 
                 <button type="submit">Soumettre</button>
