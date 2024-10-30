@@ -24,7 +24,7 @@ $success_message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer et échapper les données du formulaire
     $name = htmlspecialchars(trim($_POST['name']));
-    $firstName = htmlspecialchars(trim($_POST['surname']));
+    $firstName = htmlspecialchars(trim($_POST['firstname']));
     $email = htmlspecialchars(trim($_POST['email']));
     $password = $_POST['password']; // Le mot de passe n'est pas échappé
     $confirmPassword = $_POST['confirmPassword'];
@@ -58,11 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Requête SQL pour insérer le compte
-        $sql = "INSERT INTO users (name, first_name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users ( first_name, name,  email, password, role) VALUES (?, ?, ?, ?, ?)";
 
         // Préparer et exécuter la requête
         if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("sssss", $name, $firstName, $email, $hashedPassword, $role);
+            $stmt->bind_param("sssss",  $firstName, $name, $email, $hashedPassword, $role);
             if ($stmt->execute()) {
                 $success_message = "Le compte a été créé avec succès."; // Enregistrer le succès
             } else {

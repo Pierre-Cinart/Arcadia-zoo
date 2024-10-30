@@ -1,19 +1,24 @@
 <?php
-// Inclure le fichier de configuration pour la connexion à la base de données
-include_once './back/bdd.php'; 
+// connexion à la base de données
+ include_once './config.php';
+ $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
+// Vérifiez la connexion
+if ($conn->connect_error) {
+    die("Échec de la connexion : " . $conn->connect_error);
+}
 // Les données de l'utilisateur à insérer
 $name = 'José';
 $first_name = 'Admin';
 $password = 'MotDePasse123'; 
-$email = 'jose.admin@example.com';
+$email = 'jose.admintest2@example.com';
 $role = 'admin';
 
 // Hacher le mot de passe pour la sécurité
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // Préparer et exécuter la requête d'insertion
-$sql = "INSERT INTO users (name, first_name, password, email, role) VALUES (?, ?, ?, ?, ?)";
+$sql = "INSERT INTO users ( first_name, name, password, email, role) VALUES (?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 // Vérifier la préparation de la requête

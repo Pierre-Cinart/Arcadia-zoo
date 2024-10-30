@@ -41,8 +41,8 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin')) {
                 <label for="name">Nom :</label>
                 <input type="text" id="name" name="name" required>
 
-                <label for="surname">Prénom :</label>
-                <input type="text" id="surname" name="surname" required>
+                <label for="firstname">Prénom :</label>
+                <input type="text" id="firstname" name="firstname" required>
 
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email" required autocomplete="off">
