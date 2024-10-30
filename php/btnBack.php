@@ -6,15 +6,15 @@ function back($url, $align = null) {
             $style = "position: absolute; right: 100px;";
             break;
         case "l":
-            $style = "position: absolute; top: 10px; left: 10px;";
+            $style = "position: absolute; top: 100px; left: 100px;";
             break;
             case "t-r":
-                $style = "position: absolute; top: 10px; right: 10px;";
+                $style = "position: absolute; top: 100px; right: 100px;";
                 break;
             case "t-l":
-                $style = "position: absolute; top: 10px; left: 10px;";
+                $style = "position: absolute; top: 100px; left: 100px;";
                 break;
-        case "center":
+        case "c":
             $style = "display: block; text-align: center; margin: 0 auto;";
             break;
         default:

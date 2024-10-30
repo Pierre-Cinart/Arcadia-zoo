@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
         echo '<span class="personnel-role">(' . htmlspecialchars($row['role']) . ')</span>';
         echo '<span class="personnel-date">Inscrit le: ' . htmlspecialchars($row['created_at']) . '</span>';
         echo '<div class="action-buttons">';
-        echo '<a href="../back/modifUser.php?id = '. intval($row['id']).'" class="edit-button"><img src="../img/icones/modif.png" alt="Modifier"></a>';
+        echo '<a href="../admin/modifUser.php?id='. intval($row['id']).'" class="edit-button"><img src="../img/icones/modif.png" alt="Modifier"></a>';
         echo '<a href="" class="delete-button" onclick = "confirmDelete(event,'.intval($row['id']).')"><img src="../img/icones/supp.png" alt="Supprimer"></a>';
         echo '</div>'; // action-buttons
         echo '</div>'; // personnel-item
