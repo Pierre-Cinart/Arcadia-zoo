@@ -1,0 +1,1 @@
+recupérer l id en get et supprimé l habitat de la bdd

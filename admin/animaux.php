@@ -122,7 +122,10 @@ if ($habitatsResult) {
                 </select><br>
 
                 <label for="health">Santé :</label>
-                <input type="text" name="health" required><br>
+                <input type="text" name="health" required>
+
+                <label for="image">Télécharger une image (format .webp) :</label>
+                <input type="file" id="image" name="image" accept=".webp" required><br>
 
                 <button type="submit">Soumettre</button>
             </form>
@@ -146,7 +149,7 @@ if ($habitatsResult) {
                             <?= htmlspecialchars($race['name']) ?>
                         </option>
                     <?php endforeach; ?>
-                </select>
+                </select><br>
                 <input type="text" name="modifNewRace" id="modifRaceInput" placeholder="Entrez la nouvelle race" style="display: none;"><br>
 
                 <div id="modifRegimeContainer" style="display: none;">
@@ -185,7 +188,10 @@ if ($habitatsResult) {
                 </select><br>
 
                 <label for="modifHealth">Santé :</label>
-                <input type="text" name="modifHealth"><br>
+                <input type="text" name="modifHealth">
+                
+                <label for="image">Télécharger une image (format .webp) :</label>
+                <input type="file" id="image" name="image" accept=".webp" required><br>
 
                 <button type="submit">Soumettre</button>
             </form>

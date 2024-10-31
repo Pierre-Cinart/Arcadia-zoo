@@ -76,6 +76,10 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
                     $imagePath = "../img/habitats/" . htmlspecialchars($habitat['picture']) . ".webp";
                     echo "<article>";
                         echo '<div class="habitat-card">';
+                            echo '<div class="action-buttons">';
+                                echo '<a href="../back/modifHabitat.php?id='. intval($habitats[$habitatId]).'" class="edit-button"><img src="../img/icones/modif.png" alt="Modifier"></a>';
+                                echo '<a href="" class="delete-button" onclick = "confirmDelete(event,'.intval($habitats[$habitatId]).')"><img src="../img/icones/supp.png" alt="Supprimer"></a>';
+                            echo '</div>'; // action-buttons
                             echo "<h2>" . htmlspecialchars($habitat['title_txt']) . "</h2>";
                             echo "<img src='$imagePath' alt='" . htmlspecialchars($habitat['name']) . "'>";
                             echo '<div class="habitat-card-txt">';
@@ -103,5 +107,6 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>
+    <script src="../js/habitats.js"></script>
 </body>
 </html>
