@@ -4,6 +4,11 @@
     <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
     <ul>
     <?php
+      if (isset($_SESSION['role'])) {
+         $role = $_SESSION['role'];
+      }
+      
+      $role = $_SESSION['role'];
          if (isset($role) && $role === 'admin'){
             echo '<li><a href="../admin/personnel.php">Personnel</a></li>';
             echo '<li><a href="../admin/stats.php">Statistiques</a></li>';

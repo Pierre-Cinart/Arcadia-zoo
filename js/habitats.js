@@ -3,7 +3,7 @@ const createHabitat = document.getElementById('createHabitat');
 function confirmDelete(event, id) {
     event.preventDefault(); 
     if (confirm("Voulez-vous vraiment supprimer cet habitat ?")) {
-        window.location.href = "../back/delehabitat.php?id=" + id;
+        window.location.href = "../back/deletehabitat.php?id=" + id;
     }
 }
 

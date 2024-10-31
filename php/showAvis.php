@@ -20,8 +20,6 @@ verifPage($page , $totalPages);
 
 $offset = ($page - 1) * $limit;
 
-
-var_dump('total : ' . $totalPages . '  pages : ' .$page);
 // Requête SQL pour récupérer les avis validés (LIMIT et OFFSET)
 $sql = "SELECT pseudo, commentaire, created_at FROM avis WHERE isVisible = TRUE LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($sql); // Préparer la requête pour éviter les injections SQL

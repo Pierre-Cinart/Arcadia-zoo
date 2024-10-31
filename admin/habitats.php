@@ -27,6 +27,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <?php include_once "../php/popup.php"; ?>
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
@@ -133,6 +134,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>
+    <script src="../js/popup.js"></script>
     <script src="../js/habitats.js"></script>
 </body>
 </html>
