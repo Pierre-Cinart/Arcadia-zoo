@@ -5,18 +5,18 @@
     <ul>
     <?php
          if (isset($role) && $role === 'admin'){
-            echo '<li><a href="./personnel.php">Personnel</a></li>';
-            echo '<li><a href="./stats.php">Statistiques</a></li>';
+            echo '<li><a href="../admin/personnel.php">Personnel</a></li>';
+            echo '<li><a href="../admin/stats.php">Statistiques</a></li>';
          }
     
          if (isset($role) && ($role === 'admin' || $role === 'agent' || $role === 'veterinaire')){
-            echo '<li><a href="./services.php">Services</a></li>';
-            echo '<li><a href="./animaux.php">Animaux</a></li>';  
+            echo '<li><a href="../admin/services.php">Services</a></li>';
+            echo '<li><a href="../admin/animaux.php">Animaux</a></li>';  
          }
     
          if (isset($role) && ($role === 'admin' || $role === 'agent')){
-            echo '<li><a href="./avis.php">Avis</a></li>';
-            echo '<li><a href="./messages.php">Messages</a></li>';
+            echo '<li><a href="../admin/avis.php">Avis</a></li>';
+            echo '<li><a href="../admin/messages.php">Messages</a></li>';
          }
     ?>
         <li><a href="../index.php" target="_blank">Voir le site</a></li>

@@ -2,7 +2,7 @@
 session_start();
 // Vérification du rôle
 if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin' 
-|| $_SESSION['role'] !== 'agent' )){
+&& $_SESSION['role'] !== 'agent' )){
     session_unset();
     $_SESSION['error'] = "Il semblerait que vous n'ayez pas les droits requis \n pour des raisons de sécurité , veuillez vous reconnecter.";
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion
@@ -30,10 +30,31 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>
     </header>
+    <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
+        <button id="addHabitatBtn" onclick = "toggleForm()">Ajouter un habitat</button>
+    </div>
     <main>
-        <h1>Explorez Nos Habitats et Découvrez Nos Animaux !</h1>
-        <p style="text-align:center;">Bienvenue à Arcadia Zoo, où la nature vous invite à découvrir des animaux fascinants dans leurs habitats recréés avec soin.</p>
-        <br>
+    
+    <div id="createHabitat" style = "display : none;">
+            <h3>Ajouter un habitat : </h3>
+            <form id="createHabitatForm" method="POST" action="../back/createHabitat.php" enctype="multipart/form-data">
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="title-txt">En-tête :</label>
+                <input type="text" id="title-txt" name="title-txt" required>
+
+                <label for="description">Description :</label>
+                <input type="text" id="description" name="description" required>
+                
+                
+                <label for="picture">Image du service : (format autorisé : webp)</label>
+                <input type="file" id="picture" name="picture" accept=".webp" required>
+                
+                <br>
+                <button type="submit">Soumettre</button>
+            </form>
+        </div>
         <section class="habitat">
             <?php
                 // Préparation de la requête pour récupérer les habitats et leurs races
@@ -75,11 +96,16 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
                 foreach ($habitats as $habitat) {
                     $imagePath = "../img/habitats/" . htmlspecialchars($habitat['picture']) . ".webp";
                     echo "<article>";
+                        echo '<div class="action-buttons" 
+                            style = "background-color : #c7d31ab0; ; 
+                            padding : 10px; width:80px; border : solid black 1px ;border-radius : 10px; 
+                            transform : translateY(50px); margin-left : 5px;">';
+                            echo '<a href="../back/modifHabitat.php?id=' . intval($habitat['id']) . '
+                                " class="edit-button"><img src="../img/icones/modif.png" alt="Modifier"></a>';
+                            echo '<a href="" class="delete-button" onclick="confirmDelete(event, ' . intval($habitat['id']) . ')">
+                                <img src="../img/icones/supp.png" alt="Supprimer"></a>';                            
+                        echo '</div>'; 
                         echo '<div class="habitat-card">';
-                            echo '<div class="action-buttons">';
-                                echo '<a href="../back/modifHabitat.php?id='. intval($habitats[$habitatId]).'" class="edit-button"><img src="../img/icones/modif.png" alt="Modifier"></a>';
-                                echo '<a href="" class="delete-button" onclick = "confirmDelete(event,'.intval($habitats[$habitatId]).')"><img src="../img/icones/supp.png" alt="Supprimer"></a>';
-                            echo '</div>'; // action-buttons
                             echo "<h2>" . htmlspecialchars($habitat['title_txt']) . "</h2>";
                             echo "<img src='$imagePath' alt='" . htmlspecialchars($habitat['name']) . "'>";
                             echo '<div class="habitat-card-txt">';
@@ -103,7 +129,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
                 }
             ?>
            </section>
-        
+           
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>
