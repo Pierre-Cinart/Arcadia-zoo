@@ -60,7 +60,7 @@ if ($habitatsResult) {
                     echo '<button id="addAnimalBtn">Ajouter Un Animal</button>'; 
                     echo '<button id="modifAnimalBtn">Modifier des informations</button>'; 
                 }
-                echo '<button id="reportAnimalBtn">Faire un rapport</button>'; 
+                echo '<a href="./reports.php"><button id="reportAnimalBtn">Faire un rapport</button></a>'; 
             ?>
         </div>
         

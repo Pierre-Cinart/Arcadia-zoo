@@ -135,10 +135,11 @@ h1{
     font-weight: bold;
     margin : 20px;
 }
-h2 {
+h2{
     text-align : center;
     margin : 15px;
 }
+h3{ text-decoration:underline ;}
 
 /* footer */
 footer {
@@ -497,6 +498,7 @@ section.habitat {
 
     .menu-toggle {
         display: block; 
+       
     }
 
     .menu ul li {
