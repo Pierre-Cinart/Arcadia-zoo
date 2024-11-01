@@ -8,46 +8,140 @@ if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || $_SESSION['role
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+
 include_once './bdd.php';
 include_once './token.php';
 checkToken($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // recupération des data  
-
-     // Gestion de données race
-     $race = isset($_POST['race']) ? htmlspecialchars($_POST['race']) : null;
-     $newRace = isset($_POST['newRace']) ? htmlspecialchars($_POST['newRace']) : null; // Correction ici
-     // Vérification race
-     if ( (empty($race) || $race === "Autre") && empty($newRace)) {
-         $_SESSION['error'] = "Vous n'avez renseigné aucune race !!";
-         header('Location: ../admin/animaux.php');
-         exit();
-     }
-     // Vérifier si la nouvelle race est renseignée et l'assigner à $race
-     if (!empty($newRace)) {
-         $race = $newRace;
-     }
-
-     // gestion des données habitat
-    if ( (empty($habitat) || $habitat === "Autre") && empty($newHabitat) ) {
-        $_SESSION['error'] = "Vous n'avez renseigné aucun habitat !!";
-        header('Location: ../admin/animaux.php');
-        exit();
-    }
-    // Vérifier si le nouvel habitat est renseigné et l'assigner à $habitat
-    if (!empty($newHabitat)) {
-        $habitat = $newHabitat;
-    }
-    // recupération des données required 
+     // Récupération des données du formulaire
+     // recupération des données required 
+    $user_id = $_SESSION['user_id'];
     $name = htmlspecialchars($_POST['name']);
     $description = htmlspecialchars($_POST['description']);
     $sex = htmlspecialchars($_POST['sex']);
     $health = htmlspecialchars($_POST['health']);
     $birthday = htmlspecialchars($_POST['birthday']);
     $poid = htmlspecialchars($_POST['poid']);
-    $regime = htmlspecialchars($_POST['regime']); // Ajout du régime
+    $regime = htmlspecialchars($_POST['regime']); 
+
+    // recupération des données not required et traitement 
+    // Gestion de données race
+    $race = isset($_POST['race']) ? htmlspecialchars($_POST['race']) : null;
+    $newRace = isset($_POST['newRace']) ? htmlspecialchars($_POST['newRace']) : null;
+
+    // Vérification race fermeture si non existante
+    if ((empty($race) || $race === "Autre") && empty($newRace)) {
+        $_SESSION['error'] = "Vous n'avez renseigné aucune race !!";
+        header('Location: ../admin/animaux.php');
+        exit();
+    }
+
+    // Si selection d une race déjà enregistrée 
+    if ($race !== "Autre") {
+        // Récupération de l'id de la race
+        $sqlRace = "SELECT id FROM races WHERE name = ?";
+        $stmtRace = $conn->prepare($sqlRace);
+        $stmtRace->bind_param("s", $race);
+        $stmtRace->execute();
+        $resultRace = $stmtRace->get_result();
+        $raceRow = $resultRace->fetch_assoc();
+        
+        // Vérifier si une race correspondante a été trouvée
+        if ($raceRow) {
+            $race_id = $raceRow['id'];
+        } else {
+            $_SESSION['error'] = "Race introuvable dans la base de données.";
+            header('Location: ../admin/animaux.php');
+            exit();
+        }
+        $stmtRace->close();
+
+        // Récupération de l'habitat correspondant à cette race
+        $sqlHabitat = "SELECT habitat FROM races WHERE id = ?";
+        $stmtHabitat = $conn->prepare($sqlHabitat);
+        $stmtHabitat->bind_param("i", $race_id);
+        $stmtHabitat->execute();
+        $resultHabitat = $stmtHabitat->get_result();
+        $habitatRow = $resultHabitat->fetch_assoc();
+        
+        // Assigner l'habitat si trouvé
+        if ($habitatRow) {
+            $habitat_id = $habitatRow['habitat'];
+        } else {
+            $_SESSION['error'] = "Habitat introuvable pour cette race.";
+            header('Location: ../admin/animaux.php');
+            exit();
+        }
+        $stmtHabitat->close();
+    }
+
+    // si une nouvelle Race est renseignée l inscrire en base de données    
+    if (!empty($newRace)) {
+    //  Vérifier si la race existe déjà dans la table
+    $sqlCheck = "SELECT id FROM races WHERE name = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("s", $newRace);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
+    $raceRow = $resultCheck->fetch_assoc();
+
+    if ($raceRow) {
+        // La race existe déjà, récupération de l'id existant
+        $race_id = $raceRow['id'];
+    } else {
+        // La race n'existe pas, on l'insère dans la table
+        $sqlInsert = "INSERT INTO races (name, regime) VALUES (?, ?)";
+        $stmtInsert = $conn->prepare($sqlInsert);
+        $stmtInsert->bind_param("ss", $newRace, $regime);
+        
+        if ($stmtInsert->execute()) {
+            // Récupération de l'id de la race nouvellement insérée
+            $race_id = $conn->insert_id;
+        } else {
+            // En cas d'erreur lors de l'insertion
+            $_SESSION['error'] = "Erreur lors de l'insertion de la nouvelle race.";
+            header('Location: ../admin/animaux.php');
+            exit();
+        }
+        $stmtInsert->close();
+    }
+    $stmtCheck->close();
+    }
+
+    // Gestion des données habitat
+    $habitat = isset($_POST['habitat']) ? htmlspecialchars($_POST['habitat']) : null;
+    $newHabitat = isset($_POST['newHabitat']) ? htmlspecialchars($_POST['newHabitat']) : null;
+    
+    // aucun habitat renseigné // fermeture programme 
+    if ((empty($habitat) || $habitat === "Autre") && empty($newHabitat) && !isset($habitat_id)) {
+        $_SESSION['error'] = "Vous n'avez renseigné aucun habitat !!";
+        header('Location: ../admin/animaux.php');
+        exit();
+    }
+
+    // nouvel habitat
+    if (!empty($newHabitat)) {
+         // Insertion des informations de l'habitat dans la base de données
+         $title_txt = 'mettre à jour';
+         $description = 'mettre à jour';
+         $picture = 'mettre à jour';
+         $sql = "INSERT INTO habitats (name, title_txt, description,picture , maj_by) VALUES (?, ?, ? , ? , ? )";
+         $stmtInsert = $conn->prepare($sql);
+         $stmtInsert->bind_param("ssssi", $newHabitat,$title_txt ,$description , $picture ,$user_id);
+         // recupération de son id et assignation à $habitat_id 
+         if ($stmtInsert->execute()) {
+            // Récupération de l'id de la race nouvellement insérée
+            $habitat_id = $conn->insert_id;
+        } else {
+            // En cas d'erreur lors de l'insertion
+            $_SESSION['error'] = "Erreur lors de l'insertion du nouvelle habitat.";
+            header('Location: ../admin/habitats.php');
+            exit();
+        }
+        $stmtInsert->close();
+    }
+    
 
     // Vérification du nom avec regex
     if (!preg_match("/^[a-zA-Z\s-]+$/", $name)) {
@@ -55,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ../admin/animaux.php');
         exit();
     }
-  
+
     // Gestion de l'image
     if (isset($_FILES['image'])) {
         if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
