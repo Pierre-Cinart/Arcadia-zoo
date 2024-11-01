@@ -17,6 +17,7 @@
 
     // Vérifiez si le formulaire a été soumis avec la méthode POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+     
         // Récupération et sécurisation des données du formulaire
         $user_id = $_SESSION['user_id'];
         $name = htmlspecialchars(trim($_POST['name'])); // Nom de l'habitat
