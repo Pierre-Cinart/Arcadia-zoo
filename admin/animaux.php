@@ -124,8 +124,9 @@ if ($habitatsResult) {
                 <label for="health">Santé :</label>
                 <input type="text" name="health" required>
 
-                <label for="image">Télécharger une image (format .webp) :</label>
-                <input type="file" id="image" name="image" accept=".webp" required><br>
+                <label for="image">Télécharger une plusieurs images (format .webp) :</label>
+               <input type="file" name="images[]" accept=".webp" multiple><br>
+
 
                 <button type="submit">Soumettre</button>
             </form>
