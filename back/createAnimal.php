@@ -196,9 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->execute()) {
             $animal_id = $stmt->insert_id;
-            $sqlPicture = "INSERT INTO animal_pictures (name, animal_id) VALUES (?, ?)";
+            $sqlPicture = "INSERT INTO animal_pictures (name, animal_id , maj_by) VALUES (?, ?, ? )";
             $stmtPicture = $conn->prepare($sqlPicture);
-            $stmtPicture->bind_param("si", $pictureName, $animal_id);
+            $stmtPicture->bind_param("sii", $pictureName, $animal_id , $user_id);
 
             if ($stmtPicture->execute()) {
                 $_SESSION['success'] = "Animal ajouté avec succès !";
