@@ -67,7 +67,7 @@ if ($habitatsResult) {
         <!-- Formulaire d'ajout d'animal -->
         <div id="addAnimalForm">
             <h3>Ajouter un animal</h3>
-            <form action="../back/addAnimal.php" method="POST">
+            <form action="../back/createAnimal.php" method="POST" enctype="multipart/form-data">
                 <label for="name">Nom :</label>
                 <input type="text" name="name" required><br>
 
@@ -100,7 +100,7 @@ if ($habitatsResult) {
 
                 <div id="habitatContainer" style="display: none;">
                     <label for="habitat">Habitat :</label>
-                    <select name="habitat" id="habitatSelect" required>
+                    <select name="habitat" id="habitatSelect">
                         <option value="">Sélectionnez un habitat</option>
                         <?php foreach ($habitats as $habitat): ?>
                             <option value="<?= htmlspecialchars($habitat['name']) ?>">
@@ -134,7 +134,7 @@ if ($habitatsResult) {
         <!-- Formulaire de modification d'animal -->
         <div id="modifAnimalForm">
             <h3>Modifier un animal</h3>
-            <form action="../back/modifAnimal.php" method="POST">
+            <form action="../back/modifAnimal.php" method="POST"  enctype="multipart/form-data">>
                 <label for="modifID">ID de l'animal :</label>
                 <input type="number" name="modifID" required><br>
 
