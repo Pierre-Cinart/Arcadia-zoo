@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->close();
         exit();
     } else {
-        $choice = $_POST['choice'];}
-        
+        $choice = $_POST['choice'];
+    }
 } else {
     $_SESSION['error'] = 'Erreur de méthode';
     header('Location: ../admin/reports.php');
@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gestion animaux</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+<style>p{text-align : center;font-size : 18px;} h3{font-size : 22px;}</style>
 <body>  
     <?php include_once "../php/btnBack.php"; ?>  <!-- bouton de retour -->    
     <header>
@@ -56,34 +57,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <?php echo back('../admin/reports', "r");  // Lien de retour 
             switch ($choice) {
-                //rapport de nouriture
+                // Rapport de nourriture
                 case 'food': {
                     if (empty($_POST['race'])) {
-                        $_SESSION['error'] = 'Erreur de choix';
+                        $_SESSION['error'] = 'Erreur de choix, la race n\'est pas spécifiée.';
                         header('Location: ../admin/reports.php');
                         $conn->close();
                         exit(); 
                     } else {
-                        $race = $_POST['race'];
-                    }   
-                    echo '<h3>' . $name . '</h3>';
-                    echo  ''/* quantité de nourriture recu : $quantity*/; 
-                    echo  ''/* par : $user_id */; 
-                } 
+                        $race_name = $_POST['race']; // Récupérer le nom de la race
+                    }
+
+                    // Préparation d'une requête pour obtenir l'ID de la race à partir du nom
+                    $stmt_race = $conn->prepare("SELECT id FROM races WHERE name = ?");
+                    $stmt_race->bind_param("s", $race_name); // Lier le nom de la race
+                    $stmt_race->execute();
+                    $stmt_race->bind_result($race_id);
+                    $stmt_race->fetch();
+                    $stmt_race->close();
+
+                    // Vérifier si l'ID de la race a été trouvé
+                    if (!$race_id) {
+                        $_SESSION['error'] = 'Aucune race trouvée avec ce nom.';
+                        header('Location: ../admin/reports.php');
+                        $conn->close();
+                        exit();
+                    }
+
+                    // Préparation de la requête pour récupérer les informations de nourriture
+                    $stmt = $conn->prepare("SELECT f.quantity, u.first_name, u.name, f.food_date FROM food_reports f 
+                                             JOIN users u ON f.user_id = u.id 
+                                             WHERE f.race_id = ?");
+                    $stmt->bind_param("i", $race_id); // Lier l'ID de la race
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    // Vérifier si des données ont été récupérées
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $quantity = $row['quantity'];
+                            $user_name = $row['first_name'] . ' ' . $row['name']; // Nom de l'utilisateur
+                            $date_reported = new DateTime($row['food_date']); // Crée un objet DateTime
+                            $formatted_date = $date_reported->format('d/m/Y à H:i'); // Format français
+                        }
+
+                        // Affichage des informations
+                        echo '<br><h3>Rapport de Nourriture : ' . htmlspecialchars($race_name) . '</h3>';
+                        echo '<p>Quantité distribuée : ' . htmlspecialchars($quantity) . ' kg</p><br>'; 
+                        echo '<p>Le : ' . htmlspecialchars($formatted_date) . '</p>';
+                        echo '<p>par : ' . htmlspecialchars($user_name) . '</p>'; 
+                         
+                    } else {
+                        echo '<h3>Aucune donnée de nourriture trouvée pour cette race.</h3>';
+                    }
+
+                    $stmt->close();
+                }
                 break;
-                //rapport de santé  
+
+                // Rapport de santé  
                 case 'health': {
                     if (empty($_POST['name'])) {
                         $_SESSION['error'] = 'Erreur de choix';
                         header('Location: ../admin/reports.php');
                         $conn->close();
-                        exit(); ;
+                        exit();
                     } else {
                         $name = $_POST['name'];
                     }    
                 } 
                 break;
-                // rapport détaillé complet 
+
+                // Rapport détaillé complet 
                 case 'full':{
                     if (empty($_POST['name'])) {
                         $_SESSION['error'] = 'Erreur de choix';
@@ -102,13 +147,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $conn->close();
                     exit();
             }
-        
-             $conn->close(); ?>
+            ?>
         </div>
     </main>
     <script src="../js/toggleMenu.js"></script>
     <script src="../js/popup.js"></script>
-    <?php  $conn->close(); ?> <!-- fermeture de connexion bdd -->
+    <?php $conn->close(); ?> <!-- fermeture de connexion bdd -->
 </body>
-
 </html>
