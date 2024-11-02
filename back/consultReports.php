@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gestion animaux</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<style>p{text-align : center;font-size : 18px;} h3{font-size : 22px;}</style>
+<style>p{text-align : center;font-size : 18px;} h3{font-size : 22px;} .little{font-size : 14px}</style>
 <body>  
     <?php include_once "../php/btnBack.php"; ?>  <!-- bouton de retour -->    
     <header>
@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Affichage des informations
                         echo '<br><h3>Rapport de Nourriture : ' . htmlspecialchars($race_name) . '</h3>';
                         echo '<p>Quantité distribuée : ' . htmlspecialchars($quantity) . ' kg</p><br>'; 
-                        echo '<p>Le : ' . htmlspecialchars($formatted_date) . '</p>';
-                        echo '<p>par : ' . htmlspecialchars($user_name) . '</p>'; 
+                        echo '<p class = "little">Le : ' . htmlspecialchars($formatted_date) . '</p>';
+                        echo '<p class = "little">par : ' . htmlspecialchars($user_name) . '</p>'; 
                          
                     } else {
                         echo '<h3>Aucune donnée de nourriture trouvée pour cette race.</h3>';
@@ -125,9 +125,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         $name = $_POST['name'];
                     }    
-                } 
-                break;
 
+                    // Préparation d'une requête pour obtenir l'ID de l'animal à partir du nom
+                    $stmt_animal = $conn->prepare("SELECT id FROM animals WHERE name = ?");
+                    $stmt_animal->bind_param("s", $name); // Lier le nom de l'animal
+                    $stmt_animal->execute();
+                    $stmt_animal->bind_result($animal_id);
+                    $stmt_animal->fetch();
+                    $stmt_animal->close();
+
+                    // Vérifier si l'ID de l'animal a été trouvé
+                    if (!$animal_id) {
+                        $_SESSION['error'] = 'Aucun animal trouvé avec ce nom.';
+                        header('Location: ../admin/reports.php');
+                        $conn->close();
+                        exit();
+                    }
+
+                    // Préparation de la requête pour récupérer le dernier rapport de santé
+                    $stmt_health = $conn->prepare("SELECT ar.report_date, ar.report_txt, u.first_name, u.name 
+                                                    FROM animal_reports ar 
+                                                    JOIN users u ON ar.user_id = u.id 
+                                                    WHERE ar.animal_id = ? 
+                                                    ORDER BY ar.report_date DESC LIMIT 1");
+                    $stmt_health->bind_param("i", $animal_id); // Lier l'ID de l'animal
+                    $stmt_health->execute();
+                    $result_health = $stmt_health->get_result();
+
+                    // Vérifier si des données ont été récupérées
+                    if ($result_health->num_rows > 0) {
+                        $row = $result_health->fetch_assoc();
+                        $date_reported = new DateTime($row['report_date']); // Crée un objet DateTime
+                        $formatted_date = $date_reported->format('d/m/Y à H:i'); // Format français
+                        $report_txt = $row['report_txt'];
+                        $user_name = $row['first_name'] . ' ' . $row['name']; // Nom de l'utilisateur
+
+                        // Affichage des informations
+                        echo '<br><h3>Dernier Rapport de Santé pour : ' . htmlspecialchars($name) . '</h3>';
+                        echo '<p>' . nl2br(htmlspecialchars($report_txt)) . '</p><br>'; // Afficher le texte du rapport
+                        echo '<p class = "little">Le : ' . htmlspecialchars($formatted_date) . '</p>';
+                        echo '<p class = "little">par : ' . htmlspecialchars($user_name) . '</p>'; 
+                    } else {
+                        echo '<h3>Aucun rapport de santé trouvé pour cet animal.</h3>';
+                    }
+
+                    $stmt_health->close();
+                }
+                break;
+                
                 // Rapport détaillé complet 
                 case 'full':{
                     if (empty($_POST['name'])) {
