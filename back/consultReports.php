@@ -21,17 +21,20 @@ if (!isset($_SESSION['role']) ||
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Traitement des données POST (si nécessaire)
+    if (empty($_POST['choice'])) {
+        $_SESSION['error'] = 'Erreur de choix';
+        header('Location: ../admin/reports.php');
+        $conn->close();
+        exit();
+    } else {
+        $choice = $_POST['choice'];}
+        
 } else {
-   
     $_SESSION['error'] = 'Erreur de méthode';
     header('Location: ../admin/reports.php');
     $conn->close();
     exit();
 }
-
-$conn->close();
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -50,9 +53,62 @@ $conn->close();
     <?php include_once "../php/popup.php"; ?> <!-- Message popup -->
    
     <main class="admin">
-        <?php echo back('../admin/reports', "r"); ?>  <!-- Lien de retour -->
+        <div>
+            <?php echo back('../admin/reports', "r");  // Lien de retour 
+            switch ($choice) {
+                //rapport de nouriture
+                case 'food': {
+                    if (empty($_POST['race'])) {
+                        $_SESSION['error'] = 'Erreur de choix';
+                        header('Location: ../admin/reports.php');
+                        $conn->close();
+                        exit(); 
+                    } else {
+                        $race = $_POST['race'];
+                    }   
+                    echo '<h3>' . $name . '</h3>';
+                    echo  ''/* quantité de nourriture recu : $quantity*/; 
+                    echo  ''/* par : $user_id */; 
+                } 
+                break;
+                //rapport de santé  
+                case 'health': {
+                    if (empty($_POST['name'])) {
+                        $_SESSION['error'] = 'Erreur de choix';
+                        header('Location: ../admin/reports.php');
+                        $conn->close();
+                        exit(); ;
+                    } else {
+                        $name = $_POST['name'];
+                    }    
+                } 
+                break;
+                // rapport détaillé complet 
+                case 'full':{
+                    if (empty($_POST['name'])) {
+                        $_SESSION['error'] = 'Erreur de choix';
+                        header('Location: ../admin/reports.php');
+                        $conn->close();
+                        exit(); 
+                    } else {
+                        $name = $_POST['name'];
+                    } 
+                }
+                break; 
+                    
+                default:
+                    $_SESSION['error'] = 'Choix nul ou invalide';
+                    header('Location: ../admin/reports.php');
+                    $conn->close();
+                    exit();
+            }
+        
+             $conn->close(); ?>
+        </div>
     </main>
     <script src="../js/toggleMenu.js"></script>
     <script src="../js/popup.js"></script>
+    <?php  $conn->close(); ?> <!-- fermeture de connexion bdd -->
 </body>
+
 </html>
