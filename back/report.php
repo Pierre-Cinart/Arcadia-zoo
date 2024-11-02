@@ -7,7 +7,6 @@
         header('Location: ../admin/index.php'); // Redirection vers la page de connexion
         exit();
     } else {
-        $role = $_SESSION['role'];
         $id = $_SESSION['user_id'];
         // Connexion à la base de données
     include_once './bdd.php';
@@ -17,5 +16,16 @@
 
     checkToken($conn);// verifie si le token de session est correct et le met à jour
     }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    } else {
+        $_SESSION['error'] = 'erreur de méthode';
+        header('location:../admin/report.php');
+        exit();
+        
+    }
+    $conn->close();
+    header('location:../admin/report.php');
+    exit();
 ?>
 
