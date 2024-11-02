@@ -45,6 +45,9 @@ if ($animalsResult) {
     <title>Rapports</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+<style>
+    p{width:100%;text-align:center;}
+</style>
 <body>      
     <header>
         <?php include_once "../php/navbarrAdmin.php"; ?>  <!-- Navbar -->
@@ -104,44 +107,73 @@ if ($animalsResult) {
             </form>
         </div>
         <div id="reports">
-            <h3>consulter les rapports : </h3>
-            <h3>rapport de nourriture : </h3>
-            <!-- rapport santé -->
+            <h3>Consulter les rapports :</h3>
+            <!-- Rapport de nourriture -->
             <div id="foodReports">
-                <div id="foodReportSelect">
-                    <!-- ajouter un select race -->
-                </div>
-                <div id="showFoodReports">
-                    <!-- afficher la dernière nouriture donnée et la date selon la race selectionnée -->
-                </div>
+                <form action="../back/consultReports.php" method="POST">
+                    <h3>Rapport de nourriture :</h3>
+                    <input type="hidden" name="choice" value="food">
+                    <label for="raceSelect">Race :</label>
+                    <select name="race" id="raceSelect" required>
+                        <option value="">Sélectionnez une race</option>
+                        <?php foreach ($races as $race): ?>
+                            <option value="<?= htmlspecialchars($race['name']) ?>" data-regime="<?= htmlspecialchars($race['regime']) ?>">
+                                <?= htmlspecialchars($race['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="submit">Consulter</button>
+                </form>
             </div>
-            <!-- rapport santé -->
-            <h3>rapport santé :</h3>
+            <br>
+            <!-- Rapport santé -->
             <div id="healthReports">
-                <div id="HealthReportSelect">
-                    <!-- ajouter un select name -->
-                </div>
-                <div id="showHealthReports">
-                    <!-- afficher le nouriture donnée et la date selon la race selectionnée -->
-                </div> 
-            </div>
-           <!-- Rapport complet  -->
-            <h3>rapport complet</h3>
-            <div id="fullReports">
-                <p>selectionnez l animal :</p>
-                <!-- ajouter un select animal -->
-                <p>afficher les dates à consulter </p>
-                de :
-                <!-- ajouter un select date -->
-                à :
-                <!-- ajouter un select date -->
+                <form action="../back/consultReports.php" method="POST">
+                    <h3>Rapport santé :</h3>
+                    <input type="hidden" name="choice" value="health">
+                    <label for="reportHealthNameSelect">Animal :</label>
+                    <select name="name" id="reportHealthNameSelect" required>
+                        <option value="">Sélectionnez un animal</option>
+                        <?php foreach ($animals as $animal): ?>
+                            <option value="<?= htmlspecialchars($animal['name']) ?>">
+                                <?= htmlspecialchars($animal['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="submit">Consulter</button>
+                </form>
+    </div>
+    <br>
+    <!-- Rapport complet -->
+    <div id="fullReports">
+    <form action="../back/consultReports.php" method="POST">
+        <h3>Rapport complet</h3>
+        <input type="hidden" name="choice" value="full">
+        
+        <label for="reportNameSelect">Animal :</label>
+        <select name="name" id="reportNameSelect" required>
+            <option value="">Sélectionnez un animal</option>
+            <?php foreach ($animals as $animal): ?>
+                <option value="<?= htmlspecialchars($animal['name']) ?>">
+                    <?= htmlspecialchars($animal['name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        
+        <label>Afficher les dates à consulter</label>
+        
+        <label for="startDate">De :</label>
+        <input type="date" name="startDate" id="startDate" max="<?= date('Y-m-d'); ?>" required>
+        
+        <label for="endDate">À :</label>
+        <input type="date" name="endDate" id="endDate" max="<?= date('Y-m-d'); ?>" required><br>
+        
+        <button type="submit">Consulter</button>
+    </form>
+</div>
 
-             <div id="showFullReport" ?>>
-              <!-- afficher les rapports selectionné -->
-             </div>
-            </div>
-            
-        </div>
+</div>
+
     </main>
     <script src="../js/reports.js"></script> <!-- Affichage du formulaire + confirmation delete -->
     <script src="../js/toggleMenu.js"></script> <!-- Navbar mobile -->

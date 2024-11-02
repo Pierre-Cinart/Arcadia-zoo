@@ -92,8 +92,8 @@ if ($habitatsResult) {
                     </select><br>
                 </div>
 
-                <label for="birthday">Date de naissance :</label>
-                <input type="date" name="birthday" required><br>
+                <<label for="birthday">Date de naissance :</label>
+                <input type="date" name="birthday" id="birthday" max="<?= date('Y-m-d'); ?>" required><br>
 
                 <label for="poid">Poids (kg) :</label>
                 <input type="number" step="0.1" name="poid" required><br>
