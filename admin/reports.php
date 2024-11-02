@@ -45,13 +45,22 @@ if ($habitatsResult) {
     <title>Habitats</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body>      
     <header>
-        <?php include_once "../php/navbarrAdmin.php"; ?>
+        <?php include_once "../php/navbarrAdmin.php"; ?>  <!--navbarr -->
     </header>
-    <main>
+    <?php include_once "../php/btnLogout.php"; ?> <!-- bouton de déconnexion -->
+    <?php include_once "../php/popup.php"; ?> <!-- message popup -->
+   
+    <main class="admin">
+         <!--boutons d action -->
+    <div style = "display: flex; justify-content: center; gap: 10px;margin:20px;">
+            <button id="foodBtn" onclick = "toggleForm(1)">Rapport nourriture</button>
+            <button id="healthBtn" onclick = "toggleForm(2)">Rapport santé</button>
+    </div>
     <br>
-    <div id="foodReportForm" <?php if ($role != 'admin' && $role != 'agent'){ echo 'style="display:none;"'; } ?>>
+    <!-- formulaire rapport nourriture -->
+    <div id="foodReportForm" >
             <form action="../back/report.php" method="POST" >
             <h3>Transmettre les informations de nourriture :</h3>
             <br>
@@ -69,7 +78,8 @@ if ($habitatsResult) {
                 <button type="submit">Soumettre</button>
             </form>
         </div>
-        <div id="healthReportForm" <?php ?>>
+        <!-- formulaire rapport santé -->
+        <div id="healthReportForm">
             <form action="../back/report.php" method="POST" >
             <h3>Transmettre les informations sanitaires :</h3>
             <br>
@@ -79,12 +89,15 @@ if ($habitatsResult) {
                     <!-- faire une boucle sur les noms  d'animaux -->
                 </select>
                 <label for="nb">Remarque :</label>
-                <input type="textarea" name ="nb" id="nb" rows = 4>
-                <label for="quantity">Poids (kg) :</label>
-                <input type="number" step="0.1" name="quantity" required><br>
+                <input type="textarea" name ="nb" id="nb">
+                <label for="weight">Poids (kg) :</label>
+                <input type="number" step="0.1" name="weight" required><br>
                 <button type="submit">Soumettre</button>
             </form>
         </div>
     </main>
+    <script src="../js/reports.js"></script> <!-- affichage du formulaire + confirmation delete -->
+    <script src="../js/toggleMenu.js"></script> <!-- Navbar mobile -->
+    <script src="../js/popup.js"></script> <!-- Popup pour les messages de succès ou d'erreur -->
 </body>
 </html>
