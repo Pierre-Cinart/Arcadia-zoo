@@ -116,7 +116,7 @@ if (!isset($_SESSION['role']) && ($_SESSION['role'] !== 'admin'
                                 foreach ($habitat['races'] as $race) {
                                     $raceId = htmlspecialchars($race['id']);
                                     $raceName = htmlspecialchars($race['name']);
-                                    echo "<li><a href='./animaux.php?id=$raceId'>$raceName</a></li>";
+                                    echo "<li>$raceName</li>";
                                 }
                                 echo "</ul>";
                                 

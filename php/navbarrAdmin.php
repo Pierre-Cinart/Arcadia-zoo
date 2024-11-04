@@ -1,9 +1,9 @@
 <!-- navBarr pages admin -->
 <nav class="menu">
-    <a href="./accueil.php"><img src="../img/logo.png" alt="logo"></a>
-    <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
-    <ul>
-    <?php
+   <img src="../img/logo.png" alt="logo">
+   <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+   <ul>
+   <?php
       if (isset($_SESSION['role'])) {
          $role = $_SESSION['role'];
       } else $role = '';

@@ -2,11 +2,11 @@
 // fonction de confirmation de suppression du commentaire
 const foodReportForm = document.getElementById('foodReportForm');
 const healthReportForm = document.getElementById('healthReportForm');
-const reports = document.getElementById('reports');
+const fullReports = document.getElementById('fullReports');
 
 foodReportForm.style.display = 'none';
 healthReportForm.style.display = 'none';
-reports.style.display = 'none';
+fullReports.style.display = 'none';
 
 function toggleForm(nbr) {
     
@@ -16,15 +16,16 @@ function toggleForm(nbr) {
    if (nbr === 1) {
     form = foodReportForm;
     formBis = healthReportForm;
-    formTer = reports;
+    formTer = fullReports;
    } else if (nbr === 2) {
     formBis = foodReportForm;
     form = healthReportForm;
-    formTer = reports;
+    formTer = fullReports;
    } else if (nbr === 3) {
     formBis = foodReportForm;
-    form = reports;
+    form = fullReports;
     formTer = healthReportForm;
+    console.log(form.style.display);
    }
 
     form.style.display = form.style.display === "none" ? "block" : "none"; 
