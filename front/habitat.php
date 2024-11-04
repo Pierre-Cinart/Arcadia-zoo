@@ -1,11 +1,11 @@
 <?php
 session_start();
-//connexion à la base de données 
-include_once ( '../back/bdd.php' );
+include_once('../back/bdd.php');
+
 // Récupère l'ID de l'habitat depuis le paramètre GET et vérifie s'il est valide
 if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     $habitatId = intval($_GET['habitat_id']);
-    
+
     // Requête pour vérifier si l'habitat existe
     $sql = "SELECT name, title_txt, description, picture FROM habitats WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -13,7 +13,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $habitat = $result->fetch_assoc();
-    
+
     // Si l'habitat n'est pas trouvé, redirige vers habitats.php
     if (!$habitat) {
         header("Location: habitats.php");
@@ -26,10 +26,31 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     $stmtRaces->bind_param("i", $habitatId);
     $stmtRaces->execute();
     $resultRaces = $stmtRaces->get_result();
-    
-    // Tableau pour stocker les races
+
+    // Tableau pour stocker les races avec leur image et nom d'animal associé
     $races = [];
     while ($race = $resultRaces->fetch_assoc()) {
+        $race_id = $race['id'];
+
+        // Requête pour récupérer le nom de l'animal et l'image associée
+        $sqlImage = "SELECT a.name AS animal_name, ap.name AS picture_name
+                     FROM animals a
+                     JOIN animal_pictures ap ON ap.animal_id = a.id
+                     WHERE a.race_id = ?
+                     ORDER BY ap.id DESC LIMIT 1";
+        $stmtImage = $conn->prepare($sqlImage);
+        $stmtImage->bind_param("i", $race_id);
+        $stmtImage->execute();
+        $resultImage = $stmtImage->get_result();
+        
+        // Assigner l'image et le nom de l'animal si trouvés, sinon mettre une image par défaut
+        if ($resultImage->num_rows > 0) {
+            $imageData = $resultImage->fetch_assoc();
+            $race['image'] = '../img/animaux/' . htmlspecialchars($imageData['animal_name']) . '/' . htmlspecialchars($imageData['picture_name']);
+        } else {
+            $race['image'] = '../img/default_animal_image.webp'; // Image par défaut
+        }
+        
         $races[] = $race;
     }
 } else {
@@ -39,6 +60,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
 }
 ?>
 
+<!-- Partie HTML inchangée -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -47,6 +69,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     <link rel="stylesheet" href="../css/style.css">
     <title><?php echo htmlspecialchars($habitat['title_txt']); ?></title>
     <style>
+          
         /* Style body */
         body {
             min-height: 100vh;
@@ -67,48 +90,61 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
             border-radius: 10px;
             font-weight: normal;
         }
+        .animals_list {
+            list-style: none;
+            margin: 0 auto; /* Centre la liste horizontalement */
+            text-align: left;
+            width: fit-content; /* Ajuste la largeur au contenu */
+        }
+
+        li {
+            display: flex;
+            align-items: center; /* Centre l'image et le texte verticalement */
+            margin: 10px 0;
+        }
+
+        .animals_list img {
+            margin-right: 10px; /* Espace entre l'image et le texte */
+            vertical-align: middle;
+        }
+
         a {
             color:white;
             text-decoration : none;
         }
-        .animals_list {
-            list-style: none;
-            margin-left:50%;
-            text-align: left;
-            transform: translate(-50%, 0); 
-        }
+    
         h3 {
             text-decoration: underline;
         }
     </style>
+   
 </head>
 <body>
     <header>
         <?php include_once "../php/navbarr.php"; ?>
     </header>
-    <br>
     <main>
         <div class="container">
             <h1><?php echo htmlspecialchars($habitat['title_txt']); ?></h1>
             <p><?php echo nl2br(htmlspecialchars_decode($habitat['description'])); ?></p>
-            <?php echo  back("habitats","r"); ?>
         </div>
-        <br>
-        <div class="container" style = "text-align:center;">
-              <!-- Affiche les races liées à cet habitat -->
+        
+        <div class="container" style="text-align: center;">
             <h3>Animaux dans cet habitat :</h3>
             <?php
             if (count($races) > 0) {
-                echo '<ul class = "animals_list">';
+                echo '<ul class="animals_list">';
                 foreach ($races as $race) {
-                    echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . 
-                    '">' . htmlspecialchars($race['name']) . ' :<img src="../img/animaux/Capucins/capucin2.webp" alt="'.htmlspecialchars($race['name']).'">  </a></li>';
+                    echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . '">';
+                    echo htmlspecialchars($race['name']) . ' : <img src="' . htmlspecialchars($race['image']) . 
+                         '.webp" alt="' . htmlspecialchars($race['name']) . '" width="100"></a></li>';
                 }
                 echo '</ul>';
-        echo  '</div>' . back("habitats","r"); 
             } else {
                 echo '<p>Aucune race disponible dans cet habitat.</p>';
-            }?>
+            }
+            ?>
+        </div>
     </main>
     <?php include_once "../php/footer.php"; ?>
     <script src="../js/toggleMenu.js"></script>
