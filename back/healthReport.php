@@ -2,7 +2,7 @@
 session_start();
 
 // Vérification du rôle de l'utilisateur et de l'authentification
-if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'agent' $_SESSION['role'] !== 'veterinaire') || !isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'agent' && $_SESSION['role'] !== 'veterinaire' ) || !isset($_SESSION['user_id'])) {
     $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur ou agent pour accéder à cette page.';
     header('Location: ../admin/index.php'); // Redirection vers la page de connexion si rôle invalide
     exit();
