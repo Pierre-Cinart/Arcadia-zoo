@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             checkbox.value = image.name; // Valeur de l'image
     
                             const label = document.createElement('label');
-                            label.textContent = '  ' + image.name; // Affiche le nom de l'image
+                            label.textContent = '  ' + image.name  // Affiche le nom de l'image
                             label.prepend(checkbox); // Ajoute la case à cocher avant le texte
     
                             // Créer un élément image pour afficher l'image
@@ -114,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             img.style.height = '100px'; // Hauteur automatique pour conserver les proportions
     
                             // Ajouter le label et l'image au conteneur
-                            imageContainerModif.appendChild(label);
                             imageContainerModif.appendChild(img); // Ajouter l'image après le label
+                            imageContainerModif.appendChild(label);
                             imageContainerModif.appendChild(document.createElement('br')); // Saut de ligne
                         });
                     } else {
