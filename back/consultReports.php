@@ -274,7 +274,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_health->close();
                 } break;
                 
-  
                 default:
                     $_SESSION['error'] = 'Choix nul ou invalide';
                     header('Location: ../admin/reports.php');

@@ -96,13 +96,13 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
         <br>
         <div class="container" style = "text-align:center;">
               <!-- Affiche les races liées à cet habitat -->
-            <h3>Races dans cet habitat :</h3>
+            <h3>Animaux dans cet habitat :</h3>
             <?php
             if (count($races) > 0) {
                 echo '<ul class = "animals_list">';
                 foreach ($races as $race) {
                     echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . 
-                    '">' . htmlspecialchars($race['name']) . ' : </a></li>';
+                    '">' . htmlspecialchars($race['name']) . ' :<img src="../img/animaux/Capucins/capucin2.webp" alt="'.htmlspecialchars($race['name']).'">  </a></li>';
                 }
                 echo '</ul>';
         echo  '</div>' . back("habitats","r"); 
