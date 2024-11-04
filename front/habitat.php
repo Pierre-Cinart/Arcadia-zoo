@@ -1,7 +1,9 @@
 <?php
 session_start();
+// connexion bdd
 include_once('../back/bdd.php');
-
+// pour les boutons retour
+include_once "../php/btnBack.php"; 
 // Récupère l'ID de l'habitat depuis le paramètre GET et vérifie s'il est valide
 if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     $habitatId = intval($_GET['habitat_id']);
@@ -46,8 +48,10 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
         // Assigner l'image et le nom de l'animal si trouvés, sinon mettre une image par défaut
         if ($resultImage->num_rows > 0) {
             $imageData = $resultImage->fetch_assoc();
+            $race['animal_name'] = $imageData['animal_name'];
             $race['image'] = '../img/animaux/' . htmlspecialchars($imageData['animal_name']) . '/' . htmlspecialchars($imageData['picture_name']);
         } else {
+            $race['animal_name'] = 'Nom d\'animal inconnu';
             $race['image'] = '../img/default_animal_image.webp'; // Image par défaut
         }
         
@@ -60,7 +64,6 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
 }
 ?>
 
-<!-- Partie HTML inchangée -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -69,8 +72,7 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
     <link rel="stylesheet" href="../css/style.css">
     <title><?php echo htmlspecialchars($habitat['title_txt']); ?></title>
     <style>
-          
-        /* Style body */
+        /* Vos styles CSS */
         body {
             min-height: 100vh;
             display: flex;
@@ -80,64 +82,80 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
             background-position: center;
             color: white;
         }
-        /* Style container du titre  */
         .container {
             position: relative;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7); /* Fond transparent pour le texte */
+            background: rgba(0, 0, 0, 0.7);
             max-width: 800px;
             margin: auto;
             border-radius: 10px;
             font-weight: normal;
         }
         .animals_list {
-            list-style: none;
-            margin: 0 auto; /* Centre la liste horizontalement */
-            text-align: left;
-            width: fit-content; /* Ajuste la largeur au contenu */
-        }
-
-        li {
             display: flex;
-            align-items: center; /* Centre l'image et le texte verticalement */
-            margin: 10px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0;
         }
-
+        .animals_list li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 10px;
+            width: 160px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        .animals_list li:hover {
+            transform: scale(1.05);
+        }
         .animals_list img {
-            margin-right: 10px; /* Espace entre l'image et le texte */
-            vertical-align: middle;
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            transition: filter 0.3s ease;
         }
-
-        a {
-            color:white;
-            text-decoration : none;
+        .animals_list li:hover img {
+            filter: brightness(1.2);
         }
-    
-        h3 {
+        .animals_list a {
+            color: white;
+            text-decoration: none;
+        }
+        .animals_list a:hover {
             text-decoration: underline;
         }
     </style>
-   
 </head>
 <body>
     <header>
         <?php include_once "../php/navbarr.php"; ?>
     </header>
     <main>
+        <br>
         <div class="container">
             <h1><?php echo htmlspecialchars($habitat['title_txt']); ?></h1>
             <p><?php echo nl2br(htmlspecialchars_decode($habitat['description'])); ?></p>
+            <br>
+            <?php echo back('./habitats','r')?>
         </div>
-        
+        <br>
         <div class="container" style="text-align: center;">
             <h3>Animaux dans cet habitat :</h3>
             <?php
             if (count($races) > 0) {
                 echo '<ul class="animals_list">';
                 foreach ($races as $race) {
-                    echo '<li><a href="./animaux.php?id=' . htmlspecialchars($race['id']) . '">';
+                    echo '<li><a href="./animaux.php?race_id=' . urlencode($race['id']) . '&habitat=' . $habitatId . '">';
                     echo htmlspecialchars($race['name']) . ' : <img src="' . htmlspecialchars($race['image']) . 
-                         '.webp" alt="' . htmlspecialchars($race['name']) . '" width="100"></a></li>';
+                    '.webp" alt="' . htmlspecialchars($race['name']) . '" width="100"></a></li>';
                 }
                 echo '</ul>';
             } else {

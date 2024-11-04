@@ -69,19 +69,16 @@ include_once "../back/bdd.php";
                                 foreach ($habitat['races'] as $race) {
                                     $raceId = htmlspecialchars($race['id']);
                                     $raceName = htmlspecialchars($race['name']);
-                                    echo "<li><a href='./animaux.php?id=$raceId'>$raceName</a></li>";
+                                    echo "<li>$raceName</li>";
                                 }
                                 echo "</ul>";
                                 
-                                // Bouton "Voir les animaux" avec l'ID de l'habitat
-                                echo "<button><a href='./habitat.php?habitat_id=" . htmlspecialchars($habitat['id']) . "' class='btn'>Voir les animaux</a></button>";
+                                // Bouton "Voir les animaux" avec l'ID de l'habitat et de la race
+                                echo "<button><a href='./habitat.php?habitat_id=" . htmlspecialchars($habitat['id']) . "&race_id=" . $raceId . "' class='btn'>Voir les animaux</a></button>";
                                 
                             echo "</div>";
                         echo "</div>";
-                        echo back("./habitat","r");
                     echo "</article>";
-                    
-
                 }
             ?>
            </section>
