@@ -3,6 +3,7 @@ session_start();
 
 // fichier de configuration de reCAPTCHA
 include_once('../configCaptcha.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,13 +21,8 @@ include_once('../configCaptcha.php');
         <h1>Contact</h1>
         <h2>Si vous avez des questions ou souhaitez obtenir plus d'informations, veuillez remplir le formulaire ci-dessous</h2>
         
-        <?php
-        // Récupère les données du formulaire si elles sont enregistrées en session en cas d'erreur pour les pré-remplir
-        $form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
-        ?>
-        
         <!-- Formulaire de contact -->
-        <form id="contact-form" action="../back/clientSendMessage.php" method="POST">
+        <form id="contact-form">
             <!-- Champ pour le nom -->
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" value="<?= htmlspecialchars($form_data['name'] ?? '') ?>" required>
@@ -46,32 +42,45 @@ include_once('../configCaptcha.php');
             <!-- Champ pour l'email -->
             <label for="email">Votre Email :</label>
             <input type="email" id="email" name="email" value="<?= htmlspecialchars($form_data['email'] ?? '') ?>" required>
-
-            <!-- Bouton reCAPTCHA pour protéger le formulaire des envois automatisés -->
-            <button class="g-recaptcha" 
-                data-sitekey="<?php echo $RECAPTCHA_PUBLIC_KEY; ?>" 
-                data-callback="onSubmit"                            
-                data-action="submit">Envoyer</button>
-
+            <h3>Contactez-nous directement par email :</h3>
+            <h4>aracadia@zoo.com</h4>
+            <button id="mailButton" onclick="sendMail()">Contacter par Email</button>
         </form>
+     
         <br>
+
+        <!-- Bouton de mailing qui va déclencher la fonction JS pour pré-remplir l'email -->
+       
+        
     </main>
 
     <!-- footer -->
     <?php include_once "../php/footer.php"; ?>
     
-    <!--API reCAPTCHA de Google -->
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    
-    <!-- Fonction JavaScript appelée par reCAPTCHA lorsque le formulaire est validé -->
-    <script>
-       function onSubmit(token) {
-           // Soumet le formulaire une fois que le reCAPTCHA est validé
-           document.getElementById("contact-form").submit();
-       }
-    </script>
     <script src="../js/toggleMenu.js"></script><!-- menu mobile -->
     <script src="../js/popup.js"></script> <!-- pop-ups de succès ou d'erreur -->
-    
+
+    <!-- JavaScript pour créer le lien mailto: -->
+    <script>
+        function sendMail() {
+            // Récupérer les valeurs du formulaire
+            var name = document.getElementById("name").value;
+            var surname = document.getElementById("surname").value;
+            var objet = document.getElementById("objet").value;
+            var message = document.getElementById("message").value;
+            var email = document.getElementById("email").value;
+
+            // Créer l'URL mailto avec les données récupérées
+            var mailtoLink = "mailto:aracdia@zoo.com?subject=Demande d'information: " + encodeURIComponent(objet) +
+                             "&body=Bonjour,%0A%0ANom: " + encodeURIComponent(name) + 
+                             "%0APrénom: " + encodeURIComponent(surname) + 
+                             "%0A%0A" + encodeURIComponent(message) +
+                             "%0A%0ACordialement,%0A" + encodeURIComponent(name) + " " + encodeURIComponent(surname) + 
+                             "%0A%0AEmail: " + encodeURIComponent(email);
+
+            // Ouvrir le client email avec le lien mailto
+            window.location.href = mailtoLink;
+        }
+    </script>
 </body>
 </html>
