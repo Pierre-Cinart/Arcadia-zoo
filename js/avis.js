@@ -1,49 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const addAnimalBtn = document.getElementById('addAnimalBtn');
-    const addAnimalForm = document.getElementById('addAnimalForm');
-    const showAnimals = document.getElementById('showAnimals');
+    const showUnvalidBtn = document.getElementById('showUnvalidBtn');
+    const avisUnValid = document.getElementById('avisUnValid');
+    const showValidBtn = document.getElementById('showValidBtn');
+    const avisValid = document.getElementById('avisValid');
 
-    // Fonction pour mettre à jour l'affichage selon l'état du localStorage
-    function updateDisplay() {
-        const currentView = localStorage.getItem('currentView');
+    // Vérifier l'état du localStorage pour déterminer quelle section afficher
+    const currentView = localStorage.getItem('currentView');
+    console.log(currentView);
+  
 
-        if (currentView === 'addAnimal') {
-            addAnimalForm.style.display = 'block';
-            showAnimals.style.display = 'none';
-        } else if (currentView === 'showAnimals') {
-            showAnimals.style.display = 'block';
-            addAnimalForm.style.display = 'none';
-        } else {
-            // Masquer les deux sections par défaut
-            addAnimalForm.style.display = 'none';
-            showAnimals.style.display = 'none';
+    // Afficher la section appropriée
+    if (currentView === 'unvalid') {
+        avisUnValid.style.display = 'block';
+        avisValid.style.display = 'none';
+    } else if (currentView === 'valid') {
+        avisValid.style.display = 'block';
+        avisUnValid.style.display = 'none';
+    } else if (currentView === 'none' || currentView === undefined) {
+          // Cacher les sections par défaut
+        avisUnValid.style.display = 'none';
+        avisValid.style.display = 'none';
+    } 
+
+    // Afficher les avis en attente
+    showUnvalidBtn.addEventListener('click', function() {
+        // afficher les avis en attente
+        if (currentView === 'none' || currentView === 'valid' || currentView === undefined) {
+            localStorage.setItem('currentView', 'unvalid');
+            //masquer les avis en attente
+        } else if (currentView === 'unvalid') {
+            localStorage.setItem('currentView', 'none');;
         }
-    }
-
-    // Appel initial pour mettre à jour l'affichage
-    updateDisplay();
-
-    // Gérer l'affichage du formulaire d'ajout d'animal
-    addAnimalBtn.addEventListener('click', function() {
-        const currentView = localStorage.getItem('currentView');
-
-        if (currentView !== 'addAnimal') {
-            localStorage.setItem('currentView', 'addAnimal');
-            addAnimalForm.style.display = 'block';
-            showAnimals.style.display = 'none';
-        } else {
-            localStorage.setItem('currentView', 'none');
-            addAnimalForm.style.display = 'none';
-        }
+        
+        window.location.href = `avis.php?page=1`; // Reset la pagination
     });
 
-    // Gérer l'affichage de la liste des animaux
-    const showAnimalsBtn = document.getElementById('showAnimalsBtn'); // Assurez-vous que ce bouton existe
-    if (showAnimalsBtn) {
-        showAnimalsBtn.addEventListener('click', function() {
-            localStorage.setItem('currentView', 'showAnimals');
-            addAnimalForm.style.display = 'none';
-            showAnimals.style.display = 'block';
-        });
-    }
+    // Afficher les avis validés
+    showValidBtn.addEventListener('click', function() {
+         // afficher les avis en attente
+         if (currentView === 'none' || currentView === 'unvalid' || currentView === undefined) {
+            localStorage.setItem('currentView', 'valid');
+            //masquer les avis en attente
+        } else if (currentView === 'valid') {
+            localStorage.setItem('currentView', 'none');;
+        }
+        
+        window.location.href = `avis.php?page=1`; // Reset la pagination
+    });
 });
+
+    
+// fonction de confirmation de suppression du commentaire
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer ce commentaire ?")) {
+        window.location.href = "../back/deleteAvis.php?id=" + id;
+    }
+}

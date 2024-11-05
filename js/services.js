@@ -43,8 +43,8 @@ function modif(event, id, name , description ) {
     console.log(description);
     modifId.value = id;
     modifName.value = name;
-    modifDescription.value = description.replace(/<br\s*\/?>/mg, "\n");
-    // modifPicture.value = picture;
+    modifDescription.value = description
+    
     // cacher le formulaire d ajout si il est visible
 
     if (createService.style.display === 'block'){

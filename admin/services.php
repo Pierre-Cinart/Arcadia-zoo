@@ -46,7 +46,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['ro
             
             <label for="description">Description :</label>
             <textarea id="description" name="description" rows="4" required></textarea>
-            
+         
             <label for="picture">Image du service : (format autorisé : webp)</label>
             <input type="file" id="picture" name="picture" accept=".webp" required>
             

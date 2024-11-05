@@ -163,7 +163,7 @@ if ($habitatsResult) {
                 <select id="animalSelect" name="animalSelect">
                     <option value="">Sélectionnez un animal</option>
                     <?php foreach ($animals as $animal): ?>
-                        <option value="<?= htmlspecialchars($animal['id']) ?>">
+                        <option value="<?= (int)($animal['id']) ?>">
                             <?= htmlspecialchars($animal['name']) ?>
                         </option>
                     <?php endforeach; ?>
@@ -179,7 +179,7 @@ if ($habitatsResult) {
                     <select id="raceModifSelect" name="race">
                         <option value="">Sélectionnez une race</option>
                         <?php foreach ($races as $race): ?>
-                            <option value="<?= htmlspecialchars($race['name']) ?>" data-regime="<?= htmlspecialchars($race['regime']) ?>">
+                            <option value="<?= (int)($race['id']) ?>" data-regime="<?= htmlspecialchars($race['regime']) ?>">
                                 <?= htmlspecialchars($race['name']) ?>
                             </option>
                         <?php endforeach; ?>
@@ -193,6 +193,7 @@ if ($habitatsResult) {
                 <div id="regimeModifContainer" style="display: none;">
                     <label for="regimeModif">Régime :</label>
                     <select name="regimeModif">
+                        <option value="">Selectionnez le régime alimentaire</option>
                         <option value="carnivore">Carnivore</option>
                         <option value="herbivore">Herbivore</option>
                         <option value="omnivore">Omnivore</option>

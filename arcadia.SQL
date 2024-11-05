@@ -14,7 +14,6 @@ CREATE TABLE `animals` (
   `age` int NOT NULL,
   `poid` decimal(10,2) NOT NULL,
   `sex` varchar(1) NOT NULL,
-  `regime` int DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `health` varchar(255) NOT NULL,
   `maj` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
