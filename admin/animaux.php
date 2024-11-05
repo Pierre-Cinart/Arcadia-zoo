@@ -253,8 +253,8 @@ if ($habitatsResult) {
 
                 <!-- telechargement de nouvelles images / s affiche si le nom à était selectionné -->
                 <div id="newImagesContainer"  style="display: none;">
-                    <label for="newImages">Ajouter de nouvelles images</label>
-                    <input type="file" id="newImages" name="newImages[]" accept=".webp" multiple>
+                    <label for="images">Ajouter de nouvelles images</label>
+                    <input type="file" id="images" name="images[]" accept=".webp" multiple>
                     <br>
                 </div>
 

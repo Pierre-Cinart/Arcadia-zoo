@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    //supression  des images
     if (isset($_POST['imageToDelete'])) {
         // Récupérer les chemins complets des images à supprimer
         $imagesToDelete = $_POST['imageToDelete'];
@@ -62,15 +63,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } 
         } 
     }
-    
-    
+      // Récupérer les données de l'animal
+      $sqlAnimal = "SELECT * FROM animals WHERE id = ?";
+      $stmtAnimal = $conn->prepare($sqlAnimal);
+      $stmtAnimal->bind_param("i", $animal_id);
+      $stmtAnimal->execute();
+      $animalData = $stmtAnimal->get_result()->fetch_assoc();
 
-    // Récupérer les données de l'animal
-    $sqlAnimal = "SELECT * FROM animals WHERE id = ?";
-    $stmtAnimal = $conn->prepare($sqlAnimal);
-    $stmtAnimal->bind_param("i", $animal_id);
-    $stmtAnimal->execute();
-    $animalData = $stmtAnimal->get_result()->fetch_assoc();
+    // Gestion des images après l'insertion de l'animal
+    if (isset($_FILES['images']) && $_FILES['images']['error'][0] !== UPLOAD_ERR_NO_FILE)  {
+    $name = $animalData['name'];
+   
+    // Vérifier si plusieurs images sont téléchargées
+    foreach ($_FILES['images']['tmp_name'] as $key => $tmpName) {
+        if ($_FILES['images']['error'][$key] !== UPLOAD_ERR_OK) {
+            $_SESSION['error'] = "Erreur lors du téléchargement de l'image : " . $_FILES['images']['error'][$key];
+            header('Location: ../admin/animaux.php');
+            exit();
+        }
+
+        $fileType = mime_content_type($tmpName);
+        if ($fileType !== 'image/webp') {
+            $_SESSION['error'] = "Le format de l'image doit être .webp.";
+            header('Location: ../admin/animaux.php');
+            exit();
+        }
+
+        // Déplacement de l'image avec gestion des doublons de nom
+        $uploadDir = '../img/animaux/' . $name . '/'; // Nouveau dossier de destination
+        // Créer le dossier s'il n'existe pas
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); // Création du dossier avec permissions
+        }
+
+        $pictureName = $name; // Nom de l'image sans extension
+        $uploadFile = $uploadDir . $pictureName . '.webp';
+
+        // Gestion des doublons
+        $counter = 1;
+        while (file_exists($uploadFile)) {
+            $pictureName = $name . "($counter)";
+            $uploadFile = $uploadDir . $pictureName . '.webp';
+            $counter++;
+        }
+
+        // Déplacer le fichier téléchargé vers le nouveau chemin
+        if (move_uploaded_file($tmpName, $uploadFile)) {
+            // Insertion de l'image dans la base de données
+            $sqlPicture = "INSERT INTO animal_pictures (name, animal_id, maj_by) VALUES (?, ?, ?)";
+            $stmtPicture = $conn->prepare($sqlPicture);
+            $stmtPicture->bind_param("sii", $pictureName, $animal_id, $user_id); // Utiliser l'animal_id ici
+
+            if (!$stmtPicture->execute()) {
+                echo "Erreur lors de l'ajout de l'image de l'animal.";
+                // On ne sort pas ici pour continuer à traiter les autres images
+            } 
+
+            $stmtPicture->close();
+        } 
+        
+        
+    }
+}
+
 
     if (!$animalData) {
         $_SESSION['error'] = "Animal non trouvé.";
@@ -190,13 +245,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmtUpdateAnimal = $conn->prepare($sqlUpdateAnimal);
     $stmtUpdateAnimal->bind_param("sissssii", $newName, $race, $description, $sex, $birthday, $health, $user_id, $animal_id);
     
-    // if ($stmtUpdateAnimal->execute()) {
-    //     $_SESSION['success'] = "Animal mis à jour avec succès.";
-    //     header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
-    // } else {
-    //     $_SESSION['error'] = "Erreur lors de la mise à jour de l'animal : " . $stmtUpdateAnimal->error;
-    //     header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
-    // }
+    if ($stmtUpdateAnimal->execute()) {
+        $_SESSION['success'] = "Animal mis à jour avec succès.";
+        header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
+    } else {
+        $_SESSION['error'] = "Erreur lors de la mise à jour de l'animal : " . $stmtUpdateAnimal->error;
+        header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
+    }
     
     $stmtUpdateAnimal->close();
     $conn->close();
