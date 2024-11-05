@@ -27,44 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    if (isset($_POST['imageToDelete'])) {
-        // Récupérer les chemins complets des images à supprimer
-        $imagesToDelete = $_POST['imageToDelete'];
-    
-        // Définir le chemin du dossier de l'animal basé sur le premier chemin d'image
-        $animalFolder = dirname($imagesToDelete[0]); 
-    
-        foreach ($imagesToDelete as $imagePath) {
-            // Supprime le fichier du dossier en utilisant le chemin complet
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-                // L'image a été supprimée, pas d'echo ici mais tu pourrais utiliser une session pour notifier
-            } 
-    
-            // Extraire le nom de l'image sans le chemin ni l'extension
-            $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
-    
-            // Supprimer l'entrée de la base de données en utilisant le nom de l'image et l'ID de l'animal
-            $sqlDeletePicture = "DELETE FROM animal_pictures WHERE name = ? AND animal_id = ?";
-            $stmtDeletePicture = $conn->prepare($sqlDeletePicture);
-            $stmtDeletePicture->bind_param("si", $imageName, $animal_id);
-            if ($stmtDeletePicture->execute()) {
-                // Entrée supprimée de la base de données, pas d'echo ici mais tu peux aussi notifier
-            } 
-            $stmtDeletePicture->close();
-        }
-    
-        // Vérifier si le dossier est vide après suppression des images
-        if (is_dir($animalFolder) && count(scandir($animalFolder)) == 2) { // `scandir` retourne . et ..
-            // Supprimer le dossier
-            if (rmdir($animalFolder)) {
-                // Dossier supprimé, aucun echo mais tu peux aussi notifier
-            } 
-        } 
-    }
-    
-    
-
     // Récupérer les données de l'animal
     $sqlAnimal = "SELECT * FROM animals WHERE id = ?";
     $stmtAnimal = $conn->prepare($sqlAnimal);
@@ -190,13 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmtUpdateAnimal = $conn->prepare($sqlUpdateAnimal);
     $stmtUpdateAnimal->bind_param("sissssii", $newName, $race, $description, $sex, $birthday, $health, $user_id, $animal_id);
     
-    // if ($stmtUpdateAnimal->execute()) {
-    //     $_SESSION['success'] = "Animal mis à jour avec succès.";
-    //     header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
-    // } else {
-    //     $_SESSION['error'] = "Erreur lors de la mise à jour de l'animal : " . $stmtUpdateAnimal->error;
-    //     header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
-    // }
+    if ($stmtUpdateAnimal->execute()) {
+        $_SESSION['success'] = "Animal mis à jour avec succès.";
+        header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
+    } else {
+        $_SESSION['error'] = "Erreur lors de la mise à jour de l'animal : " . $stmtUpdateAnimal->error;
+        header('Location: ../admin/animaux.php'); // Redirigez vers une page appropriée
+    }
     
     $stmtUpdateAnimal->close();
     $conn->close();

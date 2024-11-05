@@ -1,4 +1,3 @@
-// Attendre que le DOM soit complètement chargé
 document.addEventListener('DOMContentLoaded', function() {
     // Récupération des éléments HTML nécessaires
     const addAnimalBtn = document.getElementById('addAnimalBtn');
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const healthModifContainer = document.getElementById("healthModifContainer");
     const imageContainerModif = document.getElementById("imageContainerModif");
     const newImagesContainer = document.getElementById("newImagesContainer");
-
+    const submitModifForm = document.getElementById("submitModifForm"); // Formulaire de soumission
 
     // Cacher le formulaire et les sections d'affichage au départ
     addAnimalForm.style.display = 'none';
@@ -38,42 +37,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Afficher le formulaire "Ajouter animal" lors du clic sur le bouton "Ajouter Animal" et cacher les autres sections
     addAnimalBtn.addEventListener('click', function() {
-        console.log('click add');
         addAnimalForm.style.display = addAnimalForm.style.display === "block" ? "none" : "block"; 
         modifAnimalForm.style.display = 'none'; 
     });
 
     // Afficher la section "Affichage des animaux" et cacher les autres sections
     modifAnimalBtn.addEventListener('click', function() {
-        console.log('click mod');
         modifAnimalForm.style.display = modifAnimalForm.style.display === "block" ? "none" : "block"; 
         addAnimalForm.style.display = 'none'; 
     });
 
     // Gestion de l'affichage des champs pour le formulaire d'ajout d'animal
     raceSelect.addEventListener("change", function() {
-        // Récupération de l'option sélectionnée et de son régime
         const selectedOption = raceSelect.options[raceSelect.selectedIndex];
         const regime = selectedOption.getAttribute("data-regime");
 
-        // Affiche le champ pour ajouter une nouvelle race si "Autre" est sélectionné
         newRaceInput.style.display = raceSelect.value === "Autre" ? "block" : "none";
-        
-        // Affiche le régime si "Autre" est sélectionné ou si la race n’a pas de régime prédéfini
         regimeContainer.style.display = (raceSelect.value === "Autre" || !regime) ? "block" : "none";
-
-        // Affiche .le conteneur d'habitat si la race est "Autre"
         habitatContainer.style.display = raceSelect.value === "Autre" ? "block" : "none";
     });
 
     // Gestion de l'affichage des champs pour le nouvel habitat
     habitatSelect.addEventListener("change", function() {
-        // Affiche le champ pour ajouter un nouvel habitat si "Autre" est sélectionné
         newHabitatInput.style.display = habitatSelect.value === "Autre" ? "block" : "none";
     });
 
-     // Écouteur d'événement pour la sélection de l'animal
-     animalSelect.addEventListener("change", function () {
+    // Écouteur d'événement pour la sélection de l'animal
+    animalSelect.addEventListener("change", function () {
         const selectedAnimal = this.value;
         if (selectedAnimal) {
             newNameContainer.style.display = "block";
@@ -84,39 +74,35 @@ document.addEventListener('DOMContentLoaded', function() {
             healthModifContainer.style.display = "block";
             imageContainerModif.style.display = "block";
             newImagesContainer.style.display = "block";
-    
+
             // Appel à l'API pour récupérer les images
             fetch(`../back/getAnimalImages.php?animalId=${selectedAnimal}`)
                 .then(response => response.json())
-                .then(data => { // Renomme `images` en `data` pour mieux représenter les données reçues
-                    // Vider le conteneur des images avant d'ajouter les nouvelles
+                .then(data => {
                     imageContainerModif.innerHTML = '<label>Images Actuelles</label>';
-    
-                    const nameId = data.nameId; // Récupérer le nom de l'animal
-                    const images = data.images; // Récupérer les images
-    
+                    const nameId = data.nameId; 
+                    const images = data.images; 
+
                     if (images.length > 0) {
                         images.forEach(image => {
                             const checkbox = document.createElement('input');
                             checkbox.type = 'checkbox';
-                            checkbox.name = 'imageToDelete[]'; // Nom pour le tableau des images à supprimer
-                            checkbox.value = image.name; // Valeur de l'image
-    
+                            checkbox.name = 'imageToDelete[]'; 
+                            checkbox.value = `../img/animaux/${nameId}/${image.name}.webp`; 
+
                             const label = document.createElement('label');
-                            label.textContent = '  ' + image.name  // Affiche le nom de l'image
-                            label.prepend(checkbox); // Ajoute la case à cocher avant le texte
-    
-                            // Créer un élément image pour afficher l'image
+                            label.textContent = image.name; 
+                            label.prepend(checkbox); 
+
                             const img = document.createElement('img');
-                            img.src = `../img/animaux/${nameId}/${image.name}.webp`; // Définir le chemin de l'image
-                            img.alt = image.name; // Texte alternatif pour l'image
-                            img.style.width = '100px'; // Largeur de l'image, ajuste selon tes besoins
-                            img.style.height = '100px'; // Hauteur automatique pour conserver les proportions
-    
-                            // Ajouter le label et l'image au conteneur
-                            imageContainerModif.appendChild(img); // Ajouter l'image après le label
+                            img.src = `../img/animaux/${nameId}/${image.name}.webp`; 
+                            img.alt = image.name; 
+                            img.style.width = '100px'; 
+                            img.style.height = '100px'; 
+
+                            imageContainerModif.appendChild(img); 
                             imageContainerModif.appendChild(label);
-                            imageContainerModif.appendChild(document.createElement('br')); // Saut de ligne
+                            imageContainerModif.appendChild(document.createElement('br')); 
                         });
                     } else {
                         const noImagesMessage = document.createElement('p');
@@ -130,27 +116,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
     });
-    
+
     // Écouteur d'événement pour la sélection de la race
     raceModifSelect.addEventListener("change", function () {
         if (this.value === "Autre") {
-            newRaceModifInput.style.display = "block"; // Afficher le champ pour une nouvelle race 
-            regimeModifContainer.style.display = "block";// Afficher le champ regime
-            habitatModifContainer.style.display = "block"; // Afficher le champ pour le nouvel habitat
+            newRaceModifInput.style.display = "block"; 
+            regimeModifContainer.style.display = "block"; 
+            habitatModifContainer.style.display = "block"; 
         } else {
-            habitatModifContainer.style.display = "none"; // Masquer le champ si une race est sélectionnée
-            regimeModifContainer.style.display = "none";//  Masquer le champ regime
-            habitatModifContainer.style.display = "none"; //  Masquer le champ pour le nouvel habitat
+            habitatModifContainer.style.display = "none"; 
+            regimeModifContainer.style.display = "none"; 
+            habitatModifContainer.style.display = "none"; 
         }
     });
 
     // Écouteur d'événement pour la sélection de l'habitat
     habitatModifSelect.addEventListener("change", function () {
         if (this.value === "Autre") {
-            newHabitatModifInput.style.display = "block"; // Afficher le champ pour un nouvel habitat
+            newHabitatModifInput.style.display = "block"; 
         } else {
-            newHabitatModifInput.style.display = "none"; // Masquer le champ si un habitat est sélectionné
+            newHabitatModifInput.style.display = "none"; 
         }
     });
-});
 
+    // Écouteur d'événement pour la soumission du formulaire de modification
+    submitModifForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
+        const formData = new FormData(this); // Récupère les données du formulaire
+
+        // Envoi des données via fetch ou XMLHttpRequest
+        fetch('../back/updateAnimal.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Gérer la réponse ici
+            console.log(data);
+            // Par exemple, afficher un message de succès ou mettre à jour l'interface
+        })
+        .catch(error => {
+            console.error('Erreur lors de la mise à jour de l\'animal :', error);
+        });
+    });
+});
