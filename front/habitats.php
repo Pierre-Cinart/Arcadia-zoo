@@ -81,7 +81,6 @@ include_once "../back/bdd.php";
                         echo back("./habitat","r");
                     echo "</article>";
                     
-
                 }
             ?>
            </section>

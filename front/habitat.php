@@ -153,7 +153,8 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
             if (count($races) > 0) {
                 echo '<ul class="animals_list">';
                 foreach ($races as $race) {
-                    echo '<li><a href="./animaux.php?race_id=' . urlencode($race['id']) . '&habitat=' . $habitatId . '">';
+                    echo '<li><a href="./animaux.php?race_id=' . urlencode($race['id']) . '&habitat=' . $habitatId . '" ';
+                    echo 'onclick="addClick(\'race\', ' . $race['id'] . '); setTimeout(function() { window.location.href = this.href; }, 500); return false;">'; // Le délai est de 500ms
                     echo htmlspecialchars($race['name']) . ' : <img src="' . htmlspecialchars($race['image']) . 
                     '.webp" alt="' . htmlspecialchars($race['name']) . '" width="100"></a></li>';
                 }
@@ -164,7 +165,9 @@ if (isset($_GET['habitat_id']) && is_numeric($_GET['habitat_id'])) {
             ?>
         </div>
     </main>
-    <?php include_once "../php/footer.php"; ?>
-    <script src="../js/toggleMenu.js"></script>
+    <!-- footer -->
+    <?php include_once "../php/footer.php"; ?> 
+    <script src="../js/toggleMenu.js"></script><!-- format mobile  -->
+    <script src="../js/click.js"></script><!-- comptage des clicks -->
 </body>
 </html>
