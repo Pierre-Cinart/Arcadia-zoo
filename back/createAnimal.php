@@ -2,14 +2,17 @@
 session_start();
 
 // Vérification du rôle de l'utilisateur
-if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) || !isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'admin')) {
     $_SESSION['error'] = 'Veuillez vous connecter en tant qu\'administrateur pour accéder à cette page.';
     header('Location: ../admin/index.php');
     exit();
 }
 
-
+// connexion bdd
 include_once './bdd.php';
+//fichier de fonction pour gérer les statistiques de clics
+include_once './clicks.php';
+// verification de token
 include_once './token.php';
 checkToken($conn);
 
@@ -157,7 +160,8 @@ $stmt->bind_param("sssssdii", $name, $description, $sex, $health, $birthday, $po
 
 if ($stmt->execute()) {
     // Récupération de l'ID de l'animal nouvellement inséré
-    $animal_id = $stmt->insert_id; // Ceci devrait donner une valeur
+    $animal_id = $stmt->insert_id;//recupere l'ID de l'animal
+    createNewClickId('animal', $animal_id);// créer la donnée id et initialise ses clicks à 0
     $stmt->close(); // Fermer le statement après exécution
 } else {
     $_SESSION['error'] = "Erreur lors de l'ajout de l'animal.";
