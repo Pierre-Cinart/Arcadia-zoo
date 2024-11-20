@@ -22,7 +22,7 @@ Avant de commencer, assurez-vous que vous avez installé :
 Dans le fichier arcadia.sql, vous trouverez le schéma SQL pour créer les tables nécessaires. Pour importer ce fichier dans votre base de données MySQL, Importez le fichier database.sql dans cette base de données.
 
 
-**Modifiez les fichiers de configuration :**
+3. **Modifiez les fichiers de configuration :**
 
 Les informations sensibles telles que les identifiants de connexion à la base de données et les clés API sont stockées dans des fichiers de configuration (config.php et configCaptcha.php). Assurez-vous de les remplacer avec vos propres valeurs pour sécuriser votre application..
 
@@ -35,23 +35,23 @@ $DB_NAME= 'arcadia';
 $DB_USER= 'nom_utilisateur';
 $DB_PASS= 'mot_de_passe';
 
-*Remplacez les valeurs de connexion à la base de données par celles correspondant à votre environnement local.
+Remplacez les valeurs de connexion à la base de données par celles correspondant à votre environnement local.
 
 créez un fichier configCaptcha.php :
 $RECAPTCHA_PUBLIC_KEY = 'votre_public_key';
 $RECAPTCHA_PRIVATE_KEY = 'votre_private_key';
 
-**Accès à l'interface administrateur**
+Accès à l'interface administrateur
 Pour accéder à l'interface administrateur, vous devez vous rendre à l'adresse suivante dans votre navigateur :
 
 
 http://localhost/arcadia/admin
 
-*Identifiants administrateur :*
+Identifiants administrateur :
 Email : jose.admin@example.com
 Mot de passe : MotDePasse123
 
-*Fonctionnalités administrateur :*
+Fonctionnalités administrateur :
 Une fois connecté à la partie administrateur, vous pourrez :
 
 Modifier les informations du site : Par exemple, ajouter ou mettre à jour les descriptions, images et autres informations visibles sur le site.
