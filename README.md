@@ -63,10 +63,21 @@ Ajouter ou supprimer des agents et vétérinaires : Gérez facilement les membre
 Sécurité
 
 *Fonctionnalités*
+
 Page d'accueil : Présentation du zoo et des services proposés.
+
 Page des services : Affichage des différents services disponibles au zoo (visites guidées, zoo en petit train, etc.).
+
 Page des habitats : Liste des habitats avec des images et des descriptions.
+
+Page avis : consulter et laisser un avis
+
+Page contact : laisser un message .
+
 Interface administrateur : Permet de gérer les informations du site et le personnel (ajouter, modifier, supprimer des agents et vétérinaires , valider ou supprimer les commentaires et effectué les rapports).
+
 Google reCAPTCHA : Sécurisation des formulaires avec reCAPTCHA pour éviter les abus.
-Aide et support
+
+*Aide et support*
+
 Si vous avez des questions ou rencontrez des problèmes avec le projet, n'hésitez pas à ouvrir une issue sur GitHub ou à consulter la documentation de PHP et MySQL pour résoudre vos problèmes de configuration.
