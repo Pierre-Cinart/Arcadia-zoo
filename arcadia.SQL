@@ -1,7 +1,7 @@
 --
 -- Base de données : `arcadia`
 --
-CREATE DATABASE IF NOT EXISTS arcadia DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS arcadia DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ;
 
 USE arcadia;
 
@@ -23,7 +23,7 @@ CREATE TABLE `animals` (
   `maj_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `birthday` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `animals`
@@ -60,7 +60,7 @@ CREATE TABLE `animal_pictures` (
   `animal_id` int DEFAULT NULL,
   `maj_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `maj_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `animal_pictures`
@@ -111,7 +111,7 @@ CREATE TABLE `animal_reports` (
   `report_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `report_txt` text,
   `user_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `animal_reports`
@@ -138,7 +138,7 @@ CREATE TABLE `avis` (
   `isVisible` tinyint(1) NOT NULL DEFAULT '0',
   `validate_by` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `avis`
@@ -176,7 +176,7 @@ CREATE TABLE `food_reports` (
   `quantity` decimal(10,2) DEFAULT NULL,
   `food_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `food_reports`
@@ -205,7 +205,7 @@ CREATE TABLE `habitats` (
   `picture` varchar(255) NOT NULL,
   `maj_by` int DEFAULT NULL,
   `maj` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `habitats`
@@ -227,7 +227,7 @@ CREATE TABLE `horaires` (
   `description` varchar(255) NOT NULL,
   `maj_by` int DEFAULT NULL,
   `maj` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `horaires`
@@ -247,7 +247,7 @@ CREATE TABLE `races` (
   `name` varchar(255) NOT NULL,
   `habitat` int DEFAULT NULL,
   `regime` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `races`
@@ -277,7 +277,7 @@ CREATE TABLE `services` (
   `picture` varchar(255) NOT NULL,
   `maj_by` int DEFAULT NULL,
   `maj` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `services`
@@ -304,7 +304,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `token` varchar(255) DEFAULT NULL,
   `token_expiration` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ;
 
 --
 -- Déchargement des données de la table `users`
