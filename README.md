@@ -9,8 +9,7 @@ Avant de commencer, assurez-vous que vous avez installé :
 - **PHP** (version 7.4 ou supérieure)
 - **MySQL**
 - **Serveur local** comme [XAMPP](https://www.apachefriends.org/index.html) ou [Laragon](https://laragon.org/)
-- **Composer** (facultatif, si vous utilisez des packages externes à l'avenir)
-
+- 
 ## Installation
 
 1. **Clonez ce dépôt sur votre machine locale :**
@@ -27,9 +26,6 @@ Dans le fichier arcadia.sql, vous trouverez le schéma SQL pour créer les table
 Les informations sensibles telles que les identifiants de connexion à la base de données et les clés API sont stockées dans des fichiers de configuration (config.php et configCaptcha.php). Assurez-vous de les remplacer avec vos propres valeurs pour sécuriser votre application..
 
 creez à la racine un fichier config.php : 
-<?php
-// Fichier config.php pour la connexion
-
 $DB_HOST='localhost';
 $DB_NAME= 'arcadia';
 $DB_USER= 'nom_utilisateur';
