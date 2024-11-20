@@ -16,7 +16,7 @@ Avant de commencer, assurez-vous que vous avez installé :
 1. **Clonez ce dépôt sur votre machine locale :**
 
    ```bash
-   git clone 
+   git clone git@github.com:Pierre-Cinart/Arcadia-zoo.git
 2. **Créez la base de données :**
 
 Dans le fichier arcadia.sql, vous trouverez le schéma SQL pour créer les tables nécessaires. Pour importer ce fichier dans votre base de données MySQL, Importez le fichier database.sql dans cette base de données.
