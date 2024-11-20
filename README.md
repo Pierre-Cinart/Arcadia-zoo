@@ -26,16 +26,24 @@ Dans le fichier arcadia.sql, vous trouverez le schéma SQL pour créer les table
 Les informations sensibles telles que les identifiants de connexion à la base de données et les clés API sont stockées dans des fichiers de configuration (config.php et configCaptcha.php). Assurez-vous de les remplacer avec vos propres valeurs pour sécuriser votre application..
 
 creez à la racine un fichier config.php : 
+
 $DB_HOST='localhost';
+
 $DB_NAME= 'arcadia';
+
 $DB_USER= 'nom_utilisateur';
+
 $DB_PASS= 'mot_de_passe';
+
 
 Remplacez les valeurs de connexion à la base de données par celles correspondant à votre environnement local.
 
 créez un fichier configCaptcha.php :
+
 $RECAPTCHA_PUBLIC_KEY = 'votre_public_key';
+
 $RECAPTCHA_PRIVATE_KEY = 'votre_private_key';
+
 
 Accès à l'interface administrateur
 Pour accéder à l'interface administrateur, vous devez vous rendre à l'adresse suivante dans votre navigateur :
